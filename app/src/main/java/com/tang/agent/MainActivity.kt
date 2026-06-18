@@ -1,48 +1,19 @@
 package com.tang.agent
 
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -73,19 +44,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class ChatMessage(
-    val role: String,
-    val content: String,
-)
-
-data class ModelConfig(
-    val apiKey: String,
-    val baseUrl: String,
-    val model: String,
-)
+data class ChatMessage(val role: String, val content: String)
+data class ModelConfig(val apiKey: String, val baseUrl: String, val model: String)
 
 class AgentViewModel(application: Application) : AndroidViewModel(application) {
-    private val prefs = application.getSharedPreferences("tang_agent", Application.MODE_PRIVATE)
+    private val prefs = application.getSharedPreferences("tang_agent", Context.MODE_PRIVATE)
 
     var apiKey by mutableStateOf(prefs.getString("api_key", "") ?: "")
     var baseUrl by mutableStateOf(prefs.getString("base_url", "https://api.deepseek.com") ?: "https://api.deepseek.com")
@@ -93,12 +56,9 @@ class AgentViewModel(application: Application) : AndroidViewModel(application) {
     var input by mutableStateOf("")
     var loading by mutableStateOf(false)
     var error by mutableStateOf<String?>(null)
-
     val messages = mutableStateListOf<ChatMessage>()
 
-    init {
-        loadMessages()
-    }
+    init { loadMessages() }
 
     fun saveSettings() {
         prefs.edit()
@@ -117,14 +77,12 @@ class AgentViewModel(application: Application) : AndroidViewModel(application) {
     fun send() {
         val text = input.trim()
         if (text.isBlank() || loading) return
-
         if (apiKey.isBlank()) {
             error = "先去设置里填 API Key。"
             return
         }
 
-        val userMessage = ChatMessage(role = "user", content = text)
-        messages.add(userMessage)
+        messages.add(ChatMessage("user", text))
         input = ""
         loading = true
         error = null
@@ -132,11 +90,8 @@ class AgentViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch {
             try {
-                val reply = DeepSeekClient.complete(
-                    config = ModelConfig(apiKey = apiKey, baseUrl = baseUrl, model = model),
-                    messages = messages.toList(),
-                )
-                messages.add(ChatMessage(role = "assistant", content = reply))
+                val reply = LlmClient.complete(ModelConfig(apiKey, baseUrl, model), messages.toList())
+                messages.add(ChatMessage("assistant", reply))
                 saveMessages()
             } catch (e: Exception) {
                 error = e.message ?: "请求失败"
@@ -147,36 +102,24 @@ class AgentViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun loadMessages() {
-        val raw = prefs.getString("messages", "[]") ?: "[]"
         runCatching {
-            val arr = JSONArray(raw)
+            val arr = JSONArray(prefs.getString("messages", "[]") ?: "[]")
             messages.clear()
             for (i in 0 until arr.length()) {
                 val item = arr.getJSONObject(i)
-                messages.add(
-                    ChatMessage(
-                        role = item.optString("role"),
-                        content = item.optString("content"),
-                    )
-                )
+                messages.add(ChatMessage(item.optString("role"), item.optString("content")))
             }
         }
     }
 
     private fun saveMessages() {
         val arr = JSONArray()
-        messages.forEach { msg ->
-            arr.put(
-                JSONObject()
-                    .put("role", msg.role)
-                    .put("content", msg.content)
-            )
-        }
+        messages.forEach { arr.put(JSONObject().put("role", it.role).put("content", it.content)) }
         prefs.edit().putString("messages", arr.toString()).apply()
     }
 }
 
-object DeepSeekClient {
+object LlmClient {
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(90, TimeUnit.SECONDS)
@@ -184,38 +127,24 @@ object DeepSeekClient {
         .build()
 
     suspend fun complete(config: ModelConfig, messages: List<ChatMessage>): String = withContext(Dispatchers.IO) {
-        val cleanBaseUrl = config.baseUrl.trim().trimEnd('/')
-        val bodyJson = JSONObject()
+        val json = JSONObject()
             .put("model", config.model.trim())
             .put("stream", false)
-            .put("messages", JSONArray().also { array ->
-                messages.forEach { msg ->
-                    array.put(
-                        JSONObject()
-                            .put("role", msg.role)
-                            .put("content", msg.content)
-                    )
-                }
+            .put("messages", JSONArray().also { arr ->
+                messages.forEach { arr.put(JSONObject().put("role", it.role).put("content", it.content)) }
             })
 
-        val request = Request.Builder()
-            .url("$cleanBaseUrl/chat/completions")
+        val req = Request.Builder()
+            .url("${config.baseUrl.trim().trimEnd('/')}/chat/completions")
             .addHeader("Authorization", "Bearer ${config.apiKey.trim()}")
             .addHeader("Content-Type", "application/json")
-            .post(bodyJson.toString().toRequestBody("application/json; charset=utf-8".toMediaType()))
+            .post(json.toString().toRequestBody("application/json; charset=utf-8".toMediaType()))
             .build()
 
-        client.newCall(request).execute().use { response ->
-            val responseText = response.body?.string().orEmpty()
-            if (!response.isSuccessful) {
-                throw IllegalStateException("HTTP ${response.code}: ${responseText.take(300)}")
-            }
-
-            val root = JSONObject(responseText)
-            root.getJSONArray("choices")
-                .getJSONObject(0)
-                .getJSONObject("message")
-                .getString("content")
+        client.newCall(req).execute().use { res ->
+            val text = res.body?.string().orEmpty()
+            if (!res.isSuccessful) throw IllegalStateException("HTTP ${res.code}: ${text.take(300)}")
+            JSONObject(text).getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content")
         }
     }
 }
@@ -225,18 +154,14 @@ object DeepSeekClient {
 fun TangAgentApp(vm: AgentViewModel) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var screen by androidx.compose.runtime.remember { mutableStateOf("chat") }
+    var screen by remember { mutableStateOf("chat") }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(Modifier.height(20.dp))
-                Text(
-                    text = "Tang Agent",
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                )
+                Spacer(Modifier.height(18.dp))
+                Text("Tang Agent", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(24.dp, 10.dp))
                 DrawerButton("收藏", screen == "favorites") { screen = "favorites"; scope.launch { drawerState.close() } }
                 DrawerButton("电脑", screen == "computer") { screen = "computer"; scope.launch { drawerState.close() } }
                 DrawerButton("项目", screen == "projects") { screen = "projects"; scope.launch { drawerState.close() } }
@@ -251,22 +176,14 @@ fun TangAgentApp(vm: AgentViewModel) {
             topBar = {
                 TopAppBar(
                     title = { Text(if (screen == "chat") vm.model else titleFor(screen)) },
-                    navigationIcon = {
-                        TextButton(onClick = { scope.launch { drawerState.open() } }) {
-                            Text("☰")
-                        }
-                    },
+                    navigationIcon = { TextButton(onClick = { scope.launch { drawerState.open() } }) { Text("☰") } },
                     actions = {
-                        if (screen == "chat") {
-                            TextButton(onClick = { vm.newChat() }) { Text("新建") }
-                        }
+                        if (screen == "chat") TextButton(onClick = { vm.newChat() }) { Text("新建") }
                         TextButton(onClick = { screen = "settings" }) { Text("设置") }
                     }
                 )
             },
-            bottomBar = {
-                if (screen == "chat") ChatInputBar(vm)
-            }
+            bottomBar = { if (screen == "chat") ChatInputBar(vm) }
         ) { padding ->
             when (screen) {
                 "chat" -> ChatScreen(vm, padding)
@@ -280,15 +197,10 @@ fun TangAgentApp(vm: AgentViewModel) {
 
 @Composable
 private fun DrawerButton(text: String, selected: Boolean, onClick: () -> Unit) {
-    NavigationDrawerItem(
-        label = { Text(text) },
-        selected = selected,
-        onClick = onClick,
-        modifier = Modifier.padding(horizontal = 12.dp),
-    )
+    NavigationDrawerItem(label = { Text(text) }, selected = selected, onClick = onClick, modifier = Modifier.padding(horizontal = 12.dp))
 }
 
-private fun titleFor(screen: String): String = when (screen) {
+private fun titleFor(screen: String) = when (screen) {
     "favorites" -> "收藏"
     "computer" -> "电脑"
     "projects" -> "项目"
@@ -300,18 +212,12 @@ private fun titleFor(screen: String): String = when (screen) {
 @Composable
 fun ChatScreen(vm: AgentViewModel, padding: PaddingValues) {
     val listState = rememberLazyListState()
-
     LaunchedEffect(vm.messages.size, vm.loading) {
         val last = vm.messages.lastIndex
         if (last >= 0) listState.animateScrollToItem(last)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .padding(horizontal = 12.dp)
-    ) {
+    Column(Modifier.fillMaxSize().padding(padding).padding(horizontal = 12.dp)) {
         if (vm.messages.isEmpty()) {
             Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                 Text("今天能帮到你什么吗？", style = MaterialTheme.typography.headlineSmall)
@@ -323,54 +229,27 @@ fun ChatScreen(vm: AgentViewModel, padding: PaddingValues) {
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 contentPadding = PaddingValues(vertical = 12.dp),
             ) {
-                items(vm.messages) { msg ->
-                    MessageBubble(msg)
-                }
-                if (vm.loading) {
-                    item { Text("正在思考…", modifier = Modifier.padding(8.dp)) }
-                }
+                items(vm.messages) { MessageBubble(it) }
+                if (vm.loading) item { Text("正在思考…", modifier = Modifier.padding(8.dp)) }
             }
         }
-
-        vm.error?.let {
-            Text(
-                text = it,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(vertical = 6.dp),
-            )
-        }
+        vm.error?.let { Text(it, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(vertical = 6.dp)) }
     }
 }
 
 @Composable
 private fun MessageBubble(message: ChatMessage) {
     val isUser = message.role == "user"
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start,
-    ) {
-        Surface(
-            shape = RoundedCornerShape(18.dp),
-            tonalElevation = if (isUser) 3.dp else 1.dp,
-            modifier = Modifier.fillMaxWidth(if (isUser) 0.82f else 0.92f),
-        ) {
-            Text(
-                text = message.content,
-                modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
-                style = MaterialTheme.typography.bodyLarge,
-            )
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start) {
+        Surface(shape = RoundedCornerShape(18.dp), tonalElevation = if (isUser) 3.dp else 1.dp, modifier = Modifier.fillMaxWidth(if (isUser) 0.82f else 0.92f)) {
+            Text(message.content, modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp), style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
 
 @Composable
 fun ChatInputBar(vm: AgentViewModel) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
+    Row(Modifier.fillMaxWidth().padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
         OutlinedTextField(
             value = vm.input,
             onValueChange = { vm.input = it },
@@ -380,51 +259,19 @@ fun ChatInputBar(vm: AgentViewModel) {
             maxLines = 5,
         )
         Spacer(Modifier.width(8.dp))
-        Button(onClick = { vm.send() }, enabled = !vm.loading) {
-            Text("发送")
-        }
+        Button(onClick = { vm.send() }, enabled = !vm.loading) { Text("发送") }
     }
 }
 
 @Composable
 fun SettingsScreen(vm: AgentViewModel, padding: PaddingValues) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .verticalScroll(rememberScrollState())
-            .padding(18.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
-    ) {
+    Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("集中管理模型、Bots、技能和工具能力", style = MaterialTheme.typography.titleMedium)
-
         Text("模型服务", style = MaterialTheme.typography.titleSmall)
-        OutlinedTextField(
-            value = vm.apiKey,
-            onValueChange = { vm.apiKey = it },
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text("API Key") },
-            visualTransformation = PasswordVisualTransformation(),
-            singleLine = true,
-        )
-        OutlinedTextField(
-            value = vm.baseUrl,
-            onValueChange = { vm.baseUrl = it },
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text("Base URL") },
-            singleLine = true,
-        )
-        OutlinedTextField(
-            value = vm.model,
-            onValueChange = { vm.model = it },
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text("默认模型") },
-            singleLine = true,
-        )
-        Button(onClick = { vm.saveSettings() }, modifier = Modifier.fillMaxWidth()) {
-            Text("保存模型设置")
-        }
-
+        OutlinedTextField(vm.apiKey, { vm.apiKey = it }, Modifier.fillMaxWidth(), label = { Text("API Key") }, visualTransformation = PasswordVisualTransformation(), singleLine = true)
+        OutlinedTextField(vm.baseUrl, { vm.baseUrl = it }, Modifier.fillMaxWidth(), label = { Text("Base URL") }, singleLine = true)
+        OutlinedTextField(vm.model, { vm.model = it }, Modifier.fillMaxWidth(), label = { Text("默认模型") }, singleLine = true)
+        Button(onClick = { vm.saveSettings() }, modifier = Modifier.fillMaxWidth()) { Text("保存模型设置") }
         Divider()
         SettingRow("Bots 管理", "后续：人格提示词 + 默认模型 + 可用工具")
         SettingRow("技能", "后续：读文件、写文件、搜索文件、联网搜索")
@@ -449,33 +296,20 @@ private fun SettingRow(title: String, desc: String) {
 
 @Composable
 fun SkillsScreen(padding: PaddingValues) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .padding(24.dp),
-        contentAlignment = Alignment.Center,
-    ) {
+    Box(Modifier.fillMaxSize().padding(padding).padding(24.dp), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text("需要先配置工作区", style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(10.dp))
-            Text("Skills 现在保存在你的工作区目录里。后续这里会接入 Android 文件夹选择、文件读写和工具调用。")
+            Text("Skills 现在保存在你的工作区目录里。下一版接入 Android 文件夹选择、文件读写和工具调用。")
             Spacer(Modifier.height(16.dp))
-            Button(onClick = { }) {
-                Text("去配置工作区")
-            }
+            Button(onClick = { }) { Text("去配置工作区") }
         }
     }
 }
 
 @Composable
 fun PlaceholderScreen(title: String, padding: PaddingValues) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding),
-        contentAlignment = Alignment.Center,
-    ) {
+    Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
         Text("$title 功能先占位，下一版再接真实数据。")
     }
 }
