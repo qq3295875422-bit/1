@@ -27,6 +27,16 @@ jobs:
           test -f work/release/index.html
           test -f work/tests/dynamic-browser-test.mjs
           node -e "const r=require('./work/validation/specialized-tests.json');if(!r.passed||r.assertions<30062||r.ikRandomCases<10000)process.exit(1)"
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('work/release/assets/js/app/interaction/XRInteraction.js')
+          text=p.read_text()
+          old="if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {\n            return 'WebXR 需要 HTTPS 或 localhost';\n        }"
+          new="if (!window.isSecureContext) {\n            return 'WebXR 需要 HTTPS 安全环境';\n        }"
+          if old not in text:
+              raise SystemExit('XR secure-context patch target missing')
+          p.write_text(text.replace(old,new))
+          PY
 
       - name: Fetch fixed official Three.js r180
         shell: bash
