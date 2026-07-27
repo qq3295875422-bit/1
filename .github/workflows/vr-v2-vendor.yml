@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - chatgpt-vr-v2-build-20260727
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
