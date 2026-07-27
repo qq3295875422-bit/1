@@ -1,0 +1,70 @@
+name: VR V2 Chrome Diagnostic
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  chrome-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct app and vendor
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          cat vr-v2-payload/runtime-* | base64 --decode > work/payload.zip
+          echo 'a40f9f12c9da028a4f0775963f0951fc1f2ac5fdd651f28c4f3f9a2f1540026f  work/payload.zip' | sha256sum -c -
+          unzip -q work/payload.zip -d work
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('work/release/assets/js/app/interaction/XRInteraction.js')
+          text=p.read_text()
+          old="if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {\n            return 'WebXR 需要 HTTPS 或 localhost';\n        }"
+          new="if (!window.isSecureContext) {\n            return 'WebXR 需要 HTTPS 安全环境';\n        }"
+          p.write_text(text.replace(old,new))
+          PY
+          git clone --depth 1 --branch r180 https://github.com/mrdoob/three.js.git work/three-r180
+          root=work/release/assets/js/vendor/three
+          mkdir -p "$root/addons/controls" "$root/addons/webxr"
+          cp work/three-r180/build/three.module.min.js "$root/three.module.min.js"
+          cp work/three-r180/build/three.core.min.js "$root/three.core.min.js"
+          cp work/three-r180/examples/jsm/controls/OrbitControls.js "$root/addons/controls/OrbitControls.js"
+          cp work/three-r180/examples/jsm/controls/TransformControls.js "$root/addons/controls/TransformControls.js"
+          cp work/three-r180/examples/jsm/webxr/VRButton.js "$root/addons/webxr/VRButton.js"
+          cp work/three-r180/LICENSE "$root/LICENSE"
+          cp work/three-r180/package.json "$root/package.json"
+      - name: Run Chrome and preserve result
+        shell: bash
+        continue-on-error: true
+        run: |
+          mkdir -p work/reports
+          python3 -m http.server 4173 --directory work/release > work/http-server.log 2>&1 &
+          echo $! > work/http-server.pid
+          sleep 2
+          export VR_V2_BASE_URL='http://127.0.0.1:4173/'
+          export VR_V2_BROWSER_RESULT="$PWD/work/reports/browser-dynamic.json"
+          if node -e "process.exit(typeof WebSocket==='function'?0:1)"; then
+            node work/tests/dynamic-browser-test.mjs > work/reports/browser-console.log 2>&1
+          else
+            node --experimental-websocket work/tests/dynamic-browser-test.mjs > work/reports/browser-console.log 2>&1
+          fi
+          status=$?
+          kill "$(cat work/http-server.pid)" 2>/dev/null || true
+          echo "$status" > work/reports/browser-exit-code.txt
+          exit "$status"
+      - name: Upload Chrome diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vr-storyboard-stage-v2-chrome-diagnostic
+          path: |
+            work/reports/*
+            work/http-server.log
+          if-no-files-found: warn
