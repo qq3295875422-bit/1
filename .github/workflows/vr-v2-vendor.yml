@@ -1,48 +1,17 @@
-name: VR V2 Vendor Fetch
+name: VR V2 Build Gate
 
 on:
-  push:
-    branches:
-      - chatgpt-vr-v2-build-20260727
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - 'vr-v2-payload/**'
 
 permissions:
   contents: read
 
 jobs:
-  vendor:
+  idle:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Fetch fixed Three.js r180 source
-        shell: bash
-        run: |
-          set -euo pipefail
-          git clone --depth 1 --branch r180 https://github.com/mrdoob/three.js.git three-r180
-          test "$(node -p "require('./three-r180/package.json').version")" = "0.180.0"
-      - name: Assemble original vendor files
-        shell: bash
-        run: |
-          set -euo pipefail
-          out=three-r180-vendor
-          mkdir -p "$out/addons/controls" "$out/addons/webxr"
-          cp three-r180/build/three.module.min.js "$out/three.module.min.js"
-          cp three-r180/build/three.core.min.js "$out/three.core.min.js"
-          cp three-r180/examples/jsm/controls/OrbitControls.js "$out/addons/controls/OrbitControls.js"
-          cp three-r180/examples/jsm/controls/TransformControls.js "$out/addons/controls/TransformControls.js"
-          cp three-r180/examples/jsm/webxr/VRButton.js "$out/addons/webxr/VRButton.js"
-          cp three-r180/LICENSE "$out/LICENSE"
-          cp three-r180/package.json "$out/package.json"
-          grep -q 'from"./three.core.min.js"' "$out/three.module.min.js"
-          ! grep -RIl '<!DOCTYPE html' "$out"
-          find "$out" -type f -size +0c | sort
-          sha256sum $(find "$out" -type f | sort) > "$out/SHA256SUMS.txt"
-      - name: Upload fixed vendor artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: three-r180-vendor
-          path: three-r180-vendor
-          if-no-files-found: error
-          compression-level: 0
+      - run: echo 'Payload upload gate ready'
