@@ -22,17 +22,19 @@
 2. Codespace 创建后会自动安装桌面环境并启动 noVNC。
 3. 打开底部 **PORTS** 面板。
 4. 找到端口 **6902 / Cinnamon noVNC**，点击浏览器图标打开。
-5. VNC 密码：`qifu2026`
+5. Private 模式下初始 VNC 密码：`qifu2026`
 
-端口默认是 Private：通过公网 HTTPS 地址访问，但需要先登录本人的 GitHub 账号。
+端口默认是 Private：通过公网 HTTPS 地址访问，但需要先登录本人的 GitHub 账号。这种模式更安全，也已经满足本人通过互联网访问云桌面的需求。
 
-如果需要把链接改成任何知道 URL 的人都能打开，在 PORTS 面板右键 6902 → **Port Visibility → Public**。
+## 如果一定要生成无需 GitHub 登录的 Public 链接
 
-也可以在 Codespaces 终端执行：
+建议不要直接在 PORTS 面板里手动公开，而是在 Codespaces 终端执行：
 
 ```bash
 bash .devcontainer/make-public.sh
 ```
+
+这个脚本会先自动生成一个新的随机 VNC 密码、重启桌面，再把 6902 请求设置成 Public，并在终端打印公网地址和新密码。
 
 公开地址格式通常为：
 
