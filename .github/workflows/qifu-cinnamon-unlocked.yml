@@ -1,0 +1,149 @@
+name: qifu-cinnamon-unlocked
+
+on:
+  push:
+    paths:
+      - '.github/workflows/qifu-cinnamon-unlocked.yml'
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  desktop:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stop previous temporary desktop
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -fsSL -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/runs/31351923547/cancel" || true
+
+      - name: Install Cinnamon desktop
+        shell: bash
+        run: |
+          set -euxo pipefail
+          bash .devcontainer/install-desktop.sh
+
+      - name: Set unlock password and disable auto lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          PASS="$(openssl rand -hex 4)"
+          printf '%s' "$PASS" > /tmp/qifu-password
+
+          # Make the Linux session password usable on the Cinnamon lock screen.
+          echo "${USER}:${PASS}" | sudo chpasswd
+
+          # Use the same password for VNC so the user only needs one credential.
+          VNC_PASSWD_BIN="$(command -v tigervncpasswd || command -v vncpasswd)"
+          printf '%s\n' "$PASS" | "$VNC_PASSWD_BIN" -f > "$HOME/.vnc/passwd"
+          chmod 600 "$HOME/.vnc/passwd"
+
+          # Persistently disable Cinnamon idle locking for this temporary desktop.
+          dbus-run-session -- bash -lc '
+            gsettings set org.cinnamon.desktop.screensaver lock-enabled false 2>/dev/null || true
+            gsettings set org.cinnamon.desktop.screensaver idle-activation-enabled false 2>/dev/null || true
+            gsettings set org.cinnamon.desktop.session idle-delay 0 2>/dev/null || true
+          '
+
+          mkdir -p "$HOME/.config/autostart"
+          cat > "$HOME/.config/autostart/qifu-disable-lock.desktop" <<'EOF'
+          [Desktop Entry]
+          Type=Application
+          Name=Qifu Disable Lock
+          Exec=sh -c 'sleep 3; cinnamon-screensaver-command --deactivate >/dev/null 2>&1 || true; pkill -f cinnamon-screensaver >/dev/null 2>&1 || true'
+          X-GNOME-Autostart-enabled=true
+          NoDisplay=true
+          EOF
+
+          cat >/tmp/qifu-public.pem <<'EOF'
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4VMJij20woMSDs5coI0F
+          hSrl9VqMJ2qdNpIoKcaEgolWvxBgaKyrfQHl3A3hvYTFRN+Af6Ktrsdaptxf+13o
+          jFW3MnpA41AkbDHRBTKA/Fkftlvj653qGNQK1QAoQV+ee8HGz6YGEVCy5+Sgtn+9
+          8QoL2UBqqTlwkVNZTChL4/CUifTtuG6ALcBpIcn6f5S1uWZWEzjyyslqjyVj6xOO
+          g9Mo57dBK3quaiWkMZn2DdylwyKGkehRO4oPZt+RXIOl5UV8vEQX+t3RYtFOD2ep
+          lyXNHLtUBW8qCggEKKldjmN8CPKRmhgavj7YcOmVhf4Q0pW/j24/2/pEljZZujNw
+          ZQIDAQAB
+          -----END PUBLIC KEY-----
+          EOF
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -in /tmp/qifu-password -out /tmp/qifu-pass.enc
+          base64 -w0 /tmp/qifu-pass.enc > /tmp/qifu-pass.enc.b64
+
+      - name: Start Cinnamon and noVNC
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash .devcontainer/start-desktop.sh | sed 's/VNC 密码: qifu2026/VNC 密码: [runtime-generated]/'
+          curl -fsS http://127.0.0.1:6902/ >/dev/null
+          sleep 5
+          DISPLAY=:1 cinnamon-screensaver-command --deactivate >/dev/null 2>&1 || true
+
+      - name: Open HTTPS tunnel and publish access state
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
+          chmod +x /tmp/cloudflared
+          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:6902 >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
+
+          URL=''
+          for i in $(seq 1 90); do
+            URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n1 || true)"
+            [ -n "$URL" ] && break
+            sleep 2
+          done
+          test -n "$URL"
+
+          for i in $(seq 1 30); do
+            curl -fsS "$URL/vnc.html" >/dev/null 2>&1 && break
+            sleep 2
+          done
+          curl -fsS "$URL/vnc.html" >/dev/null
+
+          FULL_URL="${URL}/vnc.html?autoconnect=true&resize=scale"
+          CIPHER="$(cat /tmp/qifu-pass.enc.b64)"
+          jq -n \
+            --arg url "$FULL_URL" \
+            --arg cipher "$CIPHER" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            '{url:$url,password_ciphertext:$cipher,run_id:$run_id,ready:true,lock_disabled:true}' \
+            >/tmp/qifu-state.json
+
+          CONTENT="$(base64 -w0 /tmp/qifu-state.json)"
+          EXISTING_SHA="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-public-desktop-state.json" 2>/dev/null | jq -r '.sha // empty' || true)"
+          if [ -n "$EXISTING_SHA" ]; then
+            jq -n --arg message 'Update temporary Cinnamon desktop access state' --arg content "$CONTENT" --arg sha "$EXISTING_SHA" '{message:$message,content:$content,sha:$sha}' >/tmp/qifu-put.json
+          else
+            jq -n --arg message 'Publish temporary Cinnamon desktop access state' --arg content "$CONTENT" '{message:$message,content:$content}' >/tmp/qifu-put.json
+          fi
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d @/tmp/qifu-put.json \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-public-desktop-state.json" \
+            >/dev/null
+
+      - name: Keep desktop online
+        shell: bash
+        run: |
+          set -euo pipefail
+          while true; do
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            curl -fsS http://127.0.0.1:6902/ >/dev/null
+            sleep 60
+          done
