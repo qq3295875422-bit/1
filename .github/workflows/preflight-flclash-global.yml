@@ -1,0 +1,33 @@
+name: Preflight FlClash AWS
+
+on:
+  push:
+    paths:
+      - 'flclash-global/.preflight-trigger'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_PAGER: ''
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check configured credentials only
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${AWS_ACCESS_KEY_ID:-}" ] || [ -z "${AWS_SECRET_ACCESS_KEY:-}" ]; then
+            echo 'PREFLIGHT_MISSING_AWS_SECRETS'
+            exit 1
+          fi
+          aws sts get-caller-identity >/tmp/identity.json
+          jq '{Account,Arn}' /tmp/identity.json
+          echo 'PREFLIGHT_AWS_OK'
