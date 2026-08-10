@@ -1,0 +1,28 @@
+name: Destroy FlClash Six Region Nodes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'flclash-global/.destroy-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  destroy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_PAGER: ''
+    steps:
+      - uses: actions/checkout@v4
+      - name: Destroy all six nodes and project VPCs
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x flclash-global/destroy.sh
+          flclash-global/destroy.sh
