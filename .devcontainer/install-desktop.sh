@@ -3,7 +3,9 @@ set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
-sudo add-apt-repository -y universe >/dev/null 2>&1 || true
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y universe
 sudo apt-get update
 sudo apt-get install -y \
   cinnamon cinnamon-session cinnamon-l10n \
@@ -70,19 +72,22 @@ sudo tee /usr/share/novnc/index.html >/dev/null <<'EOF'
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/vnc.html?autoconnect=1&resize=scale">
+  <meta http-equiv="refresh" content="0; url=/vnc.html?autoconnect=true&resize=scale">
   <title>启赋未来 Cinnamon 云桌面</title>
 </head>
 <body>正在进入云桌面……</body>
 </html>
 EOF
 
-cat >> "$HOME/.profile" <<'EOF'
+if ! grep -q 'QIFU_CLOUD_DESKTOP' "$HOME/.profile" 2>/dev/null; then
+  cat >> "$HOME/.profile" <<'EOF'
+# QIFU_CLOUD_DESKTOP
 export LANG=zh_CN.UTF-8
 export LANGUAGE=zh_CN:zh
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 EOF
+fi
 
 echo "Cinnamon 中文云桌面组件安装完成。"
