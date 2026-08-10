@@ -14,7 +14,7 @@
       "protocol": "http"
     }
   },
-  "postCreateCommand": "sudo bash .devcontainer/install-desktop.sh",
+  "postCreateCommand": "bash .devcontainer/install-desktop.sh",
   "postStartCommand": "bash .devcontainer/start-desktop.sh",
   "remoteUser": "vscode"
 }
