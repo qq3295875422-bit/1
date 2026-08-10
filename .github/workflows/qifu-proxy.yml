@@ -1,9 +1,9 @@
-name: qifu-japan-proxy
+name: qifu-russia-proxy
 
 on:
   push:
     branches:
-      - qifu-japan-proxy-20260810
+      - qifu-russia-proxy-20260810
 
 permissions:
   contents: write
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 350
     steps:
-      - name: Checkout isolated Japan proxy branch
+      - name: Checkout isolated Russia proxy branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
@@ -33,29 +33,29 @@ jobs:
           curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
           chmod +x /tmp/cloudflared
 
-      - name: Build isolated Japan network namespace
+      - name: Build isolated Russia network namespace
         shell: bash
         run: |
           set -euo pipefail
-          sudo ip netns add jpns
-          sudo ip link add veth-host type veth peer name veth-jp
-          sudo ip link set veth-jp netns jpns
-          sudo ip addr add 10.200.0.1/24 dev veth-host
+          sudo ip netns add runs
+          sudo ip link add veth-host type veth peer name veth-ru
+          sudo ip link set veth-ru netns runs
+          sudo ip addr add 10.210.0.1/24 dev veth-host
           sudo ip link set veth-host up
-          sudo ip netns exec jpns ip addr add 10.200.0.2/24 dev veth-jp
-          sudo ip netns exec jpns ip link set lo up
-          sudo ip netns exec jpns ip link set veth-jp up
-          sudo ip netns exec jpns ip route add default via 10.200.0.1
+          sudo ip netns exec runs ip addr add 10.210.0.2/24 dev veth-ru
+          sudo ip netns exec runs ip link set lo up
+          sudo ip netns exec runs ip link set veth-ru up
+          sudo ip netns exec runs ip route add default via 10.210.0.1
           HOST_IF="$(ip route show default | awk '/default/ {print $5; exit}')"
           sudo sysctl -w net.ipv4.ip_forward=1
-          sudo iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o "$HOST_IF" -j MASQUERADE
+          sudo iptables -t nat -A POSTROUTING -s 10.210.0.0/24 -o "$HOST_IF" -j MASQUERADE
           sudo iptables -A FORWARD -i veth-host -o "$HOST_IF" -j ACCEPT
           sudo iptables -A FORWARD -i "$HOST_IF" -o veth-host -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-          sudo mkdir -p /etc/netns/jpns
-          printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' | sudo tee /etc/netns/jpns/resolv.conf >/dev/null
-          sudo ip netns exec jpns curl -fsS --max-time 15 https://api.ipify.org >/tmp/pre-vpn-ip
+          sudo mkdir -p /etc/netns/runs
+          printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' | sudo tee /etc/netns/runs/resolv.conf >/dev/null
+          sudo ip netns exec runs curl -fsS --max-time 15 https://api.ipify.org >/tmp/pre-vpn-ip
 
-      - name: Connect only proxy namespace to Japan VPN Gate
+      - name: Connect only proxy namespace to Russia VPN Gate
         shell: bash
         run: |
           set -euo pipefail
@@ -69,118 +69,119 @@ jobs:
                       continue
                   try: row=next(csv.reader([line]))
                   except Exception: continue
-                  if len(row) < 15 or row[6] != 'JP' or not row[14]: continue
-                  preferred=row[0].startswith('public-vpn-') and row[1].startswith('219.100.37.')
-                  try: score=int(row[2]); speed=int(row[4])
-                  except Exception: score=speed=0
-                  rows.append((preferred,score,speed,row))
-          if not rows: raise SystemExit('No Japan OpenVPN server available')
+                  if len(row) < 15 or row[6] != 'RU' or not row[14]:
+                      continue
+                  try: score=int(row[2]); ping=int(row[3] or 999999); speed=int(row[4])
+                  except Exception: score=0; ping=999999; speed=0
+                  rows.append((score, speed, -ping, row))
+          if not rows:
+              raise SystemExit('No Russia OpenVPN server available on VPN Gate')
           rows.sort(key=lambda x:(x[0],x[1],x[2]), reverse=True)
           row=rows[0][3]
           cfg=base64.b64decode(row[14]).decode('utf-8',errors='replace')
           ip=row[1]
           cfg=re.sub(r'(?m)^remote\s+\S+\s+(\d+)(.*)$',lambda m:f'remote {ip} {m.group(1)}{m.group(2)}',cfg)
-          open('/tmp/jp.ovpn','w').write(cfg)
-          open('/tmp/jp-vpn-server','w').write(f'{row[0]}|{row[1]}')
-          print('Selected Japan VPN:',row[0],row[1])
+          open('/tmp/ru.ovpn','w').write(cfg)
+          open('/tmp/ru-vpn-server','w').write(f'{row[0]}|{row[1]}')
+          print('Selected Russia VPN:',row[0],row[1])
           PY
           printf 'vpn\nvpn\n' >/tmp/vpn.auth
           chmod 600 /tmp/vpn.auth
-          sudo ip netns exec jpns openvpn --config /tmp/jp.ovpn --auth-user-pass /tmp/vpn.auth --daemon --writepid /tmp/openvpn-jp.pid --log /tmp/openvpn-jp.log
+          sudo ip netns exec runs openvpn --config /tmp/ru.ovpn --auth-user-pass /tmp/vpn.auth --daemon --writepid /tmp/openvpn-ru.pid --log /tmp/openvpn-ru.log
           for i in $(seq 1 60); do
-            if sudo ip netns exec jpns ip link show tun0 >/dev/null 2>&1 && sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-jp.log; then break; fi
+            if sudo ip netns exec runs ip link show tun0 >/dev/null 2>&1 && sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-ru.log; then break; fi
             sleep 2
           done
-          sudo ip netns exec jpns ip link show tun0 >/dev/null
-          sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-jp.log || { sudo cat /tmp/openvpn-jp.log; exit 1; }
-          EGRESS_IP="$(sudo ip netns exec jpns curl -fsS --max-time 20 https://api.ipify.org)"
+          sudo ip netns exec runs ip link show tun0 >/dev/null
+          sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-ru.log || { sudo cat /tmp/openvpn-ru.log; exit 1; }
+          EGRESS_IP="$(sudo ip netns exec runs curl -fsS --max-time 20 https://api.ipify.org)"
           COUNTRY=''
           for U in https://ipapi.co/country/ https://ipinfo.io/country https://ifconfig.co/country-iso; do
-            COUNTRY="$(sudo ip netns exec jpns curl -fsS --max-time 15 "$U" 2>/dev/null | tr -d '\r\n ' | head -c2 || true)"
-            [ "$COUNTRY" = 'JP' ] && break
+            COUNTRY="$(sudo ip netns exec runs curl -fsS --max-time 15 "$U" 2>/dev/null | tr -d '\r\n ' | head -c2 || true)"
+            [ "$COUNTRY" = 'RU' ] && break
           done
           echo "VERIFIED_EGRESS_IP=$EGRESS_IP VERIFIED_COUNTRY=$COUNTRY"
-          test "$COUNTRY" = 'JP'
-          printf '%s' "$EGRESS_IP" >/tmp/jp-egress-ip
-          printf '%s' "$COUNTRY" >/tmp/jp-country
+          test "$COUNTRY" = 'RU'
+          printf '%s' "$EGRESS_IP" >/tmp/ru-egress-ip
+          printf '%s' "$COUNTRY" >/tmp/ru-country
 
-      - name: Start VLESS inside Japan namespace
+      - name: Start VLESS inside Russia namespace
         shell: bash
         run: |
           set -euo pipefail
           UUID="$(cat /proc/sys/kernel/random/uuid)"
-          WSPATH="qifu-jp-$(openssl rand -hex 10)"
+          WSPATH="qifu-ru-$(openssl rand -hex 10)"
           printf '%s' "$UUID" >/tmp/qifu-proxy-uuid
           printf '%s' "$WSPATH" >/tmp/qifu-proxy-path
           cat >/tmp/xray-config.json <<EOF
           {"log":{"loglevel":"warning"},"inbounds":[{"listen":"0.0.0.0","port":8080,"protocol":"vless","settings":{"clients":[{"id":"$UUID"}],"decryption":"none"},"streamSettings":{"network":"ws","wsSettings":{"path":"/$WSPATH"}}}],"outbounds":[{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"blocked"}]}
           EOF
-          sudo ip netns exec jpns sh -c 'nohup /tmp/xray/xray run -config /tmp/xray-config.json >/tmp/xray-jp.log 2>&1 & echo $! >/tmp/xray-jp.pid'
-          for i in $(seq 1 30); do sudo ip netns exec jpns ss -ltn | grep -q ':8080 ' && break; sleep 1; done
-          sudo ip netns exec jpns ss -ltn | grep -q ':8080 '
+          sudo ip netns exec runs sh -c 'nohup /tmp/xray/xray run -config /tmp/xray-config.json >/tmp/xray-ru.log 2>&1 & echo $! >/tmp/xray-ru.pid'
+          for i in $(seq 1 30); do sudo ip netns exec runs ss -ltn | grep -q ':8080 ' && break; sleep 1; done
+          sudo ip netns exec runs ss -ltn | grep -q ':8080 '
 
       - name: Open HTTPS ingress tunnels
         shell: bash
         run: |
           set -euo pipefail
-          nohup ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -T -p 443 -R0:10.200.0.2:8080 free.pinggy.io >/tmp/pinggy-jp.log 2>&1 &
-          echo $! >/tmp/pinggy-jp.pid
+          nohup ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -T -p 443 -R0:10.210.0.2:8080 free.pinggy.io >/tmp/pinggy-ru.log 2>&1 &
+          echo $! >/tmp/pinggy-ru.pid
           PINGGY_URL=''
-          for i in $(seq 1 90); do PINGGY_URL="$(grep -Eo 'https://[A-Za-z0-9.-]+\.(pinggy\.link|pinggy-free\.link)' /tmp/pinggy-jp.log | head -n1 || true)"; [ -n "$PINGGY_URL" ] && break; sleep 2; done
+          for i in $(seq 1 90); do PINGGY_URL="$(grep -Eo 'https://[A-Za-z0-9.-]+\.(pinggy\.link|pinggy-free\.link)' /tmp/pinggy-ru.log | head -n1 || true)"; [ -n "$PINGGY_URL" ] && break; sleep 2; done
           test -n "$PINGGY_URL"
-          echo "$PINGGY_URL" >/tmp/pinggy-jp-url
-          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://10.200.0.2:8080 >/tmp/cloudflared-jp.log 2>&1 &
-          echo $! >/tmp/cloudflared-jp.pid
+          echo "$PINGGY_URL" >/tmp/pinggy-ru-url
+          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://10.210.0.2:8080 >/tmp/cloudflared-ru.log 2>&1 &
+          echo $! >/tmp/cloudflared-ru.pid
           CF_URL=''
-          for i in $(seq 1 90); do CF_URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared-jp.log | head -n1 || true)"; [ -n "$CF_URL" ] && break; sleep 2; done
+          for i in $(seq 1 90); do CF_URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared-ru.log | head -n1 || true)"; [ -n "$CF_URL" ] && break; sleep 2; done
           test -n "$CF_URL"
-          echo "$CF_URL" >/tmp/cf-jp-url
+          echo "$CF_URL" >/tmp/cf-ru-url
           PINGGY_HOST="${PINGGY_URL#https://}"
           echo | openssl s_client -connect "${PINGGY_HOST}:443" -servername "$PINGGY_HOST" 2>/dev/null | grep -q 'Verify return code: 0'
 
-      - name: Publish encrypted Japan node state
+      - name: Publish encrypted Russia node state
         shell: bash
         run: |
           set -euo pipefail
-          PINGGY_HOST="$(sed 's#https://##' /tmp/pinggy-jp-url)"
-          CF_HOST="$(sed 's#https://##' /tmp/cf-jp-url)"
+          PINGGY_HOST="$(sed 's#https://##' /tmp/pinggy-ru-url)"
+          CF_HOST="$(sed 's#https://##' /tmp/cf-ru-url)"
           UUID="$(cat /tmp/qifu-proxy-uuid)"
           WSPATH="$(cat /tmp/qifu-proxy-path)"
-          EGRESS_IP="$(cat /tmp/jp-egress-ip)"
-          COUNTRY="$(cat /tmp/jp-country)"
-          VPN_SERVER="$(cat /tmp/jp-vpn-server)"
-          printf '%s|%s|%s|%s|%s|%s|%s|%s' "$PINGGY_HOST" "$CF_HOST" "$UUID" "$WSPATH" "$GITHUB_RUN_ID" "$EGRESS_IP" "$COUNTRY" "$VPN_SERVER" >/tmp/qifu-jp-state.txt
+          EGRESS_IP="$(cat /tmp/ru-egress-ip)"
+          COUNTRY="$(cat /tmp/ru-country)"
+          VPN_SERVER="$(cat /tmp/ru-vpn-server)"
+          printf '%s|%s|%s|%s|%s|%s|%s|%s' "$PINGGY_HOST" "$CF_HOST" "$UUID" "$WSPATH" "$GITHUB_RUN_ID" "$EGRESS_IP" "$COUNTRY" "$VPN_SERVER" >/tmp/qifu-ru-state.txt
           cat >/tmp/qifu-public.pem <<'EOF'
           -----BEGIN PUBLIC KEY-----
-          MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAuvxh99m44hw7p0jJia67
-          +ITGs8Jk6pN6Ycto7CrNup4kqKjT3DbJLTYXaeXtgBPxjvUQtioreTumhHYHWUZI
-          kfYrsVRBxI6oNwQR2KoxBZyq9OgeX3Hp8nYdH2utVsPMYUoLW7TIwKYsY85ZqUui
-          FYAPST+OwR74bqdTGDfOWK0JsJMKu239IRLxoQj0CSEPDhO/AbHi+NcSRT5Ifq83
-          43h/ICxcgVusZF055KpIxWH40hOOD9QISa2MCs7Z+NBs4kFNOh17HlIDGkHsWt0N
-          21ShoG5s5BeZmfz5oKpx5mSUyrM2nbVwjtTBX5JLutInS9tXfiyWvXVfiOuiWQpw
-          YaH8h7x2NvKT7Vb9pI/HFOIqxm1zVnINeUkP3aUAsIjXtn6j0v/LVWhrhERZJWK8
-          Xd8b/YiVXv29hE8/kqjZ2cYaLDWlubJla1n9wJlrfL36tYBzZXO4A2JLbu34+Nol
-          8IXrP8D3o+5OtRiKuUzJOPaJ/eheGD4pJpphh+8xBslbKXYB2gtF4GLjSCFPjnPi
-          EX4hQvI7zQZC/VWpEEw8PRcOql+AR+PMNpAnWfyFNxDYVhm78zSUU5aMrDkL/EiV
-          fiW4h3mvk7sEEGuEfnw3nzmQRl3Nk3pNRg70Fa7vGg0+79EV+BMRsblVlf1Avmuw
-          8VQcjJPQuAx9fSB/lgraGE0CAwEAAQ==
+          MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsKFOhk75I3jdTPHm9/qB
+          6y20WYcX86aUdW+6p34JPhgka3XxkisG3RNR78BoFRCy0uK31jfy12GeLJuqBDGt
+          DNdMCS09azsKKTyed850Kyo95DwXCItmt4gGIUsH6purd7hKDbWeYvRDYDQ0kFzO
+          x8wHr+cInUxxDadqoscGTUBqXJULW187sJRU91zP2XRd8zyatdxZSKAbdMD8t6OI
+          QgJWPJ0Uo6rd4tghD/J4q5pCR40tyks466p2WQ3YxThRNAXrYyXSRKGs33w4lZSb
+          ryG89JqvylajSkcGyAhXbBAFDG/prssN5z1AzBXoV3nXmJ/ldCZYm7U1X9iFRucS
+          vc4GvhYWWX6IO7IAuPUMUk+KfB8qyRYnA0OMwfxHICV/cm8VrlvY2P1JUbpJdRA3
+          d9GDol10GmAxqweko+rlvWR1BiNzXPjw8bKDgAo4CRtPIAYMwJKABee5gTK1BsSz
+          vqOteRBxQceD58x4wWPdlutPCfcDTQMgkM4iIla0klDj0wrtuEZSoCC2qTDh3Gd4
+          +gfRi5XWkMNO6pas3gdybMyLzKhbWd5ODZY855xy2QMXKCfDNk1AnuuHiCg0GbUx
+          0vxeq4FdaIkUhgwDef7DU/TUifuOwbbl5JcvUz3SIlU+/kO6uPstnohFRYNEYDd9
+          aYd3+Eo+8H6JrAUIlZ9iwUcCAwEAAQ==
           -----END PUBLIC KEY-----
           EOF
-          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in /tmp/qifu-jp-state.txt -out /tmp/qifu-jp-state.enc
-          base64 -w0 /tmp/qifu-jp-state.enc > japan-proxy-status.enc
-          git config user.name 'qifu-japan-proxy-bot'
-          git config user.email 'qifu-japan-proxy-bot@users.noreply.github.com'
-          git add japan-proxy-status.enc
-          git commit -m '[skip ci] publish verified Japan proxy state'
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in /tmp/qifu-ru-state.txt -out /tmp/qifu-ru-state.enc
+          base64 -w0 /tmp/qifu-ru-state.enc > russia-proxy-status.enc
+          git config user.name 'qifu-russia-proxy-bot'
+          git config user.email 'qifu-russia-proxy-bot@users.noreply.github.com'
+          git add russia-proxy-status.enc
+          git commit -m '[skip ci] publish verified Russia proxy state'
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
-      - name: Keep verified Japan proxy online
+      - name: Keep verified Russia proxy online
         shell: bash
         run: |
           set -euo pipefail
           for i in $(seq 1 66); do
-            sudo ip netns exec jpns ip link show tun0 >/dev/null
-            sudo ip netns exec jpns ss -ltn | grep -q ':8080 '
-            kill -0 "$(cat /tmp/cloudflared-jp.pid)"
+            sudo ip netns exec runs ip link show tun0 >/dev/null
+            sudo ip netns exec runs ss -ltn | grep -q ':8080 '
+            kill -0 "$(cat /tmp/cloudflared-ru.pid)"
             sleep 300
           done
