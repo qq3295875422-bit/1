@@ -9,28 +9,49 @@ on:
 permissions:
   contents: read
 
-env:
-  DISPLAY: ':99'
-
 jobs:
   desktop:
     runs-on: ubuntu-24.04
-    timeout-minutes: 350
+    timeout-minutes: 340
 
     steps:
-      - name: Install Cinnamon, Chinese environment and desktop tools
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install verified Cinnamon Chinese desktop stack
         shell: bash
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-            cinnamon-core cinnamon-l10n \
-            xvfb x11vnc novnc websockify dbus-x11 \
-            locales language-pack-zh-hans fonts-noto-cjk \
-            fcitx5 fcitx5-chinese-addons \
-            libreoffice gnome-terminal git curl wget unzip zip psmisc x11-utils imagemagick
-          sudo locale-gen zh_CN.UTF-8
-          sudo update-locale LANG=zh_CN.UTF-8
+          chmod +x .devcontainer/install-desktop.sh .devcontainer/start-desktop.sh
+          bash .devcontainer/install-desktop.sh
+
+      - name: Create private VNC password
+        shell: bash
+        run: |
+          set -euo pipefail
+          VNC_PASSWORD="$(python3 - <<'PY'
+          import secrets, string
+          alphabet = string.ascii_letters + string.digits
+          print(''.join(secrets.choice(alphabet) for _ in range(8)))
+          PY
+          )"
+          printf '%s' "$VNC_PASSWORD" > /tmp/vnc-password.txt
+          VNC_PASSWD_BIN="$(command -v tigervncpasswd || command -v vncpasswd)"
+          printf '%s\n' "$VNC_PASSWORD" | "$VNC_PASSWD_BIN" -f > "$HOME/.vnc/passwd"
+          chmod 600 "$HOME/.vnc/passwd"
+
+      - name: Start Cinnamon and noVNC
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash .devcontainer/start-desktop.sh
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:6902/vnc.html >/dev/null 2>&1 && break
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:6902/vnc.html >/dev/null
+          pgrep -fa 'cinnamon|muffin|Xvnc' > /tmp/desktop-processes.txt
+          cat /tmp/desktop-processes.txt
 
       - name: Install cloudflared
         shell: bash
@@ -43,72 +64,14 @@ jobs:
           sudo mv /tmp/cloudflared /usr/local/bin/cloudflared
           cloudflared --version
 
-      - name: Start Cinnamon desktop and noVNC
-        shell: bash
-        run: |
-          set -euo pipefail
-          export LANG=zh_CN.UTF-8
-          export LC_ALL=zh_CN.UTF-8
-          export LANGUAGE=zh_CN:zh
-          export XMODIFIERS='@im=fcitx'
-          export GTK_IM_MODULE=fcitx
-          export QT_IM_MODULE=fcitx
-          export LIBGL_ALWAYS_SOFTWARE=1
-          export CINNAMON_SOFTWARE_RENDERING=1
-
-          mkdir -p "$HOME/.vnc" "$HOME/.config/autostart"
-          VNC_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 12)"
-          printf '%s' "$VNC_PASSWORD" > /tmp/vnc-password.txt
-          x11vnc -storepasswd "$VNC_PASSWORD" "$HOME/.vnc/passwd" >/dev/null
-          chmod 600 "$HOME/.vnc/passwd"
-
-          nohup Xvfb :99 -screen 0 1920x1080x24 -ac +extension GLX +render -noreset \
-            >/tmp/xvfb.log 2>&1 &
-          sleep 2
-
-          dbus-run-session -- bash -lc '
-            export DISPLAY=:99
-            export LANG=zh_CN.UTF-8
-            export LC_ALL=zh_CN.UTF-8
-            export LANGUAGE=zh_CN:zh
-            export XMODIFIERS="@im=fcitx"
-            export GTK_IM_MODULE=fcitx
-            export QT_IM_MODULE=fcitx
-            export LIBGL_ALWAYS_SOFTWARE=1
-            export CINNAMON_SOFTWARE_RENDERING=1
-            fcitx5 -d --replace >/tmp/fcitx5.log 2>&1 || true
-            if command -v cinnamon-session-cinnamon2d >/dev/null 2>&1; then
-              exec cinnamon-session-cinnamon2d
-            else
-              exec cinnamon-session
-            fi
-          ' >/tmp/cinnamon-session.log 2>&1 &
-
-          sleep 10
-          if ! pgrep -fa 'cinnamon|muffin' >/tmp/cinnamon-processes.txt; then
-            echo 'Cinnamon session did not stay running.' >&2
-            cat /tmp/cinnamon-session.log >&2 || true
-            exit 1
-          fi
-
-          nohup x11vnc -display :99 -rfbport 5901 -forever -shared \
-            -rfbauth "$HOME/.vnc/passwd" -capslock \
-            >/tmp/x11vnc.log 2>&1 &
-
-          NOVNC_WEB='/usr/share/novnc'
-          test -f "$NOVNC_WEB/vnc.html"
-          nohup websockify --web="$NOVNC_WEB" 6080 localhost:5901 \
-            >/tmp/websockify.log 2>&1 &
-          sleep 3
-          curl -fsSI http://127.0.0.1:6080/vnc.html >/dev/null
-
-      - name: Start public Quick Tunnel
+      - name: Publish noVNC through Cloudflare Quick Tunnel
         shell: bash
         run: |
           set -euo pipefail
           nohup cloudflared tunnel --no-autoupdate --protocol http2 \
-            --url http://127.0.0.1:6080 \
+            --url http://127.0.0.1:6902 \
             >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
 
           TUNNEL_URL=''
           for i in $(seq 1 90); do
@@ -117,23 +80,28 @@ jobs:
             sleep 2
           done
           if [ -z "$TUNNEL_URL" ]; then
-            echo 'Quick Tunnel URL was not created.' >&2
             cat /tmp/cloudflared.log >&2 || true
             exit 1
           fi
 
           VNC_PASSWORD="$(cat /tmp/vnc-password.txt)"
           {
-            printf 'URL=%s/vnc.html?autoconnect=true&resize=scale\n' "$TUNNEL_URL"
+            printf 'URL=%s/vnc.html?autoconnect=true&resize=scale&quality=6&compression=5\n' "$TUNNEL_URL"
+            printf 'ROOT_URL=%s/\n' "$TUNNEL_URL"
             printf 'PASSWORD=%s\n' "$VNC_PASSWORD"
-            printf 'LOCALE=zh_CN.UTF-8\n'
             printf 'DESKTOP=Cinnamon\n'
-            printf 'EXPIRES_WHEN_ACTION_STOPS=true\n'
+            printf 'LOCALE=zh_CN.UTF-8\n'
+            printf 'INPUT_METHOD=Fcitx5-Pinyin\n'
           } > /tmp/connection.txt
 
-          curl -fsSI "$TUNNEL_URL/vnc.html" >/dev/null
+          for i in $(seq 1 30); do
+            curl -fsSI "$TUNNEL_URL/vnc.html" >/dev/null 2>&1 && exit 0
+            sleep 2
+          done
+          cat /tmp/cloudflared.log >&2 || true
+          exit 1
 
-      - name: Upload private-ish connection artifact
+      - name: Upload connection details
         uses: actions/upload-artifact@v4
         with:
           name: cinnamon-novnc-connection
@@ -144,10 +112,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo 'Desktop is online; connection details are stored in the workflow artifact.'
-          for i in $(seq 1 330); do
-            pgrep -f 'cloudflared tunnel' >/dev/null || exit 1
-            pgrep -f 'websockify.*6080' >/dev/null || exit 1
-            pgrep -f 'x11vnc.*5901' >/dev/null || exit 1
+          echo 'Cinnamon noVNC desktop is online.'
+          for i in $(seq 1 300); do
+            pgrep -F /tmp/cloudflared.pid >/dev/null || exit 1
+            pgrep -f 'websockify.*6902' >/dev/null || exit 1
+            pgrep -fa 'cinnamon|muffin|Xvnc' >/dev/null || exit 1
             sleep 60
           done
