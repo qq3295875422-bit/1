@@ -1,0 +1,43 @@
+name: Deploy Global Tailscale Exit Nodes
+
+on:
+  workflow_dispatch:
+    inputs:
+      instance_type:
+        description: EC2 instance type
+        required: false
+        default: t3.nano
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
+      TAILSCALE_AUTH_KEY: ${{ secrets.TAILSCALE_AUTH_KEY }}
+      TAILSCALE_API_KEY: ${{ secrets.TAILSCALE_API_KEY }}
+      INSTANCE_TYPE: ${{ inputs.instance_type }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v aws
+          command -v jq
+          aws sts get-caller-identity
+          test -n "$TAILSCALE_AUTH_KEY"
+          test -n "$TAILSCALE_API_KEY"
+
+      - name: Deploy and verify all six exit nodes
+        shell: bash
+        run: |
+          chmod +x global-exit-nodes/deploy.sh
+          global-exit-nodes/deploy.sh
