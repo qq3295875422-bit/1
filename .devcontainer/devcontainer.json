@@ -1,0 +1,20 @@
+{
+  "name": "Qifu Cinnamon Cloud Desktop",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "32gb"
+  },
+  "forwardPorts": [6902],
+  "portsAttributes": {
+    "6902": {
+      "label": "Cinnamon noVNC",
+      "onAutoForward": "openBrowser",
+      "protocol": "http"
+    }
+  },
+  "postCreateCommand": "sudo bash .devcontainer/install-desktop.sh",
+  "postStartCommand": "bash .devcontainer/start-desktop.sh",
+  "remoteUser": "vscode"
+}
