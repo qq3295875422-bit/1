@@ -6,7 +6,8 @@ on:
       - '.github/workflows/qifu-cinnamon-public-desktop.yml'
 
 permissions:
-  contents: read
+  contents: write
+  actions: write
 
 jobs:
   desktop:
@@ -15,6 +16,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Stop previous temporary desktop
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -fsSL -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/runs/31351653469/cancel" || true
 
       - name: Install Cinnamon desktop
         shell: bash
@@ -52,8 +64,10 @@ jobs:
           bash .devcontainer/start-desktop.sh | sed 's/VNC 密码: qifu2026/VNC 密码: [runtime-generated]/'
           curl -fsS http://127.0.0.1:6902/ >/dev/null
 
-      - name: Open HTTPS tunnel
+      - name: Open HTTPS tunnel and publish encrypted state
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
@@ -66,17 +80,32 @@ jobs:
             if [ -n "$URL" ]; then break; fi
             sleep 2
           done
-          if [ -z "$URL" ]; then
-            cat /tmp/cloudflared.log
-            exit 1
-          fi
+          test -n "$URL"
           for i in $(seq 1 30); do
             if curl -fsS "$URL/" >/dev/null 2>&1; then break; fi
             sleep 2
           done
-          echo "QIFU_PUBLIC_URL=${URL}/vnc.html?autoconnect=true&resize=scale"
-          echo "QIFU_ENCRYPTED_PASSWORD=$(cat /tmp/qifu-pass.enc.b64)"
-          echo "QIFU_TUNNEL_READY=1"
+          FULL_URL="${URL}/vnc.html?autoconnect=true&resize=scale"
+          CIPHER="$(cat /tmp/qifu-pass.enc.b64)"
+          jq -n \
+            --arg url "$FULL_URL" \
+            --arg cipher "$CIPHER" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            '{url:$url,password_ciphertext:$cipher,run_id:$run_id,ready:true}' \
+            >/tmp/qifu-state.json
+          CONTENT="$(base64 -w0 /tmp/qifu-state.json)"
+          jq -n \
+            --arg message 'Publish temporary Cinnamon desktop access state' \
+            --arg content "$CONTENT" \
+            '{message:$message,content:$content}' >/tmp/qifu-put.json
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d @/tmp/qifu-put.json \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-public-desktop-state.json" \
+            >/tmp/qifu-put-response.json
+          echo "Temporary desktop state published."
 
       - name: Keep desktop online
         shell: bash
