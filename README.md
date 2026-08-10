@@ -1,5 +1,7 @@
 # 启赋未来 Cinnamon 云桌面（GitHub Codespaces）
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/qq3295875422-bit/1?quickstart=1)
+
 这个仓库用于在 GitHub Codespaces 中自动部署一个可以通过浏览器访问的中文 Cinnamon 云桌面。
 
 ## 已配置
@@ -16,12 +18,11 @@
 
 ## 使用方法
 
-1. 在 GitHub 打开本仓库。
-2. 点击 **Code → Codespaces → Create codespace on main**。
-3. Codespace 创建后会自动安装桌面环境并启动 noVNC。
-4. 打开底部 **PORTS** 面板。
-5. 找到端口 **6902 / Cinnamon noVNC**，点击浏览器图标打开。
-6. VNC 密码：`qifu2026`
+1. 点击上方 **Open in GitHub Codespaces** 按钮，或在仓库里点击 **Code → Codespaces → Create codespace on main**。
+2. Codespace 创建后会自动安装桌面环境并启动 noVNC。
+3. 打开底部 **PORTS** 面板。
+4. 找到端口 **6902 / Cinnamon noVNC**，点击浏览器图标打开。
+5. VNC 密码：`qifu2026`
 
 端口默认是 Private：通过公网 HTTPS 地址访问，但需要先登录本人的 GitHub 账号。
 
