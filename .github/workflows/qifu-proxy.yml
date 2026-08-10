@@ -24,14 +24,12 @@ jobs:
           set -euo pipefail
           sudo apt-get update -y
           sudo apt-get install -y curl jq unzip openssl openssh-client openvpn iproute2 iptables python3
-
           XRAY_URL="$(curl -fsSL https://api.github.com/repos/XTLS/Xray-core/releases/latest | jq -r '.assets[] | select(.name=="Xray-linux-64.zip") | .browser_download_url' | head -n1)"
           test -n "$XRAY_URL"
           curl -fsSL "$XRAY_URL" -o /tmp/xray.zip
           mkdir -p /tmp/xray
           unzip -q /tmp/xray.zip -d /tmp/xray
           chmod +x /tmp/xray/xray
-
           curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
           chmod +x /tmp/cloudflared
 
@@ -48,14 +46,11 @@ jobs:
           sudo ip netns exec jpns ip link set lo up
           sudo ip netns exec jpns ip link set veth-jp up
           sudo ip netns exec jpns ip route add default via 10.200.0.1
-
           HOST_IF="$(ip route show default | awk '/default/ {print $5; exit}')"
-          echo "$HOST_IF" >/tmp/qifu-host-if
           sudo sysctl -w net.ipv4.ip_forward=1
           sudo iptables -t nat -A POSTROUTING -s 10.200.0.0/24 -o "$HOST_IF" -j MASQUERADE
           sudo iptables -A FORWARD -i veth-host -o "$HOST_IF" -j ACCEPT
           sudo iptables -A FORWARD -i "$HOST_IF" -o veth-host -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-
           sudo mkdir -p /etc/netns/jpns
           printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' | sudo tee /etc/netns/jpns/resolv.conf >/dev/null
           sudo ip netns exec jpns curl -fsS --max-time 15 https://api.ipify.org >/tmp/pre-vpn-ip
@@ -65,7 +60,6 @@ jobs:
         run: |
           set -euo pipefail
           curl -fsSL https://www.vpngate.net/api/iphone/ -o /tmp/vpngate.csv
-
           python3 - <<'PY'
           import base64, csv, re
           rows=[]
@@ -73,57 +67,39 @@ jobs:
               for line in f:
                   if line.startswith('*') or line.startswith('#') or not line.strip():
                       continue
-                  try:
-                      row=next(csv.reader([line]))
-                  except Exception:
-                      continue
-                  if len(row) < 15 or row[6] != 'JP' or not row[14]:
-                      continue
-                  # Prefer the long-running VPN Gate project Japan pool.
-                  preferred = row[0].startswith('public-vpn-') and row[1].startswith('219.100.37.')
-                  try:
-                      score=int(row[2]); speed=int(row[4])
-                  except Exception:
-                      score=speed=0
-                  rows.append((preferred, score, speed, row))
-          if not rows:
-              raise SystemExit('No Japan OpenVPN server available')
+                  try: row=next(csv.reader([line]))
+                  except Exception: continue
+                  if len(row) < 15 or row[6] != 'JP' or not row[14]: continue
+                  preferred=row[0].startswith('public-vpn-') and row[1].startswith('219.100.37.')
+                  try: score=int(row[2]); speed=int(row[4])
+                  except Exception: score=speed=0
+                  rows.append((preferred,score,speed,row))
+          if not rows: raise SystemExit('No Japan OpenVPN server available')
           rows.sort(key=lambda x:(x[0],x[1],x[2]), reverse=True)
           row=rows[0][3]
-          cfg=base64.b64decode(row[14]).decode('utf-8', errors='replace')
+          cfg=base64.b64decode(row[14]).decode('utf-8',errors='replace')
           ip=row[1]
-          # Use numeric IP to avoid DDNS issues while preserving the published port/proto.
-          cfg=re.sub(r'(?m)^remote\s+\S+\s+(\d+)(.*)$', lambda m: f'remote {ip} {m.group(1)}{m.group(2)}', cfg)
+          cfg=re.sub(r'(?m)^remote\s+\S+\s+(\d+)(.*)$',lambda m:f'remote {ip} {m.group(1)}{m.group(2)}',cfg)
           open('/tmp/jp.ovpn','w').write(cfg)
           open('/tmp/jp-vpn-server','w').write(f'{row[0]}|{row[1]}|{row[2]}|{row[4]}')
-          print('Selected Japan VPN:', row[0], row[1])
+          print('Selected Japan VPN:',row[0],row[1])
           PY
-
           printf 'vpn\nvpn\n' >/tmp/vpn.auth
           chmod 600 /tmp/vpn.auth
-          sudo ip netns exec jpns openvpn \
-            --config /tmp/jp.ovpn \
-            --auth-user-pass /tmp/vpn.auth \
-            --daemon \
-            --writepid /tmp/openvpn-jp.pid \
-            --log /tmp/openvpn-jp.log
-
+          sudo ip netns exec jpns openvpn --config /tmp/jp.ovpn --auth-user-pass /tmp/vpn.auth --daemon --writepid /tmp/openvpn-jp.pid --log /tmp/openvpn-jp.log
           for i in $(seq 1 60); do
-            if sudo ip netns exec jpns ip link show tun0 >/dev/null 2>&1 && grep -q 'Initialization Sequence Completed' /tmp/openvpn-jp.log; then
-              break
-            fi
+            if sudo ip netns exec jpns ip link show tun0 >/dev/null 2>&1 && sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-jp.log; then break; fi
             sleep 2
           done
           sudo ip netns exec jpns ip link show tun0 >/dev/null
-          grep -q 'Initialization Sequence Completed' /tmp/openvpn-jp.log
-
+          sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-jp.log || { sudo cat /tmp/openvpn-jp.log; exit 1; }
           EGRESS_IP="$(sudo ip netns exec jpns curl -fsS --max-time 20 https://api.ipify.org)"
           COUNTRY=''
           for U in https://ipapi.co/country/ https://ipinfo.io/country https://ifconfig.co/country-iso; do
             COUNTRY="$(sudo ip netns exec jpns curl -fsS --max-time 15 "$U" 2>/dev/null | tr -d '\r\n ' | head -c2 || true)"
             [ "$COUNTRY" = 'JP' ] && break
           done
-          echo "Japan namespace egress: $EGRESS_IP country=$COUNTRY"
+          echo "VERIFIED_EGRESS_IP=$EGRESS_IP VERIFIED_COUNTRY=$COUNTRY"
           test "$COUNTRY" = 'JP'
           printf '%s' "$EGRESS_IP" >/tmp/jp-egress-ip
           printf '%s' "$COUNTRY" >/tmp/jp-country
@@ -136,65 +112,29 @@ jobs:
           WSPATH="qifu-jp-$(openssl rand -hex 10)"
           printf '%s' "$UUID" >/tmp/qifu-proxy-uuid
           printf '%s' "$WSPATH" >/tmp/qifu-proxy-path
-
           cat >/tmp/xray-config.json <<EOF
-          {
-            "log": {"loglevel": "warning"},
-            "inbounds": [{
-              "listen": "0.0.0.0",
-              "port": 8080,
-              "protocol": "vless",
-              "settings": {"clients": [{"id": "$UUID"}], "decryption": "none"},
-              "streamSettings": {"network": "ws", "wsSettings": {"path": "/$WSPATH"}}
-            }],
-            "outbounds": [
-              {"protocol": "freedom", "tag": "direct"},
-              {"protocol": "blackhole", "tag": "blocked"}
-            ]
-          }
+          {"log":{"loglevel":"warning"},"inbounds":[{"listen":"0.0.0.0","port":8080,"protocol":"vless","settings":{"clients":[{"id":"$UUID"}],"decryption":"none"},"streamSettings":{"network":"ws","wsSettings":{"path":"/$WSPATH"}}}],"outbounds":[{"protocol":"freedom","tag":"direct"},{"protocol":"blackhole","tag":"blocked"}]}
           EOF
-
           sudo ip netns exec jpns sh -c 'nohup /tmp/xray/xray run -config /tmp/xray-config.json >/tmp/xray-jp.log 2>&1 & echo $! >/tmp/xray-jp.pid'
-          for i in $(seq 1 30); do
-            sudo ip netns exec jpns ss -ltn | grep -q ':8080 ' && break
-            sleep 1
-          done
+          for i in $(seq 1 30); do sudo ip netns exec jpns ss -ltn | grep -q ':8080 ' && break; sleep 1; done
           sudo ip netns exec jpns ss -ltn | grep -q ':8080 '
 
       - name: Open HTTPS ingress tunnels
         shell: bash
         run: |
           set -euo pipefail
-          nohup ssh \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            -o ServerAliveInterval=30 \
-            -o ServerAliveCountMax=3 \
-            -o ExitOnForwardFailure=yes \
-            -T -p 443 -R0:10.200.0.2:8080 free.pinggy.io \
-            >/tmp/pinggy-jp.log 2>&1 &
+          nohup ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -T -p 443 -R0:10.200.0.2:8080 free.pinggy.io >/tmp/pinggy-jp.log 2>&1 &
           echo $! >/tmp/pinggy-jp.pid
-
           PINGGY_URL=''
-          for i in $(seq 1 90); do
-            PINGGY_URL="$(grep -Eo 'https://[A-Za-z0-9.-]+\.(pinggy\.link|pinggy-free\.link)' /tmp/pinggy-jp.log | head -n1 || true)"
-            [ -n "$PINGGY_URL" ] && break
-            sleep 2
-          done
+          for i in $(seq 1 90); do PINGGY_URL="$(grep -Eo 'https://[A-Za-z0-9.-]+\.(pinggy\.link|pinggy-free\.link)' /tmp/pinggy-jp.log | head -n1 || true)"; [ -n "$PINGGY_URL" ] && break; sleep 2; done
           test -n "$PINGGY_URL"
           echo "$PINGGY_URL" >/tmp/pinggy-jp-url
-
           nohup /tmp/cloudflared tunnel --no-autoupdate --url http://10.200.0.2:8080 >/tmp/cloudflared-jp.log 2>&1 &
           echo $! >/tmp/cloudflared-jp.pid
           CF_URL=''
-          for i in $(seq 1 90); do
-            CF_URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared-jp.log | head -n1 || true)"
-            [ -n "$CF_URL" ] && break
-            sleep 2
-          done
+          for i in $(seq 1 90); do CF_URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared-jp.log | head -n1 || true)"; [ -n "$CF_URL" ] && break; sleep 2; done
           test -n "$CF_URL"
           echo "$CF_URL" >/tmp/cf-jp-url
-
           PINGGY_HOST="${PINGGY_URL#https://}"
           echo | openssl s_client -connect "${PINGGY_HOST}:443" -servername "$PINGGY_HOST" 2>/dev/null | grep -q 'Verify return code: 0'
 
@@ -210,7 +150,6 @@ jobs:
           COUNTRY="$(cat /tmp/jp-country)"
           VPN_SERVER="$(cat /tmp/jp-vpn-server)"
           printf '%s|%s|%s|%s|%s|%s|%s|%s' "$PINGGY_HOST" "$CF_HOST" "$UUID" "$WSPATH" "$GITHUB_RUN_ID" "$EGRESS_IP" "$COUNTRY" "$VPN_SERVER" >/tmp/qifu-jp-state.txt
-
           cat >/tmp/qifu-public.pem <<'EOF'
           -----BEGIN PUBLIC KEY-----
           MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwdABH4022h4HkzLO6FpR
@@ -222,11 +161,8 @@ jobs:
           gwIDAQAB
           -----END PUBLIC KEY-----
           EOF
-          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem \
-            -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 \
-            -in /tmp/qifu-jp-state.txt -out /tmp/qifu-jp-state.enc
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in /tmp/qifu-jp-state.txt -out /tmp/qifu-jp-state.enc
           base64 -w0 /tmp/qifu-jp-state.enc > japan-proxy-status.enc
-
           git config user.name 'qifu-japan-proxy-bot'
           git config user.email 'qifu-japan-proxy-bot@users.noreply.github.com'
           git add japan-proxy-status.enc
@@ -240,7 +176,6 @@ jobs:
           for i in $(seq 1 66); do
             sudo ip netns exec jpns ip link show tun0 >/dev/null
             sudo ip netns exec jpns ss -ltn | grep -q ':8080 '
-            kill -0 "$(cat /tmp/pinggy-jp.pid)" || true
             kill -0 "$(cat /tmp/cloudflared-jp.pid)"
             sleep 300
           done
