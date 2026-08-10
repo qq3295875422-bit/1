@@ -81,7 +81,7 @@ jobs:
           ip=row[1]
           cfg=re.sub(r'(?m)^remote\s+\S+\s+(\d+)(.*)$',lambda m:f'remote {ip} {m.group(1)}{m.group(2)}',cfg)
           open('/tmp/jp.ovpn','w').write(cfg)
-          open('/tmp/jp-vpn-server','w').write(f'{row[0]}|{row[1]}|{row[2]}|{row[4]}')
+          open('/tmp/jp-vpn-server','w').write(f'{row[0]}|{row[1]}')
           print('Selected Japan VPN:',row[0],row[1])
           PY
           printf 'vpn\nvpn\n' >/tmp/vpn.auth
@@ -152,13 +152,18 @@ jobs:
           printf '%s|%s|%s|%s|%s|%s|%s|%s' "$PINGGY_HOST" "$CF_HOST" "$UUID" "$WSPATH" "$GITHUB_RUN_ID" "$EGRESS_IP" "$COUNTRY" "$VPN_SERVER" >/tmp/qifu-jp-state.txt
           cat >/tmp/qifu-public.pem <<'EOF'
           -----BEGIN PUBLIC KEY-----
-          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwdABH4022h4HkzLO6FpR
-          4JGG1JB+4sFJ4/Cq8LYQ8GvMwrlFHzYmQeKVMI8tg+WRTqPF+SJNj51HudYEzQhQ
-          EJ2O1GpbIN7pXEGO21GLcbXmnl8bXsrGpYVQfqZeGY+BKsUgF2dnlJm7MWGLGTPM
-          hrinMTQmtyqxxc0q9vgTjBLCoCHvv/GjYSbS4v2K9iZhBHXVVRgdPSRYxSPxW0uN
-          NADYQwQVmtKMM9NWUFBHaYGGekURm3ktBaVDrfHZCr+5jJbgbEOJpZItM95CvmPd
-          UedsHznmoxyGi1ZyNIGsnnXRY5SGD3vCCatXU1UuQHoGV42tx09uBlQj2fJuGLWP
-          gwIDAQAB
+          MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAuvxh99m44hw7p0jJia67
+          +ITGs8Jk6pN6Ycto7CrNup4kqKjT3DbJLTYXaeXtgBPxjvUQtioreTumhHYHWUZI
+          kfYrsVRBxI6oNwQR2KoxBZyq9OgeX3Hp8nYdH2utVsPMYUoLW7TIwKYsY85ZqUui
+          FYAPST+OwR74bqdTGDfOWK0JsJMKu239IRLxoQj0CSEPDhO/AbHi+NcSRT5Ifq83
+          43h/ICxcgVusZF055KpIxWH40hOOD9QISa2MCs7Z+NBs4kFNOh17HlIDGkHsWt0N
+          21ShoG5s5BeZmfz5oKpx5mSUyrM2nbVwjtTBX5JLutInS9tXfiyWvXVfiOuiWQpw
+          YaH8h7x2NvKT7Vb9pI/HFOIqxm1zVnINeUkP3aUAsIjXtn6j0v/LVWhrhERZJWK8
+          Xd8b/YiVXv29hE8/kqjZ2cYaLDWlubJla1n9wJlrfL36tYBzZXO4A2JLbu34+Nol
+          8IXrP8D3o+5OtRiKuUzJOPaJ/eheGD4pJpphh+8xBslbKXYB2gtF4GLjSCFPjnPi
+          EX4hQvI7zQZC/VWpEEw8PRcOql+AR+PMNpAnWfyFNxDYVhm78zSUU5aMrDkL/EiV
+          fiW4h3mvk7sEEGuEfnw3nzmQRl3Nk3pNRg70Fa7vGg0+79EV+BMRsblVlf1Avmuw
+          8VQcjJPQuAx9fSB/lgraGE0CAwEAAQ==
           -----END PUBLIC KEY-----
           EOF
           openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in /tmp/qifu-jp-state.txt -out /tmp/qifu-jp-state.enc
