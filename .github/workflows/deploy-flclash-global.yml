@@ -1,0 +1,110 @@
+name: Deploy FlClash Six Region Nodes
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'flclash-global/.deploy-trigger'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_PAGER: ''
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check AWS credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${AWS_ACCESS_KEY_ID:-}" ] || [ -z "${AWS_SECRET_ACCESS_KEY:-}" ]; then
+            echo 'AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY are not configured in repository Actions secrets.' >&2
+            exit 1
+          fi
+          aws sts get-caller-identity
+
+      - name: Install verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://sing-box.app/install.sh | sudo sh
+          sing-box version
+          chmod +x flclash-global/deploy.sh flclash-global/verify-and-generate.sh flclash-global/destroy.sh
+
+      - name: Deploy six real servers
+        shell: bash
+        run: |
+          set -euo pipefail
+          flclash-global/deploy.sh
+
+      - name: Verify every exit and generate FlClash config
+        shell: bash
+        run: |
+          set -euo pipefail
+          flclash-global/verify-and-generate.sh
+          test -s qifu-global.yaml
+
+      - name: Encrypt config for ChatGPT handoff
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cat >/tmp/qifu-handoff-public.pem <<'EOF'
+          -----BEGIN PUBLIC KEY-----
+          MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAtVOvbwObZecaJZvFY3J6
+          c/I2RbsMOxKOpJ6UQE0UKuG/CTn2oLzSXwsGYNVD746YM9xt0mpxeIN+Ad28P9+g
+          p1ZhfsLvHQa9ahT0tThDNFC9vXPszMEvg9UsxzELkTwfShlsLtlShzH7MzsHerM+
+          PtocJTlOLbmhXGu42YrYoDJpnTYcjKClPcHPzu6nMdB59LHF5g7wCHpMHFbGCZyg
+          KO4P5YbjtHpOeON3ZFimU32G9wppGhlZFmttRWwFBMqBiaiePDZR7p2FNxcFtrcG
+          z2XbyDhBAe9py/FUvEJtFAWP8l78pcOXHzSRil9aoqt1iEaaLIZXVgFCrP6leAAN
+          LOjZKF/rQzoMp1tX/TOqdVWT9N/jZ3zhRFiICx/sraS8YRJyfub6iAkBUgD4Kbl1
+          8+iWaT1qhFiFCxVmQJr+ECF7/XB3XYlSLlPJjPnRHRjYv55sQlY+wMuaId9eKTq0
+          EskCs2s3MsXIX9dHUA4nWGrFvAz20jMR3HHO0sbfqJSPAgMBAAE=
+          -----END PUBLIC KEY-----
+          EOF
+
+          openssl rand 32 >/tmp/qifu-aes.key
+          openssl rand 16 >/tmp/qifu-aes.iv
+          KEY_HEX="$(xxd -p -c 256 /tmp/qifu-aes.key)"
+          IV_HEX="$(xxd -p -c 256 /tmp/qifu-aes.iv)"
+          openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -in qifu-global.yaml -out /tmp/qifu-global.enc
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-handoff-public.pem \
+            -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 \
+            -in /tmp/qifu-aes.key -out /tmp/qifu-key.enc
+
+          jq -n \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --arg iv "$IV_HEX" \
+            --arg key "$(base64 -w0 /tmp/qifu-key.enc)" \
+            --arg data "$(base64 -w0 /tmp/qifu-global.enc)" \
+            --arg sha256 "$(sha256sum qifu-global.yaml | awk '{print $1}')" \
+            '{ready:true,run_id:$run_id,cipher:"AES-256-CBC",rsa:"RSA-OAEP-SHA256",iv_hex:$iv,encrypted_key_b64:$key,ciphertext_b64:$data,plaintext_sha256:$sha256}' \
+            >/tmp/qifu-encrypted-state.json
+
+          CONTENT="$(base64 -w0 /tmp/qifu-encrypted-state.json)"
+          EXISTING_SHA="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-flclash-encrypted.json" 2>/dev/null | jq -r '.sha // empty' || true)"
+          if [ -n "$EXISTING_SHA" ]; then
+            jq -n --arg message 'Update encrypted FlClash handoff' --arg content "$CONTENT" --arg sha "$EXISTING_SHA" '{message:$message,content:$content,sha:$sha}' >/tmp/put.json
+          else
+            jq -n --arg message 'Publish encrypted FlClash handoff' --arg content "$CONTENT" '{message:$message,content:$content}' >/tmp/put.json
+          fi
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -d @/tmp/put.json \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-flclash-encrypted.json" >/dev/null
+
+          shred -u qifu-global.yaml /tmp/qifu-aes.key /tmp/qifu-aes.iv /tmp/qifu-global.enc /tmp/qifu-key.enc 2>/dev/null || true
+          rm -rf flclash-global/.state
+          echo 'All six nodes verified; encrypted handoff published.'
