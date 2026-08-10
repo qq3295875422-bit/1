@@ -1,0 +1,146 @@
+name: qifu-warp-flclash
+
+on:
+  push:
+    paths:
+      - '.github/workflows/qifu-warp-flclash.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Generate WARP WireGuard profile
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp
+          curl -fsSL https://github.com/ViRb3/wgcf/releases/download/v2.2.32/wgcf_2.2.32_linux_amd64 -o wgcf
+          chmod +x wgcf
+          ./wgcf register --accept-tos >/dev/null
+          ./wgcf generate >/dev/null
+
+          PRIVATE_KEY="$(awk -F' = ' '/^PrivateKey/{print $2}' wgcf-profile.conf)"
+          ADDRESS_LINE="$(awk -F' = ' '/^Address/{print $2}' wgcf-profile.conf)"
+          IPV4="$(printf '%s' "$ADDRESS_LINE" | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -m1 '\.' | cut -d/ -f1)"
+          IPV6="$(printf '%s' "$ADDRESS_LINE" | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -m1 ':' | cut -d/ -f1 || true)"
+          PUBLIC_KEY="$(awk -F' = ' '/^PublicKey/{print $2}' wgcf-profile.conf)"
+          ENDPOINT="$(awk -F' = ' '/^Endpoint/{print $2}' wgcf-profile.conf)"
+          SERVER="${ENDPOINT%:*}"
+          PORT="${ENDPOINT##*:}"
+          MTU="$(awk -F' = ' '/^MTU/{print $2}' wgcf-profile.conf)"
+
+          cat > qifu-warp.yaml <<EOF
+          mixed-port: 7890
+          allow-lan: false
+          mode: rule
+          log-level: warning
+          ipv6: true
+          proxies:
+            - name: "☁️ Cloudflare WARP"
+              type: wireguard
+              server: "$SERVER"
+              port: $PORT
+              ip: "$IPV4"
+              ipv6: "$IPV6"
+              private-key: "$PRIVATE_KEY"
+              public-key: "$PUBLIC_KEY"
+              allowed-ips:
+                - 0.0.0.0/0
+                - ::/0
+              udp: true
+              mtu: ${MTU:-1280}
+              remote-dns-resolve: true
+              dns:
+                - 1.1.1.1
+                - 1.0.0.1
+          proxy-groups:
+            - name: "🚀 节点选择"
+              type: select
+              proxies:
+                - "☁️ Cloudflare WARP"
+                - DIRECT
+          rules:
+            - MATCH,🚀 节点选择
+          EOF
+          chmod 600 qifu-warp.yaml
+
+      - name: Validate with Mihomo and verify WARP egress
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp
+          API='https://api.github.com/repos/MetaCubeX/mihomo/releases/tags/v1.19.28'
+          URL="$(curl -fsSL "$API" | jq -r '.assets[] | select(.name == "mihomo-linux-amd64-compatible-v1.19.28.gz") | .browser_download_url')"
+          test -n "$URL" && test "$URL" != null
+          curl -fsSL "$URL" -o mihomo.gz
+          gzip -dc mihomo.gz > mihomo
+          chmod +x mihomo
+          ./mihomo -t -f qifu-warp.yaml >/dev/null
+          mkdir -p /tmp/mihomo-home
+          ./mihomo -f qifu-warp.yaml -d /tmp/mihomo-home >/tmp/mihomo.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" >/dev/null 2>&1 || true' EXIT
+          TRACE=''
+          for i in $(seq 1 20); do
+            TRACE="$(curl -fsS --max-time 15 --proxy http://127.0.0.1:7890 https://www.cloudflare.com/cdn-cgi/trace 2>/dev/null || true)"
+            if printf '%s\n' "$TRACE" | grep -q '^warp=on$'; then break; fi
+            sleep 2
+          done
+          printf '%s\n' "$TRACE" | grep -q '^warp=on$'
+          printf '%s\n' "$TRACE" | grep -E '^(ip|loc|colo|warp)=' > /tmp/qifu-trace.txt
+          echo 'QIFU_WARP_VERIFIED=1'
+
+      - name: Encrypt config and publish temporary state
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd /tmp
+          cat > qifu-public.pem <<'EOF'
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7jRCGnDcyEZo6GAjt1bp
+          LvjrC0xzNZiG0zRZ715a5mbYypYsmTyP+3sv3cLOBV08mVSkUN3aUlXifwrye1RB
+          bw5Ei9QhOqhbWQTFHoHG8MFyjIgs30nfNyDM5lMjbpwWdH3wZPImClI8CB4IRURs
+          /hdTuu0vh9iodu8RBdqFCEBFlYNNBcYel0hsBIFG2CbZHEOVuh/fMXbW9y1rVbCm
+          xk2rOa5lp0ZvHUV14DA88rHDsl8w7tOiSm44j4xMiuMLza7VR0JU1E8ysIGPqCpn
+          7eAVzmG983r6XxH25YlesA5I7syqyPTVLkWJEc99s1YVQtUHRJVrW5r8NJWQjpkI
+          cQIDAQAB
+          -----END PUBLIC KEY-----
+          EOF
+
+          KEYHEX="$(openssl rand -hex 32)"
+          IVHEX="$(openssl rand -hex 16)"
+          openssl enc -aes-256-cbc -K "$KEYHEX" -iv "$IVHEX" -in qifu-warp.yaml -out qifu-warp.enc
+          jq -n --arg key "$KEYHEX" --arg iv "$IVHEX" '{key:$key,iv:$iv}' > key.json
+          openssl pkeyutl -encrypt -pubin -inkey qifu-public.pem -in key.json -out key.enc
+
+          SHA="$(sha256sum qifu-warp.yaml | awk '{print $1}')"
+          TRACE="$(cat /tmp/qifu-trace.txt)"
+          jq -n \
+            --arg config_ciphertext "$(base64 -w0 qifu-warp.enc)" \
+            --arg key_ciphertext "$(base64 -w0 key.enc)" \
+            --arg sha256 "$SHA" \
+            --arg trace "$TRACE" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            '{ready:true,verified:true,run_id:$run_id,sha256:$sha256,trace:$trace,config_ciphertext:$config_ciphertext,key_ciphertext:$key_ciphertext}' \
+            > state.json
+
+          CONTENT="$(base64 -w0 state.json)"
+          EXISTING_SHA="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-warp-state.json" 2>/dev/null | jq -r '.sha // empty' || true)"
+          if [ -n "$EXISTING_SHA" ]; then
+            jq -n --arg message 'Update encrypted WARP state' --arg content "$CONTENT" --arg sha "$EXISTING_SHA" '{message:$message,content:$content,sha:$sha}' > put.json
+          else
+            jq -n --arg message 'Publish encrypted WARP state' --arg content "$CONTENT" '{message:$message,content:$content}' > put.json
+          fi
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -d @put.json \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-warp-state.json" >/dev/null
+          echo 'QIFU_STATE_PUBLISHED=1'
