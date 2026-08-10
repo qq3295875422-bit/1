@@ -1,0 +1,89 @@
+name: qifu-cinnamon-public-desktop
+
+on:
+  push:
+    paths:
+      - '.github/workflows/qifu-cinnamon-public-desktop.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Cinnamon desktop
+        shell: bash
+        run: |
+          set -euxo pipefail
+          bash .devcontainer/install-desktop.sh
+
+      - name: Generate private VNC credential
+        shell: bash
+        run: |
+          set -euo pipefail
+          PASS="$(openssl rand -hex 4)"
+          VNC_PASSWD_BIN="$(command -v tigervncpasswd || command -v vncpasswd)"
+          printf '%s\n' "$PASS" | "$VNC_PASSWD_BIN" -f > "$HOME/.vnc/passwd"
+          chmod 600 "$HOME/.vnc/passwd"
+          printf '%s' "$PASS" > /tmp/qifu-vnc-password
+          cat >/tmp/qifu-public.pem <<'EOF'
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsU6uLV6AuwDHnfxjGewN
+          54kKPX61uK23AGYefZJ/XGXWIX63/JxH+uir30nStuS5pkIhhM1plsoeEVLILzPf
+          01EcoGaG1pIibvHqUwk9n+nnApzeBy+EwkLZnz+tf18gfoHEjd+GPu9Uo1zlJrn5
+          LRrzHGVIgzRcPSglyxJPhy7Vli/1sHu9KfxPRSHmqEzeumUELtmNNAEIK4bjHB51
+          IV96VxUZgE0/7iKQ4ETT9u8RPzF3Ws9bUrVQO7o/u9S1G/Q6S7FDN9fhPvZaQ5lI
+          ff890iTAYI0vxzwhF6GaE/12mroPHg45Rkpbc2w0fqU3tJxUGeznT50C13xk/iHt
+          xQIDAQAB
+          -----END PUBLIC KEY-----
+          EOF
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -in /tmp/qifu-vnc-password -out /tmp/qifu-pass.enc
+          base64 -w0 /tmp/qifu-pass.enc > /tmp/qifu-pass.enc.b64
+
+      - name: Start Cinnamon and noVNC
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash .devcontainer/start-desktop.sh | sed 's/VNC 密码: qifu2026/VNC 密码: [runtime-generated]/'
+          curl -fsS http://127.0.0.1:6902/ >/dev/null
+
+      - name: Open HTTPS tunnel
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
+          chmod +x /tmp/cloudflared
+          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:6902 >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
+          URL=''
+          for i in $(seq 1 90); do
+            URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n1 || true)"
+            if [ -n "$URL" ]; then break; fi
+            sleep 2
+          done
+          if [ -z "$URL" ]; then
+            cat /tmp/cloudflared.log
+            exit 1
+          fi
+          for i in $(seq 1 30); do
+            if curl -fsS "$URL/" >/dev/null 2>&1; then break; fi
+            sleep 2
+          done
+          echo "QIFU_PUBLIC_URL=${URL}/vnc.html?autoconnect=true&resize=scale"
+          echo "QIFU_ENCRYPTED_PASSWORD=$(cat /tmp/qifu-pass.enc.b64)"
+          echo "QIFU_TUNNEL_READY=1"
+
+      - name: Keep desktop online
+        shell: bash
+        run: |
+          set -euo pipefail
+          while true; do
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            curl -fsS http://127.0.0.1:6902/ >/dev/null
+            sleep 60
+          done
