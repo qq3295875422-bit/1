@@ -1,0 +1,134 @@
+name: qifu-proxy-node
+
+on:
+  push:
+    branches:
+      - qifu-proxy-20260810-1841
+
+permissions:
+  contents: write
+
+jobs:
+  proxy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - name: Checkout isolated proxy branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Xray and Cloudflared
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y
+          sudo apt-get install -y curl jq unzip openssl
+
+          XRAY_URL="$(curl -fsSL https://api.github.com/repos/XTLS/Xray-core/releases/latest | jq -r '.assets[] | select(.name=="Xray-linux-64.zip") | .browser_download_url' | head -n1)"
+          test -n "$XRAY_URL"
+          curl -fsSL "$XRAY_URL" -o /tmp/xray.zip
+          mkdir -p /tmp/xray
+          unzip -q /tmp/xray.zip -d /tmp/xray
+          chmod +x /tmp/xray/xray
+
+          curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
+          chmod +x /tmp/cloudflared
+
+      - name: Start private VLESS WebSocket node
+        shell: bash
+        run: |
+          set -euo pipefail
+          UUID="$(cat /proc/sys/kernel/random/uuid)"
+          WSPATH="qifu-$(openssl rand -hex 10)"
+          printf '%s' "$UUID" > /tmp/qifu-proxy-uuid
+          printf '%s' "$WSPATH" > /tmp/qifu-proxy-path
+
+          cat >/tmp/xray-config.json <<EOF
+          {
+            "log": {"loglevel": "warning"},
+            "inbounds": [
+              {
+                "listen": "127.0.0.1",
+                "port": 8080,
+                "protocol": "vless",
+                "settings": {
+                  "clients": [{"id": "$UUID"}],
+                  "decryption": "none"
+                },
+                "streamSettings": {
+                  "network": "ws",
+                  "wsSettings": {"path": "/$WSPATH"}
+                }
+              }
+            ],
+            "outbounds": [
+              {"protocol": "freedom", "tag": "direct"},
+              {"protocol": "blackhole", "tag": "blocked"}
+            ]
+          }
+          EOF
+
+          nohup /tmp/xray/xray run -config /tmp/xray-config.json >/tmp/xray.log 2>&1 &
+          echo $! >/tmp/xray.pid
+          for i in $(seq 1 30); do
+            ss -ltn | grep -q ':8080 ' && break
+            sleep 1
+          done
+          ss -ltn | grep -q ':8080 '
+
+      - name: Open HTTPS tunnel and publish encrypted access state
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          nohup /tmp/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8080 >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
+
+          URL=''
+          for i in $(seq 1 90); do
+            URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n1 || true)"
+            [ -n "$URL" ] && break
+            sleep 2
+          done
+          test -n "$URL"
+
+          HOST="${URL#https://}"
+          UUID="$(cat /tmp/qifu-proxy-uuid)"
+          WSPATH="$(cat /tmp/qifu-proxy-path)"
+          printf '%s|%s|%s|%s' "$HOST" "$UUID" "$WSPATH" "$GITHUB_RUN_ID" >/tmp/qifu-proxy-state.txt
+
+          cat >/tmp/qifu-public.pem <<'EOF'
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj7W/XL2AH3kkZ7N82AAe
+          KnB2Xyz+m9OLpJ7TOZ1qzZtq8o1FNwhwPhmbVEYpAMSwIqBXu16VwiPFY+KlP8aS
+          1XrDVPZavtgYJGGqWZ17fzDc9HIUhaXVox9rEGFWVslCERLpuzIVyJlGEPXgNibD
+          iPo1Ct1E9vvRzYwU14luGeQdB3aKi/buyPq8wdyyrLCjo7ixBpoA+nhAtNULcLWq
+          rry6yRDsjsOGDjh5CWiPhlXcWxudLnC+3GIgw7uISdabdR5Z5pYGBOGviaEJs5+x
+          GgHwOQBAUm8VRq4zyQvdqzFldJ/bL4Qah9FOw0cEDN6190oq5kyr5uyhMg90oKOQ
+          WQIDAQAB
+          -----END PUBLIC KEY-----
+          EOF
+
+          openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem \
+            -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 \
+            -in /tmp/qifu-proxy-state.txt -out /tmp/qifu-proxy-state.enc
+          base64 -w0 /tmp/qifu-proxy-state.enc > proxy-status.enc
+
+          git config user.name 'qifu-proxy-bot'
+          git config user.email 'qifu-proxy-bot@users.noreply.github.com'
+          git add proxy-status.enc
+          git commit -m '[skip ci] publish encrypted proxy access state'
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Keep proxy online
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 66); do
+            kill -0 "$(cat /tmp/xray.pid)"
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            ss -ltn | grep -q ':8080 '
+            sleep 300
+          done
