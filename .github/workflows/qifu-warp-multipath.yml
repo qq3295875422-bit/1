@@ -1,0 +1,257 @@
+name: qifu-warp-multipath
+
+on:
+  push:
+    paths:
+      - '.github/workflows/qifu-warp-multipath.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Build and verify six independent WARP lines
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cd /tmp
+
+          curl -fsSL https://github.com/ViRb3/wgcf/releases/download/v2.2.32/wgcf_2.2.32_linux_amd64 -o wgcf
+          chmod +x wgcf
+
+          API='https://api.github.com/repos/MetaCubeX/mihomo/releases/tags/v1.19.28'
+          URL="$(curl -fsSL "$API" | jq -r '.assets[] | select(.name == "mihomo-linux-amd64-compatible-v1.19.28.gz") | .browser_download_url')"
+          test -n "$URL" && test "$URL" != null
+          curl -fsSL "$URL" -o mihomo.gz
+          gzip -dc mihomo.gz > mihomo
+          chmod +x mihomo
+
+          printf '[]' > lines.json
+          desired_ports=(2408 500 1701 4500 2408 500)
+
+          for n in 1 2 3 4 5 6; do
+            d="/tmp/warp-$n"
+            mkdir -p "$d"
+            cd "$d"
+
+            okreg=0
+            for reg_try in 1 2 3 4 5; do
+              rm -f wgcf-account.toml wgcf-profile.conf
+              if /tmp/wgcf register --accept-tos >/dev/null 2>&1 && /tmp/wgcf generate >/dev/null 2>&1; then
+                okreg=1
+                break
+              fi
+              sleep $((reg_try * 3))
+            done
+            [ "$okreg" = 1 ] || { echo "registration failed for line $n" >&2; exit 1; }
+
+            PRIVATE_KEY="$(awk -F' = ' '/^PrivateKey/{print $2}' wgcf-profile.conf)"
+            ADDRESS_LINE="$(awk -F' = ' '/^Address/{print $2}' wgcf-profile.conf)"
+            IPV4="$(printf '%s' "$ADDRESS_LINE" | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -m1 '\.' | cut -d/ -f1)"
+            IPV6="$(printf '%s' "$ADDRESS_LINE" | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -m1 ':' | cut -d/ -f1 || true)"
+            PUBLIC_KEY="$(awk -F' = ' '/^PublicKey/{print $2}' wgcf-profile.conf)"
+            ENDPOINT="$(awk -F' = ' '/^Endpoint/{print $2}' wgcf-profile.conf)"
+            SERVER="${ENDPOINT%:*}"
+            MTU="$(awk -F' = ' '/^MTU/{print $2}' wgcf-profile.conf)"
+
+            preferred="${desired_ports[$((n-1))]}"
+            selected=''
+            trace=''
+            for p in "$preferred" 2408; do
+              [ -n "$selected" ] && break
+              TEST_PORT=$((7890+n))
+              cat > candidate.yaml <<EOF
+          mixed-port: $TEST_PORT
+          allow-lan: false
+          mode: rule
+          log-level: warning
+          ipv6: true
+          proxies:
+            - name: "WARP-$n"
+              type: wireguard
+              server: "$SERVER"
+              port: $p
+              ip: "$IPV4"
+              ipv6: "$IPV6"
+              private-key: "$PRIVATE_KEY"
+              public-key: "$PUBLIC_KEY"
+              allowed-ips:
+                - 0.0.0.0/0
+                - ::/0
+              udp: true
+              mtu: ${MTU:-1280}
+              remote-dns-resolve: true
+              dns:
+                - 1.1.1.1
+                - 1.0.0.1
+          proxy-groups:
+            - name: "PROXY"
+              type: select
+              proxies:
+                - "WARP-$n"
+          rules:
+            - MATCH,PROXY
+          EOF
+              /tmp/mihomo -t -f candidate.yaml >/dev/null
+              rm -rf "home-$p" && mkdir -p "home-$p"
+              /tmp/mihomo -f candidate.yaml -d "home-$p" >"mihomo-$p.log" 2>&1 &
+              pid=$!
+              sleep 1
+              for attempt in 1 2 3 4 5; do
+                trace="$(curl -fsS --max-time 12 --proxy "http://127.0.0.1:$TEST_PORT" https://www.cloudflare.com/cdn-cgi/trace 2>/dev/null || true)"
+                if printf '%s\n' "$trace" | grep -q '^warp=on$'; then
+                  selected="$p"
+                  break
+                fi
+                sleep 2
+              done
+              kill "$pid" >/dev/null 2>&1 || true
+              wait "$pid" >/dev/null 2>&1 || true
+            done
+
+            [ -n "$selected" ] || { echo "WARP verification failed for line $n" >&2; exit 1; }
+            loc="$(printf '%s\n' "$trace" | awk -F= '$1=="loc"{print $2}')"
+            colo="$(printf '%s\n' "$trace" | awk -F= '$1=="colo"{print $2}')"
+            egress="$(printf '%s\n' "$trace" | awk -F= '$1=="ip"{print $2}')"
+
+            item="$(jq -n \
+              --arg name "☁️ WARP $n" \
+              --arg server "$SERVER" \
+              --arg ipv4 "$IPV4" \
+              --arg ipv6 "$IPV6" \
+              --arg private "$PRIVATE_KEY" \
+              --arg public "$PUBLIC_KEY" \
+              --arg loc "$loc" \
+              --arg colo "$colo" \
+              --arg egress "$egress" \
+              --argjson port "$selected" \
+              --argjson mtu "${MTU:-1280}" \
+              '{name:$name,server:$server,port:$port,ipv4:$ipv4,ipv6:$ipv6,private:$private,public:$public,mtu:$mtu,verified:{loc:$loc,colo:$colo,egress:$egress,warp:"on"}}')"
+            jq --argjson item "$item" '. + [$item]' /tmp/lines.json > /tmp/lines.next.json
+            mv /tmp/lines.next.json /tmp/lines.json
+            echo "PASS line=$n transport=$SERVER:$selected loc=${loc:-unknown} colo=${colo:-unknown}"
+            sleep 2
+          done
+
+          cd /tmp
+          cat > qifu-warp-6line.yaml <<'EOF'
+          mixed-port: 7890
+          allow-lan: false
+          mode: rule
+          log-level: warning
+          ipv6: true
+          profile:
+            store-selected: true
+          proxies:
+          EOF
+
+          for idx in 0 1 2 3 4 5; do
+            name="$(jq -r ".[$idx].name" lines.json)"
+            server="$(jq -r ".[$idx].server" lines.json)"
+            port="$(jq -r ".[$idx].port" lines.json)"
+            ipv4="$(jq -r ".[$idx].ipv4" lines.json)"
+            ipv6="$(jq -r ".[$idx].ipv6" lines.json)"
+            private="$(jq -r ".[$idx].private" lines.json)"
+            public="$(jq -r ".[$idx].public" lines.json)"
+            mtu="$(jq -r ".[$idx].mtu" lines.json)"
+            cat >> qifu-warp-6line.yaml <<EOF
+            - name: "$name"
+              type: wireguard
+              server: "$server"
+              port: $port
+              ip: "$ipv4"
+              ipv6: "$ipv6"
+              private-key: "$private"
+              public-key: "$public"
+              allowed-ips:
+                - 0.0.0.0/0
+                - ::/0
+              udp: true
+              mtu: $mtu
+              remote-dns-resolve: true
+              dns:
+                - 1.1.1.1
+                - 1.0.0.1
+          EOF
+          done
+
+          cat >> qifu-warp-6line.yaml <<'EOF'
+          proxy-groups:
+            - name: "🚀 节点选择"
+              type: select
+              proxies:
+                - "♻️ 自动选择"
+                - "☁️ WARP 1"
+                - "☁️ WARP 2"
+                - "☁️ WARP 3"
+                - "☁️ WARP 4"
+                - "☁️ WARP 5"
+                - "☁️ WARP 6"
+                - DIRECT
+            - name: "♻️ 自动选择"
+              type: url-test
+              proxies:
+                - "☁️ WARP 1"
+                - "☁️ WARP 2"
+                - "☁️ WARP 3"
+                - "☁️ WARP 4"
+                - "☁️ WARP 5"
+                - "☁️ WARP 6"
+              url: "https://www.gstatic.com/generate_204"
+              interval: 300
+              tolerance: 50
+          rules:
+            - MATCH,🚀 节点选择
+          EOF
+
+          /tmp/mihomo -t -f qifu-warp-6line.yaml >/dev/null
+          chmod 600 qifu-warp-6line.yaml
+
+          cat > qifu-public.pem <<'EOF'
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApSj6At+aBNogncipb+37
+          xSEMnX7jx1bKANA+3M2iyMxXVozUplMwHInTuzVnjn+O41xAmAbCy6UnEqV0KPwh
+          bhNblbwlF+MdjrJaZIpIand/uPZXRHcg7KRjhEKzy+ONLKv94iLVGRXSEClb+oE6
+          l2aBeqKEwoLyxuZ1Tdy8WN5++8G1R43FDO6/2Amy5KKvT9n0eu6IExRlcp6fstD8
+          keu2Oaam8Gn34qr8MoqmwxA0rwGCwdtqIHM3jWq2necevQMUjamucXYZ0BZZZcOP
+          kKUkaNOlzawq08/e143Kjj8s+7Kfs3kdAIiyA8ycsu1zNo5DVkY/DgQOBuzf+hZH
+          eQIDAQAB
+          -----END PUBLIC KEY-----
+          EOF
+
+          KEYHEX="$(openssl rand -hex 32)"
+          IVHEX="$(openssl rand -hex 16)"
+          openssl enc -aes-256-cbc -K "$KEYHEX" -iv "$IVHEX" -in qifu-warp-6line.yaml -out qifu-warp-6line.enc
+          jq -n --arg key "$KEYHEX" --arg iv "$IVHEX" '{key:$key,iv:$iv}' > key.json
+          openssl pkeyutl -encrypt -pubin -inkey qifu-public.pem -in key.json -out key.enc
+
+          SHA="$(sha256sum qifu-warp-6line.yaml | awk '{print $1}')"
+          SUMMARY="$(jq '[.[] | {name,server,port,verified}]' lines.json)"
+          jq -n \
+            --arg config_ciphertext "$(base64 -w0 qifu-warp-6line.enc)" \
+            --arg key_ciphertext "$(base64 -w0 key.enc)" \
+            --arg sha256 "$SHA" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --argjson summary "$SUMMARY" \
+            '{ready:true,verified:true,count:6,run_id:$run_id,sha256:$sha256,summary:$summary,config_ciphertext:$config_ciphertext,key_ciphertext:$key_ciphertext}' \
+            > state.json
+
+          CONTENT="$(base64 -w0 state.json)"
+          EXISTING_SHA="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-warp-multipath-state.json" 2>/dev/null | jq -r '.sha // empty' || true)"
+          if [ -n "$EXISTING_SHA" ]; then
+            jq -n --arg message 'Update encrypted six-line WARP state' --arg content "$CONTENT" --arg sha "$EXISTING_SHA" '{message:$message,content:$content,sha:$sha}' > put.json
+          else
+            jq -n --arg message 'Publish encrypted six-line WARP state' --arg content "$CONTENT" '{message:$message,content:$content}' > put.json
+          fi
+          curl -fsSL -X PUT \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            -d @put.json \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-warp-multipath-state.json" >/dev/null
+          echo 'QIFU_WARP_MULTIPATH_READY=1'
