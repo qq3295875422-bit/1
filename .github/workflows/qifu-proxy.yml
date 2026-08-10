@@ -25,7 +25,6 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y curl jq unzip openssl openssh-client openvpn iproute2 iptables python3
           XRAY_URL="$(curl -fsSL https://api.github.com/repos/XTLS/Xray-core/releases/latest | jq -r '.assets[] | select(.name=="Xray-linux-64.zip") | .browser_download_url' | head -n1)"
-          test -n "$XRAY_URL"
           curl -fsSL "$XRAY_URL" -o /tmp/xray.zip
           mkdir -p /tmp/xray
           unzip -q /tmp/xray.zip -d /tmp/xray
@@ -53,15 +52,15 @@ jobs:
           sudo iptables -A FORWARD -i "$HOST_IF" -o veth-host -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
           sudo mkdir -p /etc/netns/runs
           printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' | sudo tee /etc/netns/runs/resolv.conf >/dev/null
-          sudo ip netns exec runs curl -fsS --max-time 15 https://api.ipify.org >/tmp/pre-vpn-ip
 
-      - name: Connect only proxy namespace to Russia VPN Gate
+      - name: Find and verify a working Russia VPN Gate exit
         shell: bash
         run: |
           set -euo pipefail
           curl -fsSL https://www.vpngate.net/api/iphone/ -o /tmp/vpngate.csv
+          mkdir -p /tmp/ru_candidates
           python3 - <<'PY'
-          import base64, csv, re
+          import base64, csv, re, os
           rows=[]
           with open('/tmp/vpngate.csv', encoding='utf-8', errors='replace') as f:
               for line in f:
@@ -71,39 +70,73 @@ jobs:
                   except Exception: continue
                   if len(row) < 15 or row[6] != 'RU' or not row[14]:
                       continue
+                  try:
+                      cfg=base64.b64decode(row[14]).decode('utf-8',errors='replace')
+                  except Exception:
+                      continue
+                  ip=row[1]
+                  cfg=re.sub(r'(?m)^remote\s+\S+\s+(\d+)(.*)$',lambda m:f'remote {ip} {m.group(1)}{m.group(2)}',cfg)
+                  tcp=1 if re.search(r'(?mi)^proto\s+tcp', cfg) else 0
                   try: score=int(row[2]); ping=int(row[3] or 999999); speed=int(row[4])
                   except Exception: score=0; ping=999999; speed=0
-                  rows.append((score, speed, -ping, row))
+                  rows.append((tcp,score,speed,-ping,row,cfg))
           if not rows:
-              raise SystemExit('No Russia OpenVPN server available on VPN Gate')
-          rows.sort(key=lambda x:(x[0],x[1],x[2]), reverse=True)
-          row=rows[0][3]
-          cfg=base64.b64decode(row[14]).decode('utf-8',errors='replace')
-          ip=row[1]
-          cfg=re.sub(r'(?m)^remote\s+\S+\s+(\d+)(.*)$',lambda m:f'remote {ip} {m.group(1)}{m.group(2)}',cfg)
-          open('/tmp/ru.ovpn','w').write(cfg)
-          open('/tmp/ru-vpn-server','w').write(f'{row[0]}|{row[1]}')
-          print('Selected Russia VPN:',row[0],row[1])
+              raise SystemExit('No Russia OpenVPN candidates available')
+          rows.sort(key=lambda x:(x[0],x[1],x[2],x[3]), reverse=True)
+          with open('/tmp/ru_candidates/index.tsv','w') as idx:
+              for i,(_,_,_,_,row,cfg) in enumerate(rows[:12]):
+                  open(f'/tmp/ru_candidates/{i}.ovpn','w').write(cfg)
+                  idx.write(f'{i}\t{row[0]}\t{row[1]}\n')
+          print('Russia candidates prepared:', min(12,len(rows)))
           PY
+
           printf 'vpn\nvpn\n' >/tmp/vpn.auth
           chmod 600 /tmp/vpn.auth
-          sudo ip netns exec runs openvpn --config /tmp/ru.ovpn --auth-user-pass /tmp/vpn.auth --daemon --writepid /tmp/openvpn-ru.pid --log /tmp/openvpn-ru.log
-          for i in $(seq 1 60); do
-            if sudo ip netns exec runs ip link show tun0 >/dev/null 2>&1 && sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-ru.log; then break; fi
-            sleep 2
-          done
-          sudo ip netns exec runs ip link show tun0 >/dev/null
-          sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn-ru.log || { sudo cat /tmp/openvpn-ru.log; exit 1; }
-          EGRESS_IP="$(sudo ip netns exec runs curl -fsS --max-time 20 https://api.ipify.org)"
-          COUNTRY=''
-          for U in https://ipapi.co/country/ https://ipinfo.io/country https://ifconfig.co/country-iso; do
-            COUNTRY="$(sudo ip netns exec runs curl -fsS --max-time 15 "$U" 2>/dev/null | tr -d '\r\n ' | head -c2 || true)"
-            [ "$COUNTRY" = 'RU' ] && break
-          done
-          echo "VERIFIED_EGRESS_IP=$EGRESS_IP VERIFIED_COUNTRY=$COUNTRY"
-          test "$COUNTRY" = 'RU'
-          printf '%s' "$EGRESS_IP" >/tmp/ru-egress-ip
-          printf '%s' "$COUNTRY" >/tmp/ru-country
+          SUCCESS=0
+          while IFS=$'\t' read -r IDX NAME IP; do
+            echo "Trying Russia VPN candidate #$IDX: $NAME $IP"
+            LOG="/tmp/openvpn-ru-$IDX.log"
+            PID="/tmp/openvpn-ru-$IDX.pid"
+            sudo rm -f "$LOG" "$PID"
+            sudo ip netns exec runs ip link del tun0 2>/dev/null || true
+            sudo ip netns exec runs openvpn \
+              --config "/tmp/ru_candidates/$IDX.ovpn" \
+              --auth-user-pass /tmp/vpn.auth \
+              --connect-retry-max 1 \
+              --daemon --writepid "$PID" --log "$LOG" || true
+
+            CONNECTED=0
+            for i in $(seq 1 12); do
+              if sudo ip netns exec runs ip link show tun0 >/dev/null 2>&1 && sudo grep -q 'Initialization Sequence Completed' "$LOG" 2>/dev/null; then
+                CONNECTED=1
+                break
+              fi
+              sleep 2
+            done
+
+            if [ "$CONNECTED" = 1 ]; then
+              EGRESS_IP="$(sudo ip netns exec runs curl -fsS --max-time 15 https://api.ipify.org || true)"
+              COUNTRY=''
+              for U in https://ipapi.co/country/ https://ipinfo.io/country https://ifconfig.co/country-iso; do
+                COUNTRY="$(sudo ip netns exec runs curl -fsS --max-time 12 "$U" 2>/dev/null | tr -d '\r\n ' | head -c2 || true)"
+                [ "$COUNTRY" = 'RU' ] && break
+              done
+              echo "Candidate result: egress=$EGRESS_IP country=$COUNTRY"
+              if [ "$COUNTRY" = 'RU' ]; then
+                printf '%s' "$EGRESS_IP" >/tmp/ru-egress-ip
+                printf '%s' "$COUNTRY" >/tmp/ru-country
+                printf '%s|%s' "$NAME" "$IP" >/tmp/ru-vpn-server
+                SUCCESS=1
+                break
+              fi
+            fi
+
+            if sudo test -s "$PID"; then sudo kill "$(sudo cat "$PID")" 2>/dev/null || true; fi
+            sleep 1
+          done </tmp/ru_candidates/index.tsv
+
+          test "$SUCCESS" = 1
+          echo "VERIFIED_RUSSIA_EGRESS=$(cat /tmp/ru-egress-ip) COUNTRY=$(cat /tmp/ru-country) VPN=$(cat /tmp/ru-vpn-server)"
 
       - name: Start VLESS inside Russia namespace
         shell: bash
@@ -130,12 +163,14 @@ jobs:
           for i in $(seq 1 90); do PINGGY_URL="$(grep -Eo 'https://[A-Za-z0-9.-]+\.(pinggy\.link|pinggy-free\.link)' /tmp/pinggy-ru.log | head -n1 || true)"; [ -n "$PINGGY_URL" ] && break; sleep 2; done
           test -n "$PINGGY_URL"
           echo "$PINGGY_URL" >/tmp/pinggy-ru-url
+
           nohup /tmp/cloudflared tunnel --no-autoupdate --url http://10.210.0.2:8080 >/tmp/cloudflared-ru.log 2>&1 &
           echo $! >/tmp/cloudflared-ru.pid
           CF_URL=''
           for i in $(seq 1 90); do CF_URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared-ru.log | head -n1 || true)"; [ -n "$CF_URL" ] && break; sleep 2; done
           test -n "$CF_URL"
           echo "$CF_URL" >/tmp/cf-ru-url
+
           PINGGY_HOST="${PINGGY_URL#https://}"
           echo | openssl s_client -connect "${PINGGY_HOST}:443" -servername "$PINGGY_HOST" 2>/dev/null | grep -q 'Verify return code: 0'
 
