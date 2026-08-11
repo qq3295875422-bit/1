@@ -3,9 +3,9 @@ chcp 65001 >nul
 cd /d "%~dp0"
 where py >nul 2>&1
 if %errorlevel%==0 (
-  py qifu-cloud-pc.py
+  py qifu-cloud-pc.py start
 ) else (
-  python qifu-cloud-pc.py
+  python qifu-cloud-pc.py start
 )
 echo.
 pause
