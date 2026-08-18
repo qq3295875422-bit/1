@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "connect-japan-exit",
+  "stage": "start-public-relay",
   "run_id": "32151967581",
-  "updated_at": "2026-08-18T15:02:49.737527Z",
-  "message": "Connecting native Japan TCP 443 exit and verifying JP"
+  "updated_at": "2026-08-18T15:03:41.619281Z",
+  "message": "JP exit verified; starting VLESS/WebSocket/Cloudflare relay"
 }
