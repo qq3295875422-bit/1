@@ -1,8 +1,7 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "connect-japan-exit",
-  "run_id": "32150617702",
-  "updated_at": "2026-08-18T14:50:13.649632Z",
-  "message": "Trying official Japan VPN Gate exits over OpenVPN TCP 443 and verifying JP"
+  "stage": "probe-tun",
+  "run_id": "32150773929",
+  "message": "Checking GitHub runner TUN support"
 }
