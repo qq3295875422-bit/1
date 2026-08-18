@@ -1,7 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "probe-tun",
+  "stage": "install-runtime",
   "run_id": "32151967581",
-  "message": "TUN support verified; starting native TCP443 Japan VPN build"
+  "updated_at": "2026-08-18T15:02:29.401318Z",
+  "message": "Installing runtime"
 }
