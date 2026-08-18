@@ -1,8 +1,7 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "start-public-relay",
-  "run_id": "32151967581",
-  "updated_at": "2026-08-18T15:04:04.346990Z",
-  "message": "exit=1; line=197"
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32152431086",
+  "message": "Checking GitHub runner TUN support"
 }
