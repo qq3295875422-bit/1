@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "boot",
+  "stage": "install-runtime",
   "run_id": "32150236779",
-  "updated_at": "2026-08-18T14:45:23.052596Z",
-  "message": "GitHub runner allocated"
+  "updated_at": "2026-08-18T14:45:24.415881Z",
+  "message": "Installing OpenVPN, nginx, sing-box and cloudflared"
 }
