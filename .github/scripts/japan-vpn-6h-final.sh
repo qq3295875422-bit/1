@@ -6,7 +6,7 @@ STAGE="boot"
 
 publish_file() {
   python3 - <<'PY'
-import base64, json, os, urllib.request, urllib.error
+import base64, json, os, urllib.request
 repo=os.environ['GITHUB_REPOSITORY']
 token=os.environ['GH_TOKEN']
 path='.qifu-japan-vpn-current.json'
@@ -73,7 +73,7 @@ sing-box version
 cloudflared --version
 
 STAGE="fetch-vpngate-japan"
-write_state starting "$STAGE" "Fetching VPN Gate CSV and selecting Japan nodes"
+write_state starting "$STAGE" "Fetching VPN Gate CSV and selecting official Japan TCP 443 nodes"
 printf 'vpn\nvpn\n' >/tmp/vpn-auth
 python3 - <<'PY'
 import base64,csv,io,json,urllib.request
@@ -87,30 +87,43 @@ lines[0]=lines[0].lstrip('#')
 rows=list(csv.DictReader(io.StringIO('\n'.join(lines))))
 out=[]
 for r in rows:
+    ip=r.get('IP','')
     if (r.get('CountryShort') or '').upper()!='JP': continue
+    if not ip.startswith('219.100.37.'): continue
     blob=r.get('OpenVPN_ConfigData_Base64') or ''
     if not blob: continue
     try: cfg=base64.b64decode(blob).decode('utf-8','replace')
     except Exception: continue
-    out.append({'ip':r.get('IP',''),'host':r.get('HostName',''),'speed':int(r.get('Speed') or 0),'ping':int(r.get('Ping') or 999999),'score':int(r.get('Score') or 0),'config':cfg})
-out.sort(key=lambda x:(-x['speed'],x['ping'],-x['score']))
-if not out: raise SystemExit('No JP OpenVPN candidates found')
-json.dump(out[:30],open('/tmp/jp.json','w',encoding='utf-8'))
-print('JP candidates:',len(out))
+    out.append({'ip':ip,'host':r.get('HostName',''),'speed':int(r.get('Speed') or 0),'ping':int(r.get('Ping') or 999999),'score':int(r.get('Score') or 0),'config':cfg})
+out.sort(key=lambda x:(x['ping'],-x['speed'],-x['score']))
+if not out: raise SystemExit('No official JP OpenVPN candidates found')
+json.dump(out[:20],open('/tmp/jp.json','w',encoding='utf-8'))
+print('Official JP candidates:',len(out))
 PY
 
 STAGE="connect-japan-exit"
-write_state starting "$STAGE" "Trying Japanese OpenVPN exits and verifying country=JP"
+write_state starting "$STAGE" "Trying official Japan VPN Gate exits over OpenVPN TCP 443 and verifying JP"
 ORIGINAL_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
 FOUND=0
-for IDX in $(seq 0 29); do
+for IDX in $(seq 0 19); do
   ITEM="$(jq -r ".[${IDX}] // empty" /tmp/jp.json)"
   [ -n "$ITEM" ] || break
   echo "$ITEM" | jq -r '.config' >/tmp/jp.ovpn
   IP="$(echo "$ITEM" | jq -r '.ip')"
-  echo "Trying JP candidate $IDX: $IP"
+  echo "Trying JP TCP443 candidate $IDX: $IP"
   sudo pkill openvpn >/dev/null 2>&1 || true
   sleep 2
+
+  if grep -qE '^proto[[:space:]]' /tmp/jp.ovpn; then
+    sed -i -E 's/^proto .*/proto tcp-client/' /tmp/jp.ovpn
+  else
+    echo 'proto tcp-client' >>/tmp/jp.ovpn
+  fi
+  if grep -qE '^remote[[:space:]]' /tmp/jp.ovpn; then
+    sed -i -E "0,/^remote .*/s//remote ${IP} 443/" /tmp/jp.ovpn
+  else
+    echo "remote ${IP} 443" >>/tmp/jp.ovpn
+  fi
   if grep -qE '^auth-user-pass([[:space:]]|$)' /tmp/jp.ovpn; then
     sed -i -E 's#^auth-user-pass.*#auth-user-pass /tmp/vpn-auth#' /tmp/jp.ovpn
   else
@@ -118,22 +131,24 @@ for IDX in $(seq 0 29); do
   fi
   cat >>/tmp/jp.ovpn <<'EOF'
 auth-nocache
-connect-retry-max 2
-connect-timeout 12
+connect-retry-max 1
+connect-timeout 10
 script-security 2
 EOF
+
   sudo openvpn --config /tmp/jp.ovpn --daemon qifu-jp --writepid /tmp/openvpn.pid --log /tmp/openvpn.log || true
   READY=0
-  for _ in $(seq 1 20); do
+  for _ in $(seq 1 15); do
     if grep -q 'Initialization Sequence Completed' /tmp/openvpn.log 2>/dev/null; then READY=1; break; fi
     sleep 2
   done
   if [ "$READY" -ne 1 ]; then
-    tail -n 15 /tmp/openvpn.log || true
+    tail -n 12 /tmp/openvpn.log || true
     sudo pkill openvpn >/dev/null 2>&1 || true
     sleep 2
     continue
   fi
+
   EXIT_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
   COUNTRY="$(curl -4fsS --max-time 15 https://ifconfig.co/country-iso || true)"
   COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
@@ -149,9 +164,9 @@ EOF
     break
   fi
   sudo pkill openvpn >/dev/null 2>&1 || true
-  sleep 3
+  sleep 2
 done
-[ "$FOUND" -eq 1 ] || { echo 'No verified Japan VPN exit' >&2; false; }
+[ "$FOUND" -eq 1 ] || { echo 'No verified Japan TCP443 VPN exit' >&2; false; }
 
 STAGE="start-public-relay"
 write_state starting "$STAGE" "Japan exit verified; starting VLESS/WebSocket public relay"
