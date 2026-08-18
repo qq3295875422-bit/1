@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Probe Japan VPN Gate TCP 443
+      - name: Probe native Japan VPN Gate TCP 443 config
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -26,36 +26,42 @@ jobs:
           printf 'vpn\nvpn\n' >/tmp/vpn-auth
 
           python3 - <<'PY'
-          import base64,csv,io,json,urllib.request
+          import base64,csv,io,json,re,urllib.request
           raw=urllib.request.urlopen('https://www.vpngate.net/api/iphone/',timeout=30).read().decode('utf-8','replace')
           lines=[x for x in raw.splitlines() if x.strip() and not x.startswith('*')]
           idx=next(i for i,x in enumerate(lines) if x.startswith('#HostName,'))
           lines=lines[idx:]; lines[0]=lines[0].lstrip('#')
           rows=list(csv.DictReader(io.StringIO('\n'.join(lines))))
-          cand=[]
+          native=[]; alljp=[]
           for r in rows:
               ip=r.get('IP','')
-              if (r.get('CountryShort') or '').upper()!='JP' or not ip.startswith('219.100.37.'):
-                  continue
+              if (r.get('CountryShort') or '').upper()!='JP': continue
               blob=r.get('OpenVPN_ConfigData_Base64') or ''
               if not blob: continue
               try: cfg=base64.b64decode(blob).decode('utf-8','replace')
               except Exception: continue
-              cand.append((int(r.get('Ping') or 999999),-int(r.get('Speed') or 0),ip,cfg))
-          cand.sort()
-          if not cand: raise SystemExit('no candidate')
-          _,_,ip,cfg=cand[0]
-          open('/tmp/ip','w').write(ip)
-          open('/tmp/jp.ovpn','w').write(cfg)
-          print(ip)
+              proto=''
+              remote=''
+              for line in cfg.splitlines():
+                  s=line.strip()
+                  if s.startswith('proto '): proto=s
+                  if s.startswith('remote ') and not remote: remote=s
+              item={'ip':ip,'host':r.get('HostName',''),'ping':int(r.get('Ping') or 999999),'speed':int(r.get('Speed') or 0),'config':cfg,'proto':proto,'remote':remote}
+              alljp.append(item)
+              if 'tcp' in proto.lower() and re.search(r'\s443(?:\s|$)',remote): native.append(item)
+          native.sort(key=lambda x:(x['ping'],-x['speed']))
+          alljp.sort(key=lambda x:(x['ping'],-x['speed']))
+          pick=native[0] if native else alljp[0]
+          open('/tmp/ip','w').write(pick['ip'])
+          open('/tmp/jp.ovpn','w').write(pick['config'])
+          json.dump({'native_tcp443_count':len(native),'pick_ip':pick['ip'],'pick_proto':pick['proto'],'pick_remote':pick['remote']},open('/tmp/select.json','w'),ensure_ascii=False)
+          print(json.dumps({'native_tcp443_count':len(native),'pick_ip':pick['ip'],'pick_proto':pick['proto'],'pick_remote':pick['remote']},ensure_ascii=False))
           PY
 
           IP="$(cat /tmp/ip)"
           TCP_OK=false
           if timeout 6 bash -c "</dev/tcp/${IP}/443" 2>/dev/null; then TCP_OK=true; fi
 
-          sed -i -E 's/^proto .*/proto tcp-client/' /tmp/jp.ovpn
-          sed -i -E "0,/^remote .*/s//remote ${IP} 443/" /tmp/jp.ovpn
           if grep -qE '^auth-user-pass([[:space:]]|$)' /tmp/jp.ovpn; then
             sed -i -E 's#^auth-user-pass.*#auth-user-pass /tmp/vpn-auth#' /tmp/jp.ovpn
           else
@@ -83,23 +89,22 @@ jobs:
             COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
           fi
 
-          sudo tail -n 35 /tmp/openvpn.log >/tmp/openvpn-tail.txt 2>/dev/null || true
+          sudo tail -n 40 /tmp/openvpn.log >/tmp/openvpn-tail.txt 2>/dev/null || true
           sudo chown "$USER":"$USER" /tmp/openvpn-tail.txt 2>/dev/null || true
           python3 - <<PY
           import json,os
-          try:
-              log=open('/tmp/openvpn-tail.txt',errors='replace').read()
-          except Exception as e:
-              log=str(e)
-          json.dump({
+          sel=json.load(open('/tmp/select.json'))
+          try: log=open('/tmp/openvpn-tail.txt',errors='replace').read()
+          except Exception as e: log=str(e)
+          sel.update({
             'run_id':os.environ.get('GITHUB_RUN_ID',''),
-            'ip':'${IP}',
             'tcp_443_reachable':'${TCP_OK}'=='true',
             'openvpn_initialized':'${INIT}'=='true',
             'exit_ip':'${EXIT_IP}',
             'country':'${COUNTRY}',
             'log_tail':log
-          },open('/tmp/probe.json','w'),ensure_ascii=False,indent=2)
+          })
+          json.dump(sel,open('/tmp/probe.json','w'),ensure_ascii=False,indent=2)
           PY
 
           python3 - <<'PY'
@@ -116,5 +121,4 @@ jobs:
           req=urllib.request.Request(api,data=json.dumps(p).encode(),headers={**h,'Content-Type':'application/json'},method='PUT')
           with urllib.request.urlopen(req,timeout=30) as r:r.read()
           PY
-
           cat /tmp/probe.json
