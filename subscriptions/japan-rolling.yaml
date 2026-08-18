@@ -1,0 +1,29 @@
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: false
+
+proxy-providers:
+  qifu-japan-live:
+    type: http
+    url: "https://raw.githubusercontent.com/qq3295875422-bit/1/main/subscriptions/japan-live-provider.yaml"
+    path: ./providers/qifu-japan-live.yaml
+    interval: 180
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 30
+      lazy: false
+
+proxy-groups:
+  - name: "🇯🇵 日本VPN"
+    type: fallback
+    use:
+      - qifu-japan-live
+    url: https://www.gstatic.com/generate_204
+    interval: 30
+    lazy: false
+
+rules:
+  - MATCH,🇯🇵 日本VPN
