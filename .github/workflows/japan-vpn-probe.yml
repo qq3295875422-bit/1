@@ -1,0 +1,119 @@
+name: Qifu Japan VPN Probe
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/japan-vpn-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe Japan VPN Gate TCP 443
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -u
+          sudo apt-get update >/dev/null
+          sudo apt-get install -y openvpn jq curl python3 >/dev/null
+          printf 'vpn\nvpn\n' >/tmp/vpn-auth
+
+          python3 - <<'PY'
+          import base64,csv,io,json,urllib.request
+          raw=urllib.request.urlopen('https://www.vpngate.net/api/iphone/',timeout=30).read().decode('utf-8','replace')
+          lines=[x for x in raw.splitlines() if x.strip() and not x.startswith('*')]
+          idx=next(i for i,x in enumerate(lines) if x.startswith('#HostName,'))
+          lines=lines[idx:]; lines[0]=lines[0].lstrip('#')
+          rows=list(csv.DictReader(io.StringIO('\n'.join(lines))))
+          cand=[]
+          for r in rows:
+              ip=r.get('IP','')
+              if (r.get('CountryShort') or '').upper()!='JP' or not ip.startswith('219.100.37.'):
+                  continue
+              blob=r.get('OpenVPN_ConfigData_Base64') or ''
+              if not blob: continue
+              try: cfg=base64.b64decode(blob).decode('utf-8','replace')
+              except Exception: continue
+              cand.append((int(r.get('Ping') or 999999),-int(r.get('Speed') or 0),ip,cfg))
+          cand.sort()
+          if not cand: raise SystemExit('no candidate')
+          _,_,ip,cfg=cand[0]
+          open('/tmp/ip','w').write(ip)
+          open('/tmp/jp.ovpn','w').write(cfg)
+          print(ip)
+          PY
+
+          IP="$(cat /tmp/ip)"
+          TCP_OK=false
+          if timeout 6 bash -c "</dev/tcp/${IP}/443" 2>/dev/null; then TCP_OK=true; fi
+
+          sed -i -E 's/^proto .*/proto tcp-client/' /tmp/jp.ovpn
+          sed -i -E "0,/^remote .*/s//remote ${IP} 443/" /tmp/jp.ovpn
+          if grep -qE '^auth-user-pass([[:space:]]|$)' /tmp/jp.ovpn; then
+            sed -i -E 's#^auth-user-pass.*#auth-user-pass /tmp/vpn-auth#' /tmp/jp.ovpn
+          else
+            echo 'auth-user-pass /tmp/vpn-auth' >>/tmp/jp.ovpn
+          fi
+          cat >>/tmp/jp.ovpn <<'EOF'
+          auth-nocache
+          connect-retry-max 1
+          connect-timeout 10
+          verb 4
+          EOF
+
+          sudo openvpn --config /tmp/jp.ovpn --daemon qifu-probe --writepid /tmp/openvpn.pid --log /tmp/openvpn.log || true
+          INIT=false
+          for _ in $(seq 1 18); do
+            if grep -q 'Initialization Sequence Completed' /tmp/openvpn.log 2>/dev/null; then INIT=true; break; fi
+            sleep 2
+          done
+
+          EXIT_IP=''
+          COUNTRY=''
+          if [ "$INIT" = true ]; then
+            EXIT_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
+            COUNTRY="$(curl -4fsS --max-time 15 https://ifconfig.co/country-iso || true)"
+            COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+          fi
+
+          python3 - <<PY
+          import json,os
+          log=''
+          try:
+              log='\n'.join(open('/tmp/openvpn.log',errors='replace').read().splitlines()[-35:])
+          except Exception as e:
+              log=str(e)
+          json.dump({
+            'run_id':os.environ.get('GITHUB_RUN_ID',''),
+            'ip':'${IP}',
+            'tcp_443_reachable':'${TCP_OK}'=='true',
+            'openvpn_initialized':'${INIT}'=='true',
+            'exit_ip':'${EXIT_IP}',
+            'country':'${COUNTRY}',
+            'log_tail':log
+          },open('/tmp/probe.json','w'),ensure_ascii=False,indent=2)
+          PY
+
+          python3 - <<'PY'
+          import base64,json,os,urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']; token=os.environ['GH_TOKEN']; path='.qifu-japan-vpn-probe.json'
+          api=f'https://api.github.com/repos/{repo}/contents/{path}'
+          h={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'qifu-japan-vpn'}
+          sha=''
+          try:
+              with urllib.request.urlopen(urllib.request.Request(api,headers=h),timeout=30) as r: sha=json.load(r).get('sha','')
+          except Exception: pass
+          raw=open('/tmp/probe.json','rb').read(); p={'message':'Update Japan VPN probe result','content':base64.b64encode(raw).decode()}
+          if sha:p['sha']=sha
+          req=urllib.request.Request(api,data=json.dumps(p).encode(),headers={**h,'Content-Type':'application/json'},method='PUT')
+          with urllib.request.urlopen(req,timeout=30) as r:r.read()
+          PY
+
+          cat /tmp/probe.json
