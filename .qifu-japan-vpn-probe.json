@@ -1,0 +1,9 @@
+{
+  "run_id": "32151212155",
+  "ip": "219.100.37.98",
+  "tcp_443_reachable": true,
+  "openvpn_initialized": false,
+  "exit_ip": "",
+  "country": "",
+  "log_tail": "[Errno 13] Permission denied: '/tmp/openvpn.log'"
+}
