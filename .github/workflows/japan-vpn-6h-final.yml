@@ -1,0 +1,49 @@
+name: Qifu Japan VPN 6h Final
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/japan-vpn-6h-final.yml'
+      - '.github/scripts/japan-vpn-6h-final.sh'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qifu-japan-vpn-6h-final
+  cancel-in-progress: true
+
+jobs:
+  japan-vpn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and verify temporary Japan VPN
+        id: build
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash .github/scripts/japan-vpn-6h-final.sh
+      - name: Upload verified subscription
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qifu-japan-vpn-connection
+          path: |
+            /tmp/state.json
+            /tmp/sub.yaml
+          retention-days: 1
+      - name: Keep VPN online
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          for _ in $(seq 1 325); do
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            kill -0 "$(cat /tmp/sing-server.pid)"
+            sudo kill -0 "$(cat /tmp/openvpn.pid)"
+            curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null
+            sleep 60
+          done
