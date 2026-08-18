@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "fetch-vpngate-japan",
+  "stage": "connect-japan-exit",
   "run_id": "32149622387",
-  "updated_at": "2026-08-18T14:39:18.646437Z",
-  "message": "Fetching VPN Gate CSV and selecting Japan nodes"
+  "updated_at": "2026-08-18T14:39:22.321411Z",
+  "message": "Trying Japanese OpenVPN exits and verifying country=JP"
 }
