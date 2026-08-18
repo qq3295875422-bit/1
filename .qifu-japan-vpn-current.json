@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "starting",
+  "status": "failed",
   "stage": "start-public-relay",
   "run_id": "32151967581",
-  "updated_at": "2026-08-18T15:03:41.619281Z",
-  "message": "JP exit verified; starting VLESS/WebSocket/Cloudflare relay"
+  "updated_at": "2026-08-18T15:04:04.346990Z",
+  "message": "exit=1; line=197"
 }
