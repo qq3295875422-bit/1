@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "fetch-vpngate-japan",
+  "stage": "connect-japan-exit",
   "run_id": "32150773929",
-  "updated_at": "2026-08-18T14:51:37.560366Z",
-  "message": "Fetching VPN Gate CSV and selecting official Japan TCP 443 nodes"
+  "updated_at": "2026-08-18T14:51:40.349331Z",
+  "message": "Trying official Japan VPN Gate exits over OpenVPN TCP 443 and verifying JP"
 }
