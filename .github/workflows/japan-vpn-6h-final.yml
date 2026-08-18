@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/japan-vpn-6h-final.yml'
-      - '.github/scripts/japan-vpn-6h-final.sh'
+      - '.github/scripts/japan-vpn-6h-native-final.sh'
 
 permissions:
   contents: write
@@ -34,45 +34,29 @@ jobs:
           path='.qifu-japan-vpn-current.json'
           api=f'https://api.github.com/repos/{repo}/contents/{path}'
           headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'qifu-japan-vpn'}
-          data={
-            'ready': False,
-            'status': os.environ['STATUS'],
-            'stage': 'probe-tun',
-            'run_id': os.environ.get('GITHUB_RUN_ID',''),
-            'message': os.environ['MESSAGE']
-          }
+          data={'ready':False,'status':os.environ['STATUS'],'stage':'probe-tun','run_id':os.environ.get('GITHUB_RUN_ID',''),'message':os.environ['MESSAGE']}
           raw=json.dumps(data,ensure_ascii=False,indent=2).encode()
           sha=''
           try:
-              req=urllib.request.Request(api,headers=headers)
-              with urllib.request.urlopen(req,timeout=30) as r:
-                  sha=json.load(r).get('sha','')
-          except Exception:
-              pass
+              with urllib.request.urlopen(urllib.request.Request(api,headers=headers),timeout=30) as r: sha=json.load(r).get('sha','')
+          except Exception: pass
           payload={'message':'Update Qifu Japan VPN TUN preflight state','content':base64.b64encode(raw).decode()}
           if sha: payload['sha']=sha
           req=urllib.request.Request(api,data=json.dumps(payload).encode(),headers={**headers,'Content-Type':'application/json'},method='PUT')
-          with urllib.request.urlopen(req,timeout=30) as r: r.read()
+          with urllib.request.urlopen(req,timeout=30) as r:r.read()
           PY
           }
           publish_state starting 'Checking GitHub runner TUN support'
-          if ! test -c /dev/net/tun; then
-            publish_state failed '/dev/net/tun is unavailable on this runner'
-            exit 1
-          fi
-          if ! sudo ip tuntap add dev qifu-tun-test mode tun; then
-            publish_state failed 'Runner cannot create a TUN interface'
-            exit 1
-          fi
+          if ! test -c /dev/net/tun; then publish_state failed '/dev/net/tun unavailable'; exit 1; fi
+          if ! sudo ip tuntap add dev qifu-tun-test mode tun; then publish_state failed 'Cannot create TUN'; exit 1; fi
           sudo ip link set qifu-tun-test up
           sudo ip link del qifu-tun-test
-          publish_state starting 'TUN support verified; starting Japan VPN build'
+          publish_state starting 'TUN support verified; starting native TCP443 Japan VPN build'
       - name: Build and verify temporary Japan VPN
-        id: build
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash .github/scripts/japan-vpn-6h-final.sh
+        run: bash .github/scripts/japan-vpn-6h-native-final.sh
       - name: Upload verified subscription
         if: success()
         uses: actions/upload-artifact@v4
