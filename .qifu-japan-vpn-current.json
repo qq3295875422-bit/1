@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "install-runtime",
+  "stage": "select-native-tcp443-jp",
   "run_id": "32151967581",
-  "updated_at": "2026-08-18T15:02:29.401318Z",
-  "message": "Installing runtime"
+  "updated_at": "2026-08-18T15:02:44.187275Z",
+  "message": "Selecting native VPN Gate Japan TCP 443 configs"
 }
