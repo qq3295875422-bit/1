@@ -1,0 +1,390 @@
+name: Qifu Japan VPN 6h
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/japan-vpn-6h.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  japan-vpn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install runtime dependencies
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y openvpn nginx jq curl unzip uuid-runtime python3 ca-certificates
+
+          TAG="$(curl -fsSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name')"
+          VER="${TAG#v}"
+          curl -fsSL --retry 5 --retry-delay 2 \
+            "https://github.com/SagerNet/sing-box/releases/download/${TAG}/sing-box-${VER}-linux-amd64.tar.gz" \
+            -o /tmp/sing-box.tar.gz
+          tar -xzf /tmp/sing-box.tar.gz -C /tmp
+          install -m 0755 "/tmp/sing-box-${VER}-linux-amd64/sing-box" /usr/local/bin/sing-box
+          sing-box version
+
+          curl -fsSL --retry 5 --retry-delay 2 \
+            https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 \
+            -o /tmp/cloudflared
+          chmod +x /tmp/cloudflared
+          sudo install -m 0755 /tmp/cloudflared /usr/local/bin/cloudflared
+          cloudflared --version
+
+      - name: Select and connect a verified Japan VPN Gate exit
+        shell: bash
+        run: |
+          set -euxo pipefail
+          printf 'vpn\nvpn\n' >/tmp/vpn-auth
+
+          python3 - <<'PY'
+          import base64, csv, io, json, urllib.request
+
+          url = 'https://www.vpngate.net/api/iphone/'
+          raw = urllib.request.urlopen(url, timeout=30).read().decode('utf-8', 'replace')
+          lines = [x for x in raw.splitlines() if x and not x.startswith('*') and not x.startswith('#')]
+          rows = list(csv.DictReader(io.StringIO('\n'.join(lines))))
+          jp = []
+          for r in rows:
+              if (r.get('CountryShort') or '').upper() != 'JP':
+                  continue
+              blob = r.get('OpenVPN_ConfigData_Base64') or ''
+              if not blob:
+                  continue
+              try:
+                  cfg = base64.b64decode(blob).decode('utf-8', 'replace')
+              except Exception:
+                  continue
+              jp.append({
+                  'ip': r.get('IP', ''),
+                  'host': r.get('HostName', ''),
+                  'speed': int(r.get('Speed') or 0),
+                  'ping': int(r.get('Ping') or 999999),
+                  'score': int(r.get('Score') or 0),
+                  'config': cfg,
+              })
+          jp.sort(key=lambda x: (-x['speed'], x['ping'], -x['score']))
+          if not jp:
+              raise SystemExit('No Japan OpenVPN candidates returned by VPN Gate')
+          with open('/tmp/jp-candidates.json', 'w', encoding='utf-8') as f:
+              json.dump(jp[:20], f)
+          print('Japan candidates:', len(jp), 'using top', min(20, len(jp)))
+          PY
+
+          ORIGINAL_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
+          echo "Original IP: ${ORIGINAL_IP}"
+
+          FOUND=0
+          for IDX in $(seq 0 19); do
+            CANDIDATE="$(jq -r ".[${IDX}] // empty" /tmp/jp-candidates.json)"
+            [ -n "$CANDIDATE" ] || break
+
+            echo "$CANDIDATE" | jq -r '.config' >/tmp/japan.ovpn
+            IP="$(echo "$CANDIDATE" | jq -r '.ip')"
+            HOST="$(echo "$CANDIDATE" | jq -r '.host')"
+            echo "Trying Japan VPN Gate candidate ${IDX}: ${IP} ${HOST}"
+
+            sudo pkill openvpn >/dev/null 2>&1 || true
+            sleep 2
+
+            if grep -qE '^auth-user-pass([[:space:]]|$)' /tmp/japan.ovpn; then
+              sed -i -E 's#^auth-user-pass.*#auth-user-pass /tmp/vpn-auth#' /tmp/japan.ovpn
+            else
+              echo 'auth-user-pass /tmp/vpn-auth' >>/tmp/japan.ovpn
+            fi
+            cat >>/tmp/japan.ovpn <<'EOF'
+          auth-nocache
+          connect-retry-max 2
+          connect-timeout 12
+          script-security 2
+          EOF
+
+            sudo openvpn --config /tmp/japan.ovpn \
+              --daemon qifu-japan-openvpn \
+              --writepid /tmp/openvpn.pid \
+              --log /tmp/openvpn.log || true
+
+            READY=0
+            for _ in $(seq 1 20); do
+              if grep -q 'Initialization Sequence Completed' /tmp/openvpn.log 2>/dev/null; then
+                READY=1
+                break
+              fi
+              sleep 2
+            done
+            if [ "$READY" -ne 1 ]; then
+              echo 'OpenVPN did not initialize:'
+              tail -n 30 /tmp/openvpn.log || true
+              sudo pkill openvpn >/dev/null 2>&1 || true
+              sleep 2
+              continue
+            fi
+
+            EXIT_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
+            COUNTRY="$(curl -4fsS --max-time 15 https://ifconfig.co/country-iso || true)"
+            COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+            if [ "$COUNTRY" != 'JP' ]; then
+              COUNTRY2="$(curl -4fsS --max-time 15 https://ipapi.co/country/ || true)"
+              COUNTRY2="$(echo "$COUNTRY2" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+              [ "$COUNTRY2" = 'JP' ] && COUNTRY='JP'
+            fi
+
+            echo "Candidate exit IP=${EXIT_IP}, country=${COUNTRY}"
+            if [ -n "$EXIT_IP" ] && [ "$EXIT_IP" != "$ORIGINAL_IP" ] && [ "$COUNTRY" = 'JP' ]; then
+              FOUND=1
+              printf '%s' "$EXIT_IP" >/tmp/japan-exit-ip
+              printf '%s' "$IP" >/tmp/vpngate-server-ip
+              break
+            fi
+
+            sudo pkill openvpn >/dev/null 2>&1 || true
+            sleep 3
+          done
+
+          if [ "$FOUND" -ne 1 ]; then
+            echo 'Unable to establish a verified JP VPN Gate exit.' >&2
+            exit 1
+          fi
+
+          echo 'Verified Japanese VPN exit:'
+          echo "VPN Gate server: $(cat /tmp/vpngate-server-ip)"
+          echo "Exit IP: $(cat /tmp/japan-exit-ip)"
+          echo 'Country: JP'
+
+      - name: Start VLESS WebSocket relay and HTTPS tunnel
+        shell: bash
+        run: |
+          set -euxo pipefail
+          UUID="$(uuidgen)"
+          printf '%s' "$UUID" >/tmp/qifu-uuid
+
+          cat >/tmp/sing-box-server.json <<EOF
+          {
+            "log": {"level": "info"},
+            "inbounds": [
+              {
+                "type": "vless",
+                "tag": "vless-in",
+                "listen": "127.0.0.1",
+                "listen_port": 10000,
+                "users": [{"uuid": "${UUID}"}],
+                "transport": {"type": "ws", "path": "/ws"}
+              }
+            ],
+            "outbounds": [{"type": "direct", "tag": "direct"}]
+          }
+          EOF
+
+          nohup sing-box run -c /tmp/sing-box-server.json >/tmp/sing-box-server.log 2>&1 &
+          echo $! >/tmp/sing-box-server.pid
+
+          sudo tee /etc/nginx/sites-available/default >/dev/null <<'EOF'
+          server {
+            listen 127.0.0.1:8080;
+            server_name _;
+
+            location /ws {
+              proxy_pass http://127.0.0.1:10000;
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              proxy_set_header Host $host;
+              proxy_read_timeout 3600s;
+              proxy_send_timeout 3600s;
+            }
+
+            location = /sub.yaml {
+              alias /tmp/sub.yaml;
+              default_type text/yaml;
+              add_header Cache-Control "no-store" always;
+            }
+
+            location = /health {
+              default_type text/plain;
+              return 200 "ok\n";
+            }
+          }
+          EOF
+          sudo nginx -t
+          sudo systemctl restart nginx
+
+          echo '# waiting for tunnel' >/tmp/sub.yaml
+          nohup cloudflared tunnel --no-autoupdate --protocol http2 \
+            --url http://127.0.0.1:8080 >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
+
+          TUNNEL_URL=''
+          for _ in $(seq 1 90); do
+            TUNNEL_URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n1 || true)"
+            [ -n "$TUNNEL_URL" ] && break
+            sleep 2
+          done
+          if [ -z "$TUNNEL_URL" ]; then
+            cat /tmp/cloudflared.log >&2 || true
+            exit 1
+          fi
+
+          HOST="${TUNNEL_URL#https://}"
+          printf '%s' "$TUNNEL_URL" >/tmp/tunnel-url
+          printf '%s' "$HOST" >/tmp/tunnel-host
+
+          cat >/tmp/sub.yaml <<EOF
+          mixed-port: 7890
+          allow-lan: true
+          mode: rule
+          log-level: info
+          ipv6: false
+
+          proxies:
+            - name: "🇯🇵 GitHub临时日本VPN"
+              type: vless
+              server: ${HOST}
+              port: 443
+              uuid: ${UUID}
+              network: ws
+              tls: true
+              udp: true
+              servername: ${HOST}
+              ws-opts:
+                path: /ws
+                headers:
+                  Host: ${HOST}
+
+          proxy-groups:
+            - name: "🇯🇵 日本VPN"
+              type: select
+              proxies:
+                - "🇯🇵 GitHub临时日本VPN"
+                - DIRECT
+
+          rules:
+            - MATCH,🇯🇵 日本VPN
+          EOF
+
+          curl -fsS --retry 10 --retry-delay 2 "${TUNNEL_URL}/sub.yaml" >/tmp/sub-public.yaml
+          grep -q 'GitHub临时日本VPN' /tmp/sub-public.yaml
+          echo "Public subscription: ${TUNNEL_URL}/sub.yaml"
+
+      - name: End-to-end verify public proxy exits in Japan
+        shell: bash
+        run: |
+          set -euxo pipefail
+          HOST="$(cat /tmp/tunnel-host)"
+          UUID="$(cat /tmp/qifu-uuid)"
+
+          cat >/tmp/sing-box-client.json <<EOF
+          {
+            "log": {"level": "info"},
+            "inbounds": [
+              {"type": "mixed", "tag": "mixed-in", "listen": "127.0.0.1", "listen_port": 2080}
+            ],
+            "outbounds": [
+              {
+                "type": "vless",
+                "tag": "jp-public-vless",
+                "server": "${HOST}",
+                "server_port": 443,
+                "uuid": "${UUID}",
+                "tls": {"enabled": true, "server_name": "${HOST}"},
+                "transport": {"type": "ws", "path": "/ws", "headers": {"Host": "${HOST}"}}
+              }
+            ]
+          }
+          EOF
+
+          nohup sing-box run -c /tmp/sing-box-client.json >/tmp/sing-box-client.log 2>&1 &
+          echo $! >/tmp/sing-box-client.pid
+          sleep 4
+
+          PUBLIC_EXIT=''
+          PUBLIC_COUNTRY=''
+          for _ in $(seq 1 12); do
+            PUBLIC_EXIT="$(curl -4fsS --max-time 20 --socks5-hostname 127.0.0.1:2080 https://api.ipify.org || true)"
+            PUBLIC_COUNTRY="$(curl -4fsS --max-time 20 --socks5-hostname 127.0.0.1:2080 https://ifconfig.co/country-iso || true)"
+            PUBLIC_COUNTRY="$(echo "$PUBLIC_COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+            if [ -n "$PUBLIC_EXIT" ] && [ "$PUBLIC_COUNTRY" = 'JP' ]; then
+              break
+            fi
+            sleep 5
+          done
+
+          echo "End-to-end public proxy exit=${PUBLIC_EXIT}, country=${PUBLIC_COUNTRY}"
+          if [ -z "$PUBLIC_EXIT" ] || [ "$PUBLIC_COUNTRY" != 'JP' ]; then
+            echo 'Public VLESS/WS path did not verify as JP.' >&2
+            cat /tmp/sing-box-client.log >&2 || true
+            cat /tmp/cloudflared.log >&2 || true
+            exit 1
+          fi
+
+          printf '%s' "$PUBLIC_EXIT" >/tmp/public-exit-ip
+          printf '%s' "$PUBLIC_COUNTRY" >/tmp/public-country
+
+      - name: Publish verified connection details
+        shell: bash
+        run: |
+          set -euxo pipefail
+          TUNNEL_URL="$(cat /tmp/tunnel-url)"
+          HOST="$(cat /tmp/tunnel-host)"
+          UUID="$(cat /tmp/qifu-uuid)"
+          EXIT_IP="$(cat /tmp/public-exit-ip)"
+          VPNGATE_IP="$(cat /tmp/vpngate-server-ip)"
+          STARTED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          EXPIRES_AT="$(date -u -d '+325 minutes' +%Y-%m-%dT%H:%M:%SZ)"
+
+          cat >/tmp/japan-vpn-connection.txt <<EOF
+          SUBSCRIPTION_URL=${TUNNEL_URL}/sub.yaml
+          NODE_NAME=🇯🇵 GitHub临时日本VPN
+          VERIFIED_COUNTRY=JP
+          VERIFIED_EXIT_IP=${EXIT_IP}
+          VPNGATE_SERVER_IP=${VPNGATE_IP}
+          STARTED_AT=${STARTED_AT}
+          APPROX_EXPIRES_AT=${EXPIRES_AT}
+          RUN_ID=${GITHUB_RUN_ID}
+          EOF
+
+          jq -n \
+            --arg subscription_url "${TUNNEL_URL}/sub.yaml" \
+            --arg host "$HOST" \
+            --arg uuid "$UUID" \
+            --arg exit_ip "$EXIT_IP" \
+            --arg vpngate_ip "$VPNGATE_IP" \
+            --arg started_at "$STARTED_AT" \
+            --arg expires_at "$EXPIRES_AT" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            '{ready:true,subscription_url:$subscription_url,transport:"VLESS+WebSocket+TLS",verified_country:"JP",verified_exit_ip:$exit_ip,vpngate_server_ip:$vpngate_ip,started_at:$started_at,approx_expires_at:$expires_at,run_id:$run_id}' \
+            >/tmp/japan-vpn-state.json
+
+          cat /tmp/japan-vpn-connection.txt
+
+      - name: Upload verified subscription details
+        uses: actions/upload-artifact@v4
+        with:
+          name: qifu-japan-vpn-connection
+          path: |
+            /tmp/japan-vpn-connection.txt
+            /tmp/japan-vpn-state.json
+            /tmp/sub.yaml
+          retention-days: 1
+
+      - name: Keep Japan VPN online
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'Verified Japan VPN is online.'
+          for _ in $(seq 1 325); do
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            kill -0 "$(cat /tmp/sing-box-server.pid)"
+            sudo kill -0 "$(cat /tmp/openvpn.pid)"
+            curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null
+            sleep 60
+          done
