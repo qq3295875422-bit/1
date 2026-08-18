@@ -1,7 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "probe-tun",
+  "stage": "boot",
   "run_id": "32150773929",
-  "message": "TUN support verified; starting Japan VPN build"
+  "updated_at": "2026-08-18T14:51:22.465357Z",
+  "message": "GitHub runner allocated"
 }
