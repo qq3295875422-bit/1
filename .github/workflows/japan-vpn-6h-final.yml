@@ -1,18 +1,18 @@
-name: Qifu Japan VPN 6h Final
+name: Qifu Japan VPN Rolling 5h
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '8 */5 * * *'
   push:
     paths:
       - '.github/workflows/japan-vpn-6h-final.yml'
       - '.github/scripts/japan-vpn-6h-native-v2.sh'
+      - '.github/scripts/publish-japan-rolling-provider.py'
+      - '.github/keepalive/japan-vpn-trigger.txt'
 
 permissions:
   contents: write
-
-concurrency:
-  group: qifu-japan-vpn-6h-final
-  cancel-in-progress: true
 
 jobs:
   japan-vpn:
@@ -20,6 +20,7 @@ jobs:
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
+
       - name: Verify runner TUN support
         shell: bash
         env:
@@ -49,11 +50,20 @@ jobs:
           sudo ip link set qifu-tun-test up
           sudo ip link del qifu-tun-test
           publish_state starting 'TUN verified; starting Japan VPN build'
+
       - name: Build and verify temporary Japan VPN
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: bash .github/scripts/japan-vpn-6h-native-v2.sh
+
+      - name: Publish rolling provider handoff
+        if: success()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/publish-japan-rolling-provider.py
+
       - name: Upload verified subscription
         if: success()
         uses: actions/upload-artifact@v4
@@ -63,12 +73,13 @@ jobs:
             /tmp/state.json
             /tmp/sub.yaml
           retention-days: 1
-      - name: Keep VPN online
+
+      - name: Keep VPN online with overlap
         if: success()
         shell: bash
         run: |
           set -euo pipefail
-          for _ in $(seq 1 325); do
+          for _ in $(seq 1 335); do
             kill -0 "$(cat /tmp/cloudflared.pid)"
             kill -0 "$(cat /tmp/sing-server.pid)"
             sudo kill -0 "$(cat /tmp/openvpn.pid)"
