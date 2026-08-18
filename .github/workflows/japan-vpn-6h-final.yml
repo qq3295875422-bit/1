@@ -20,6 +20,14 @@ jobs:
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
+      - name: Verify runner TUN support
+        shell: bash
+        run: |
+          set -euxo pipefail
+          test -c /dev/net/tun
+          sudo ip tuntap add dev qifu-tun-test mode tun
+          sudo ip link set qifu-tun-test up
+          sudo ip link del qifu-tun-test
       - name: Build and verify temporary Japan VPN
         id: build
         shell: bash
