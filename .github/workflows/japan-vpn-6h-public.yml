@@ -1,0 +1,281 @@
+name: Qifu Japan VPN 6h Public State
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/japan-vpn-6h-public.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  japan-vpn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y openvpn nginx jq curl uuid-runtime python3 ca-certificates
+
+          TAG="$(curl -fsSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name')"
+          VER="${TAG#v}"
+          curl -fsSL --retry 5 --retry-delay 2 \
+            "https://github.com/SagerNet/sing-box/releases/download/${TAG}/sing-box-${VER}-linux-amd64.tar.gz" \
+            -o /tmp/sing-box.tar.gz
+          tar -xzf /tmp/sing-box.tar.gz -C /tmp
+          sudo install -m 0755 "/tmp/sing-box-${VER}-linux-amd64/sing-box" /usr/local/bin/sing-box
+
+          curl -fsSL --retry 5 --retry-delay 2 \
+            https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 \
+            -o /tmp/cloudflared
+          sudo install -m 0755 /tmp/cloudflared /usr/local/bin/cloudflared
+          sing-box version
+          cloudflared --version
+
+      - name: Connect verified JP VPN Gate exit
+        shell: bash
+        run: |
+          set -euxo pipefail
+          printf 'vpn\nvpn\n' >/tmp/vpn-auth
+
+          python3 - <<'PY'
+          import base64, csv, io, json, urllib.request
+          raw = urllib.request.urlopen('https://www.vpngate.net/api/iphone/', timeout=30).read().decode('utf-8', 'replace')
+          lines = [x for x in raw.splitlines() if x and not x.startswith('*') and not x.startswith('#')]
+          rows = list(csv.DictReader(io.StringIO('\n'.join(lines))))
+          out=[]
+          for r in rows:
+              if (r.get('CountryShort') or '').upper() != 'JP':
+                  continue
+              b64=r.get('OpenVPN_ConfigData_Base64') or ''
+              if not b64:
+                  continue
+              try:
+                  cfg=base64.b64decode(b64).decode('utf-8','replace')
+              except Exception:
+                  continue
+              out.append({'ip':r.get('IP',''),'host':r.get('HostName',''),'speed':int(r.get('Speed') or 0),'ping':int(r.get('Ping') or 999999),'score':int(r.get('Score') or 0),'config':cfg})
+          out.sort(key=lambda x:(-x['speed'],x['ping'],-x['score']))
+          if not out:
+              raise SystemExit('No JP OpenVPN candidates')
+          json.dump(out[:25],open('/tmp/jp.json','w',encoding='utf-8'))
+          print('JP candidates:',len(out))
+          PY
+
+          ORIGINAL_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
+          FOUND=0
+          for IDX in $(seq 0 24); do
+            ITEM="$(jq -r ".[${IDX}] // empty" /tmp/jp.json)"
+            [ -n "$ITEM" ] || break
+            echo "$ITEM" | jq -r '.config' >/tmp/jp.ovpn
+            IP="$(echo "$ITEM" | jq -r '.ip')"
+            echo "Trying JP node ${IDX}: ${IP}"
+
+            sudo pkill openvpn >/dev/null 2>&1 || true
+            sleep 2
+            if grep -qE '^auth-user-pass([[:space:]]|$)' /tmp/jp.ovpn; then
+              sed -i -E 's#^auth-user-pass.*#auth-user-pass /tmp/vpn-auth#' /tmp/jp.ovpn
+            else
+              echo 'auth-user-pass /tmp/vpn-auth' >>/tmp/jp.ovpn
+            fi
+            cat >>/tmp/jp.ovpn <<'EOF'
+          auth-nocache
+          connect-retry-max 2
+          connect-timeout 12
+          script-security 2
+          EOF
+
+            sudo openvpn --config /tmp/jp.ovpn --daemon qifu-jp --writepid /tmp/openvpn.pid --log /tmp/openvpn.log || true
+            READY=0
+            for _ in $(seq 1 20); do
+              grep -q 'Initialization Sequence Completed' /tmp/openvpn.log 2>/dev/null && READY=1 && break
+              sleep 2
+            done
+            [ "$READY" -eq 1 ] || { tail -n 20 /tmp/openvpn.log || true; sudo pkill openvpn || true; continue; }
+
+            EXIT_IP="$(curl -4fsS --max-time 15 https://api.ipify.org || true)"
+            COUNTRY="$(curl -4fsS --max-time 15 https://ifconfig.co/country-iso || true)"
+            COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+            if [ "$COUNTRY" != JP ]; then
+              COUNTRY="$(curl -4fsS --max-time 15 https://ipapi.co/country/ || true)"
+              COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+            fi
+            echo "exit=${EXIT_IP} country=${COUNTRY}"
+            if [ -n "$EXIT_IP" ] && [ "$EXIT_IP" != "$ORIGINAL_IP" ] && [ "$COUNTRY" = JP ]; then
+              printf '%s' "$EXIT_IP" >/tmp/jp-exit-ip
+              printf '%s' "$IP" >/tmp/jp-vpngate-ip
+              FOUND=1
+              break
+            fi
+            sudo pkill openvpn >/dev/null 2>&1 || true
+            sleep 3
+          done
+          [ "$FOUND" -eq 1 ] || { echo 'No verified JP VPN exit found' >&2; exit 1; }
+
+      - name: Start VLESS WS and Cloudflare HTTPS
+        shell: bash
+        run: |
+          set -euxo pipefail
+          UUID="$(uuidgen)"
+          printf '%s' "$UUID" >/tmp/uuid
+          cat >/tmp/server.json <<EOF
+          {
+            "log":{"level":"info"},
+            "inbounds":[{"type":"vless","listen":"127.0.0.1","listen_port":10000,"users":[{"uuid":"${UUID}"}],"transport":{"type":"ws","path":"/ws"}}],
+            "outbounds":[{"type":"direct"}]
+          }
+          EOF
+          nohup sing-box run -c /tmp/server.json >/tmp/sing-server.log 2>&1 &
+          echo $! >/tmp/sing-server.pid
+          sleep 2
+          kill -0 "$(cat /tmp/sing-server.pid)"
+
+          sudo tee /etc/nginx/sites-available/default >/dev/null <<'EOF'
+          server {
+            listen 127.0.0.1:8080;
+            location /ws {
+              proxy_pass http://127.0.0.1:10000;
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              proxy_set_header Host $host;
+              proxy_read_timeout 3600s;
+            }
+            location = /sub.yaml {
+              alias /tmp/sub.yaml;
+              default_type text/yaml;
+              add_header Cache-Control "no-store" always;
+            }
+            location = /health { default_type text/plain; return 200 "ok\n"; }
+          }
+          EOF
+          echo '# initializing' >/tmp/sub.yaml
+          sudo nginx -t
+          sudo systemctl restart nginx
+
+          nohup cloudflared tunnel --no-autoupdate --protocol http2 --url http://127.0.0.1:8080 >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
+          URL=''
+          for _ in $(seq 1 90); do
+            URL="$(grep -Eo 'https://[A-Za-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n1 || true)"
+            [ -n "$URL" ] && break
+            sleep 2
+          done
+          [ -n "$URL" ] || { cat /tmp/cloudflared.log >&2; exit 1; }
+          HOST="${URL#https://}"
+          printf '%s' "$URL" >/tmp/tunnel-url
+          printf '%s' "$HOST" >/tmp/tunnel-host
+
+          cat >/tmp/sub.yaml <<EOF
+          mixed-port: 7890
+          allow-lan: true
+          mode: rule
+          log-level: info
+          ipv6: false
+          proxies:
+            - name: "🇯🇵 GitHub临时日本VPN"
+              type: vless
+              server: ${HOST}
+              port: 443
+              uuid: ${UUID}
+              network: ws
+              tls: true
+              udp: true
+              servername: ${HOST}
+              ws-opts:
+                path: /ws
+                headers:
+                  Host: ${HOST}
+          proxy-groups:
+            - name: "🇯🇵 日本VPN"
+              type: select
+              proxies:
+                - "🇯🇵 GitHub临时日本VPN"
+                - DIRECT
+          rules:
+            - MATCH,🇯🇵 日本VPN
+          EOF
+          curl -fsS --retry 12 --retry-delay 2 "${URL}/sub.yaml" | grep -q 'GitHub临时日本VPN'
+
+      - name: Verify exact public VLESS path is JP
+        shell: bash
+        run: |
+          set -euxo pipefail
+          HOST="$(cat /tmp/tunnel-host)"
+          UUID="$(cat /tmp/uuid)"
+          cat >/tmp/client.json <<EOF
+          {
+            "log":{"level":"info"},
+            "inbounds":[{"type":"mixed","listen":"127.0.0.1","listen_port":2080}],
+            "outbounds":[{"type":"vless","server":"${HOST}","server_port":443,"uuid":"${UUID}","tls":{"enabled":true,"server_name":"${HOST}"},"transport":{"type":"ws","path":"/ws","headers":{"Host":"${HOST}"}}}]
+          }
+          EOF
+          nohup sing-box run -c /tmp/client.json >/tmp/sing-client.log 2>&1 &
+          echo $! >/tmp/sing-client.pid
+          sleep 3
+          PUBLIC_IP=''
+          COUNTRY=''
+          for _ in $(seq 1 15); do
+            PUBLIC_IP="$(curl -4fsS --max-time 20 --socks5-hostname 127.0.0.1:2080 https://api.ipify.org || true)"
+            COUNTRY="$(curl -4fsS --max-time 20 --socks5-hostname 127.0.0.1:2080 https://ifconfig.co/country-iso || true)"
+            COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
+            [ -n "$PUBLIC_IP" ] && [ "$COUNTRY" = JP ] && break
+            sleep 4
+          done
+          echo "PUBLIC VLESS VERIFIED: ip=${PUBLIC_IP} country=${COUNTRY}"
+          [ -n "$PUBLIC_IP" ] && [ "$COUNTRY" = JP ] || { cat /tmp/sing-client.log >&2; exit 1; }
+          printf '%s' "$PUBLIC_IP" >/tmp/public-ip
+
+      - name: Publish current verified state
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          URL="$(cat /tmp/tunnel-url)/sub.yaml"
+          EXIT_IP="$(cat /tmp/public-ip)"
+          VPNGATE_IP="$(cat /tmp/jp-vpngate-ip)"
+          STARTED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          EXPIRES="$(date -u -d '+325 minutes' +%Y-%m-%dT%H:%M:%SZ)"
+          jq -n --arg url "$URL" --arg exit_ip "$EXIT_IP" --arg vpn_gate_ip "$VPNGATE_IP" --arg started "$STARTED" --arg expires "$EXPIRES" --arg run_id "$GITHUB_RUN_ID" \
+            '{ready:true,subscription_url:$url,verified_country:"JP",verified_exit_ip:$exit_ip,vpn_gate_server_ip:$vpn_gate_ip,started_at:$started,approx_expires_at:$expires,run_id:$run_id,transport:"VLESS+WebSocket+TLS"}' >/tmp/state.json
+
+          API="${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/contents/.qifu-japan-vpn-current.json"
+          SHA="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' "$API" 2>/dev/null | jq -r '.sha // empty' || true)"
+          CONTENT="$(base64 -w0 /tmp/state.json)"
+          if [ -n "$SHA" ]; then
+            jq -n --arg message 'Update current verified Japan VPN state' --arg content "$CONTENT" --arg sha "$SHA" '{message:$message,content:$content,sha:$sha}' >/tmp/put.json
+          else
+            jq -n --arg message 'Publish current verified Japan VPN state' --arg content "$CONTENT" '{message:$message,content:$content}' >/tmp/put.json
+          fi
+          curl -fsSL -X PUT -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' -d @/tmp/put.json "$API" >/dev/null
+          cat /tmp/state.json
+
+      - name: Upload verified connection
+        uses: actions/upload-artifact@v4
+        with:
+          name: qifu-japan-vpn-connection
+          path: |
+            /tmp/state.json
+            /tmp/sub.yaml
+          retention-days: 1
+
+      - name: Keep VPN online
+        shell: bash
+        run: |
+          set -euo pipefail
+          for _ in $(seq 1 325); do
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            kill -0 "$(cat /tmp/sing-server.pid)"
+            sudo kill -0 "$(cat /tmp/openvpn.pid)"
+            curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null
+            sleep 60
+          done
