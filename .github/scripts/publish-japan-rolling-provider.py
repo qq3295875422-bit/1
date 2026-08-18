@@ -5,6 +5,8 @@ import base64
 import json
 import os
 import re
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -38,22 +40,40 @@ def get_file(path: str):
         return "", ""
 
 
-def put_file(path: str, text: str, message: str):
-    _, sha = get_file(path)
-    payload = {
-        "message": message,
-        "content": base64.b64encode(text.encode("utf-8")).decode("ascii"),
-    }
-    if sha:
-        payload["sha"] = sha
-    req = urllib.request.Request(
-        api_url(path),
-        data=json.dumps(payload).encode("utf-8"),
-        headers={**HEADERS, "Content-Type": "application/json"},
-        method="PUT",
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        resp.read()
+def put_file(path: str, text: str, message: str, attempts: int = 6):
+    last = None
+    for attempt in range(1, attempts + 1):
+        _, sha = get_file(path)
+        payload = {
+            "message": message,
+            "content": base64.b64encode(text.encode("utf-8")).decode("ascii"),
+        }
+        if sha:
+            payload["sha"] = sha
+        req = urllib.request.Request(
+            api_url(path),
+            data=json.dumps(payload).encode("utf-8"),
+            headers={**HEADERS, "Content-Type": "application/json"},
+            method="PUT",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                resp.read()
+            return
+        except urllib.error.HTTPError as exc:
+            last = exc
+            # A concurrent workflow/automation may have advanced this file's blob SHA.
+            # Refresh and retry only the conflict-like statuses we have observed.
+            if exc.code not in (409, 422) or attempt == attempts:
+                raise
+            time.sleep(min(2 * attempt, 8))
+        except Exception as exc:
+            last = exc
+            if attempt == attempts:
+                raise
+            time.sleep(min(2 * attempt, 8))
+    if last:
+        raise last
 
 
 def proxy_section_from_sub(text: str) -> str:
@@ -121,6 +141,8 @@ provider = (
 if previous:
     provider += previous
 
+# Provider publication is the critical handoff. If this fails, fail the job so an
+# unadvertised runner does not masquerade as a completed rotation.
 put_file(PROVIDER_PATH, provider, f"Rotate Japan VPN provider to run {RUN_ID}")
 
 status = {
@@ -132,6 +154,12 @@ status = {
     "provider_path": PROVIDER_PATH,
     "stable_subscription_path": "subscriptions/japan-rolling.yaml",
 }
-put_file(STATUS_PATH, json.dumps(status, ensure_ascii=False, indent=2) + "\n", f"Update Japan VPN rolling status {RUN_ID}")
+
+# Status is observability metadata. Do not tear down an already verified and
+# published VPN merely because this second independent GitHub write raced.
+try:
+    put_file(STATUS_PATH, json.dumps(status, ensure_ascii=False, indent=2) + "\n", f"Update Japan VPN rolling status {RUN_ID}")
+except Exception as exc:
+    print(f"WARNING: provider published but rolling status update failed: {exc}", flush=True)
 
 print(json.dumps(status, ensure_ascii=False, indent=2))
