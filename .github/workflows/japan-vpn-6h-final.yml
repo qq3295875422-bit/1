@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - '.github/workflows/japan-vpn-6h-final.yml'
-      - '.github/scripts/japan-vpn-6h-native-final.sh'
+      - '.github/scripts/japan-vpn-6h-native-v2.sh'
 
 permissions:
   contents: write
@@ -28,35 +28,32 @@ jobs:
           set -euo pipefail
           publish_state() {
             STATUS="$1" MESSAGE="$2" python3 - <<'PY'
-          import base64, json, os, urllib.request
-          repo=os.environ['GITHUB_REPOSITORY']
-          token=os.environ['GH_TOKEN']
-          path='.qifu-japan-vpn-current.json'
+          import base64,json,os,urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']; token=os.environ['GH_TOKEN']; path='.qifu-japan-vpn-current.json'
           api=f'https://api.github.com/repos/{repo}/contents/{path}'
-          headers={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'qifu-japan-vpn'}
+          h={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'qifu-japan-vpn'}
           data={'ready':False,'status':os.environ['STATUS'],'stage':'probe-tun','run_id':os.environ.get('GITHUB_RUN_ID',''),'message':os.environ['MESSAGE']}
-          raw=json.dumps(data,ensure_ascii=False,indent=2).encode()
-          sha=''
+          raw=json.dumps(data,ensure_ascii=False,indent=2).encode(); sha=''
           try:
-              with urllib.request.urlopen(urllib.request.Request(api,headers=headers),timeout=30) as r: sha=json.load(r).get('sha','')
+              with urllib.request.urlopen(urllib.request.Request(api,headers=h),timeout=30) as r: sha=json.load(r).get('sha','')
           except Exception: pass
-          payload={'message':'Update Qifu Japan VPN TUN preflight state','content':base64.b64encode(raw).decode()}
-          if sha: payload['sha']=sha
-          req=urllib.request.Request(api,data=json.dumps(payload).encode(),headers={**headers,'Content-Type':'application/json'},method='PUT')
+          p={'message':'Update Japan VPN TUN preflight state','content':base64.b64encode(raw).decode()}
+          if sha:p['sha']=sha
+          req=urllib.request.Request(api,data=json.dumps(p).encode(),headers={**h,'Content-Type':'application/json'},method='PUT')
           with urllib.request.urlopen(req,timeout=30) as r:r.read()
           PY
           }
           publish_state starting 'Checking GitHub runner TUN support'
-          if ! test -c /dev/net/tun; then publish_state failed '/dev/net/tun unavailable'; exit 1; fi
-          if ! sudo ip tuntap add dev qifu-tun-test mode tun; then publish_state failed 'Cannot create TUN'; exit 1; fi
+          test -c /dev/net/tun || { publish_state failed '/dev/net/tun unavailable'; exit 1; }
+          sudo ip tuntap add dev qifu-tun-test mode tun || { publish_state failed 'Cannot create TUN'; exit 1; }
           sudo ip link set qifu-tun-test up
           sudo ip link del qifu-tun-test
-          publish_state starting 'TUN support verified; starting native TCP443 Japan VPN build'
+          publish_state starting 'TUN verified; starting Japan VPN build'
       - name: Build and verify temporary Japan VPN
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash .github/scripts/japan-vpn-6h-native-final.sh
+        run: bash .github/scripts/japan-vpn-6h-native-v2.sh
       - name: Upload verified subscription
         if: success()
         uses: actions/upload-artifact@v4
