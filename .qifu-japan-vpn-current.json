@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://vacations-simon-european-flat.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.81",
-  "started_at": "2026-08-18T15:07:49Z",
-  "approx_expires_at": "2026-08-18T20:32:49Z",
-  "run_id": "32152431086",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32153567792",
+  "message": "Checking GitHub runner TUN support"
 }
