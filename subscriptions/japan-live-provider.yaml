@@ -1,0 +1,16 @@
+# Qifu rolling Japan VPN provider
+# Current verified generation: 32152431086
+proxies:
+  - name: "🇯🇵 日本VPN-32152431086"
+    type: vless
+    server: vacations-simon-european-flat.trycloudflare.com
+    port: 443
+    uuid: 143afbb8-265f-41fc-be21-9b49f7cf1526
+    network: ws
+    tls: true
+    udp: true
+    servername: vacations-simon-european-flat.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: vacations-simon-european-flat.trycloudflare.com
