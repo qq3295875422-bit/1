@@ -71,7 +71,7 @@ jobs:
           sudo openvpn --config /tmp/jp.ovpn --daemon qifu-probe --writepid /tmp/openvpn.pid --log /tmp/openvpn.log || true
           INIT=false
           for _ in $(seq 1 18); do
-            if grep -q 'Initialization Sequence Completed' /tmp/openvpn.log 2>/dev/null; then INIT=true; break; fi
+            if sudo grep -q 'Initialization Sequence Completed' /tmp/openvpn.log 2>/dev/null; then INIT=true; break; fi
             sleep 2
           done
 
@@ -83,11 +83,12 @@ jobs:
             COUNTRY="$(echo "$COUNTRY" | tr -d '\r\n[:space:]' | tr '[:lower:]' '[:upper:]')"
           fi
 
+          sudo tail -n 35 /tmp/openvpn.log >/tmp/openvpn-tail.txt 2>/dev/null || true
+          sudo chown "$USER":"$USER" /tmp/openvpn-tail.txt 2>/dev/null || true
           python3 - <<PY
           import json,os
-          log=''
           try:
-              log='\n'.join(open('/tmp/openvpn.log',errors='replace').read().splitlines()[-35:])
+              log=open('/tmp/openvpn-tail.txt',errors='replace').read()
           except Exception as e:
               log=str(e)
           json.dump({
