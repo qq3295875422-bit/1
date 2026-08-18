@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "connect-japan-exit",
-  "run_id": "32149622387",
-  "updated_at": "2026-08-18T14:39:22.321411Z",
-  "message": "Trying Japanese OpenVPN exits and verifying country=JP"
+  "stage": "boot",
+  "run_id": "32150236779",
+  "updated_at": "2026-08-18T14:45:23.052596Z",
+  "message": "GitHub runner allocated"
 }
