@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "install-runtime",
+  "stage": "fetch-vpngate-japan",
   "run_id": "32150236779",
-  "updated_at": "2026-08-18T14:45:24.415881Z",
-  "message": "Installing OpenVPN, nginx, sing-box and cloudflared"
+  "updated_at": "2026-08-18T14:45:37.530378Z",
+  "message": "Fetching VPN Gate CSV and selecting official Japan TCP 443 nodes"
 }
