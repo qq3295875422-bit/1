@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://any-affect-scenic-genome.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.23",
+  "started_at": "2026-08-19T14:37:59Z",
+  "approx_expires_at": "2026-08-19T20:02:59Z",
   "run_id": "32264975667",
-  "updated_at": "2026-08-19T14:37:43.175113Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
