@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32204296122
+# Current verified generation: 32206371016
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32206371016"
+    type: vless
+    server: navy-displaying-durham-behavior.trycloudflare.com
+    port: 443
+    uuid: 8276e1ec-08d6-45d9-8229-c0f49b89f404
+    network: ws
+    tls: true
+    udp: true
+    servername: navy-displaying-durham-behavior.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: navy-displaying-durham-behavior.trycloudflare.com
   - name: "🇯🇵 日本VPN-32204296122"
     type: vless
     server: extended-sentences-chronic-pot.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: extended-sentences-chronic-pot.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32183260902"
-    type: vless
-    server: taken-bags-benjamin-infrared.trycloudflare.com
-    port: 443
-    uuid: f7e06ed4-aadb-4c51-ac97-48b16a154426
-    network: ws
-    tls: true
-    udp: true
-    servername: taken-bags-benjamin-infrared.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: taken-bags-benjamin-infrared.trycloudflare.com
