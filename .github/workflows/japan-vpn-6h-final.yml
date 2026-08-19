@@ -79,10 +79,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          HEALTH_FAILS=0
           for _ in $(seq 1 335); do
             kill -0 "$(cat /tmp/cloudflared.pid)"
             kill -0 "$(cat /tmp/sing-server.pid)"
             sudo kill -0 "$(cat /tmp/openvpn.pid)"
-            curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null
+            if curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null; then
+              HEALTH_FAILS=0
+            else
+              HEALTH_FAILS=$((HEALTH_FAILS + 1))
+              echo "Public tunnel health check failed ${HEALTH_FAILS}/3"
+              if [ "$HEALTH_FAILS" -ge 3 ]; then
+                echo 'Public tunnel remained unhealthy for three consecutive checks.' >&2
+                exit 1
+              fi
+            fi
             sleep 60
           done
