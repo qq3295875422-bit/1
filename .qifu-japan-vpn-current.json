@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "start-public-relay",
-  "run_id": "32264909996",
-  "updated_at": "2026-08-19T14:37:40.191228Z",
-  "message": "exit=1; line=6"
+  "status": "starting",
+  "stage": "verify-public-path",
+  "run_id": "32264975667",
+  "updated_at": "2026-08-19T14:37:43.175113Z",
+  "message": "End-to-end verifying imported public VLESS path exits JP"
 }
