@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32264975667
+# Current verified generation: 32299964035
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32299964035"
+    type: vless
+    server: brain-consultants-cancel-nightlife.trycloudflare.com
+    port: 443
+    uuid: d86097a6-77c9-4001-acbc-471747a75ad3
+    network: ws
+    tls: true
+    udp: true
+    servername: brain-consultants-cancel-nightlife.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: brain-consultants-cancel-nightlife.trycloudflare.com
   - name: "🇯🇵 日本VPN-32264975667"
     type: vless
     server: any-affect-scenic-genome.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: any-affect-scenic-genome.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32244072534"
-    type: vless
-    server: butler-innovative-rather-constructed.trycloudflare.com
-    port: 443
-    uuid: d46863a6-b0e6-427e-825f-cf9f13e673e2
-    network: ws
-    tls: true
-    udp: true
-    servername: butler-innovative-rather-constructed.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: butler-innovative-rather-constructed.trycloudflare.com
