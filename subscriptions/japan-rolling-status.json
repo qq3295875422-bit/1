@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32183260902",
-  "current_server": "taken-bags-benjamin-infrared.trycloudflare.com",
-  "previous_run_id": "32181169266",
-  "previous_server": "completion-temperature-crawford-welding.trycloudflare.com",
+  "current_run_id": "32204296122",
+  "current_server": "extended-sentences-chronic-pot.trycloudflare.com",
+  "previous_run_id": "32183260902",
+  "previous_server": "taken-bags-benjamin-infrared.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
