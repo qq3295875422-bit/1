@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://any-affect-scenic-genome.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.23",
-  "started_at": "2026-08-19T14:37:59Z",
-  "approx_expires_at": "2026-08-19T20:02:59Z",
-  "run_id": "32264975667",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32271783277",
+  "message": "Checking GitHub runner TUN support"
 }
