@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "fix-dns",
-  "run_id": "32264909996",
-  "updated_at": "2026-08-19T14:37:27.876805Z",
-  "message": "JP exit verified; switching runner to public DNS"
+  "stage": "wait-public-dns",
+  "run_id": "32264975667",
+  "updated_at": "2026-08-19T14:37:35.026444Z",
+  "message": "Waiting for new trycloudflare hostname to resolve globally"
 }
