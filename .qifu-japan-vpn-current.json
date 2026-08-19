@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://taken-bags-benjamin-infrared.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.126",
-  "started_at": "2026-08-18T20:39:31Z",
-  "approx_expires_at": "2026-08-19T02:04:31Z",
-  "run_id": "32183260902",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32204296122",
+  "message": "Checking GitHub runner TUN support"
 }
