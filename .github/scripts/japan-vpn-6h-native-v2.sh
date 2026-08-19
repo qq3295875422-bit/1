@@ -4,18 +4,27 @@ STAGE="boot"
 
 publish_file(){
 python3 - <<'PY'
-import base64,json,os,urllib.request
+import base64,json,os,time,urllib.error,urllib.request
 repo=os.environ['GITHUB_REPOSITORY']; token=os.environ['GH_TOKEN']; path='.qifu-japan-vpn-current.json'
 api=f'https://api.github.com/repos/{repo}/contents/{path}'
 h={'Authorization':f'Bearer {token}','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'qifu-japan-vpn'}
-sha=''
-try:
- with urllib.request.urlopen(urllib.request.Request(api,headers=h),timeout=30) as r: sha=json.load(r).get('sha','')
-except Exception: pass
-raw=open('/tmp/state.json','rb').read(); p={'message':'Update current verified Japan VPN state','content':base64.b64encode(raw).decode()}
-if sha:p['sha']=sha
-req=urllib.request.Request(api,data=json.dumps(p).encode(),headers={**h,'Content-Type':'application/json'},method='PUT')
-with urllib.request.urlopen(req,timeout=30) as r:r.read()
+raw=open('/tmp/state.json','rb').read()
+for attempt in range(1,7):
+ sha=''
+ try:
+  with urllib.request.urlopen(urllib.request.Request(api,headers=h),timeout=30) as r: sha=json.load(r).get('sha','')
+ except Exception:
+  pass
+ p={'message':'Update current verified Japan VPN state','content':base64.b64encode(raw).decode()}
+ if sha:p['sha']=sha
+ req=urllib.request.Request(api,data=json.dumps(p).encode(),headers={**h,'Content-Type':'application/json'},method='PUT')
+ try:
+  with urllib.request.urlopen(req,timeout=30) as r:r.read()
+  break
+ except urllib.error.HTTPError as exc:
+  if exc.code not in (409,422) or attempt == 6:
+   raise
+  time.sleep(min(2*attempt,8))
 PY
 }
 state(){
