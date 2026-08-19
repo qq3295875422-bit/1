@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32183260902
+# Current verified generation: 32204296122
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32204296122"
+    type: vless
+    server: extended-sentences-chronic-pot.trycloudflare.com
+    port: 443
+    uuid: 152d6eeb-c07e-4035-9b83-018971971dc9
+    network: ws
+    tls: true
+    udp: true
+    servername: extended-sentences-chronic-pot.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: extended-sentences-chronic-pot.trycloudflare.com
   - name: "🇯🇵 日本VPN-32183260902"
     type: vless
     server: taken-bags-benjamin-infrared.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: taken-bags-benjamin-infrared.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32181169266"
-    type: vless
-    server: completion-temperature-crawford-welding.trycloudflare.com
-    port: 443
-    uuid: 26e04922-f83e-4dd2-b060-0d942e832b4a
-    network: ws
-    tls: true
-    udp: true
-    servername: completion-temperature-crawford-welding.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: completion-temperature-crawford-welding.trycloudflare.com
