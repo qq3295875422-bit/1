@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://bones-hwy-self-championships.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.245",
-  "vpn_gate_server_ip": "219.100.37.200",
-  "started_at": "2026-08-20T12:17:04Z",
-  "approx_expires_at": "2026-08-20T17:42:04Z",
-  "run_id": "32367854093",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32388120738",
+  "message": "Checking GitHub runner TUN support"
 }
