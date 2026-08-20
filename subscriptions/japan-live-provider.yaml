@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32336683413
+# Current verified generation: 32360392420
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32360392420"
+    type: vless
+    server: montana-apps-lil-stored.trycloudflare.com
+    port: 443
+    uuid: 745649db-75f3-44d1-85ee-2e9d00c61f61
+    network: ws
+    tls: true
+    udp: true
+    servername: montana-apps-lil-stored.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: montana-apps-lil-stored.trycloudflare.com
   - name: "🇯🇵 日本VPN-32336683413"
     type: vless
     server: cheese-dining-adapter-percentage.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: cheese-dining-adapter-percentage.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32322352224"
-    type: vless
-    server: let-outline-exams-banner.trycloudflare.com
-    port: 443
-    uuid: eec913b9-7b37-496c-ab74-ad2586b7c816
-    network: ws
-    tls: true
-    udp: true
-    servername: let-outline-exams-banner.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: let-outline-exams-banner.trycloudflare.com
