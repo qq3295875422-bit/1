@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32322352224
+# Current verified generation: 32336683413
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32336683413"
+    type: vless
+    server: cheese-dining-adapter-percentage.trycloudflare.com
+    port: 443
+    uuid: 301ae22e-1f45-43b8-960b-fb7ca47890d9
+    network: ws
+    tls: true
+    udp: true
+    servername: cheese-dining-adapter-percentage.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: cheese-dining-adapter-percentage.trycloudflare.com
   - name: "🇯🇵 日本VPN-32322352224"
     type: vless
     server: let-outline-exams-banner.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: let-outline-exams-banner.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32299964035"
-    type: vless
-    server: brain-consultants-cancel-nightlife.trycloudflare.com
-    port: 443
-    uuid: d86097a6-77c9-4001-acbc-471747a75ad3
-    network: ws
-    tls: true
-    udp: true
-    servername: brain-consultants-cancel-nightlife.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: brain-consultants-cancel-nightlife.trycloudflare.com
