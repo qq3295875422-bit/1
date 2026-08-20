@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32336683413",
-  "current_server": "cheese-dining-adapter-percentage.trycloudflare.com",
-  "previous_run_id": "32322352224",
-  "previous_server": "let-outline-exams-banner.trycloudflare.com",
+  "current_run_id": "32360392420",
+  "current_server": "montana-apps-lil-stored.trycloudflare.com",
+  "previous_run_id": "32336683413",
+  "previous_server": "cheese-dining-adapter-percentage.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
