@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32367854093",
-  "current_server": "bones-hwy-self-championships.trycloudflare.com",
-  "previous_run_id": "32360392420",
-  "previous_server": "montana-apps-lil-stored.trycloudflare.com",
+  "current_run_id": "32388120738",
+  "current_server": "angel-implementing-prominent-tours.trycloudflare.com",
+  "previous_run_id": "32367854093",
+  "previous_server": "bones-hwy-self-championships.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
