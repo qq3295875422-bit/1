@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://cheese-dining-adapter-percentage.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.20",
+  "started_at": "2026-08-20T05:44:40Z",
+  "approx_expires_at": "2026-08-20T11:09:40Z",
   "run_id": "32336683413",
-  "updated_at": "2026-08-20T05:44:26.026535Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
