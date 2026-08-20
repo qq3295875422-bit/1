@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32415535081",
-  "current_server": "rest-paste-website-olympic.trycloudflare.com",
-  "previous_run_id": "32388120738",
-  "previous_server": "angel-implementing-prominent-tours.trycloudflare.com",
+  "current_run_id": "32423136194",
+  "current_server": "prototype-size-holders-costs.trycloudflare.com",
+  "previous_run_id": "32415535081",
+  "previous_server": "rest-paste-website-olympic.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
