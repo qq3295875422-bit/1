@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://angel-implementing-prominent-tours.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.243",
-  "vpn_gate_server_ip": "219.100.37.161",
-  "started_at": "2026-08-20T15:49:39Z",
-  "approx_expires_at": "2026-08-20T21:14:39Z",
-  "run_id": "32388120738",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32415535081",
+  "message": "Checking GitHub runner TUN support"
 }
