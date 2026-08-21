@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32512372978
+# Current verified generation: 32524482643
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32524482643"
+    type: vless
+    server: albuquerque-suzuki-cookie-til.trycloudflare.com
+    port: 443
+    uuid: 323e1750-9174-474d-b462-b19157d57792
+    network: ws
+    tls: true
+    udp: true
+    servername: albuquerque-suzuki-cookie-til.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: albuquerque-suzuki-cookie-til.trycloudflare.com
   - name: "🇯🇵 日本VPN-32512372978"
     type: vless
     server: delete-beautiful-stephanie-nonprofit.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: delete-beautiful-stephanie-nonprofit.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32512166998"
-    type: vless
-    server: keyboards-romantic-financing-keeps.trycloudflare.com
-    port: 443
-    uuid: 33d2efd4-c802-45ac-b996-6ad940635d22
-    network: ws
-    tls: true
-    udp: true
-    servername: keyboards-romantic-financing-keeps.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: keyboards-romantic-financing-keeps.trycloudflare.com
