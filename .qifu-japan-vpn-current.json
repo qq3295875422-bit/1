@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://delete-beautiful-stephanie-nonprofit.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.243",
-  "vpn_gate_server_ip": "219.100.37.162",
-  "started_at": "2026-08-21T18:17:43Z",
-  "approx_expires_at": "2026-08-21T23:42:43Z",
-  "run_id": "32512372978",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32524482643",
+  "message": "Checking GitHub runner TUN support"
 }
