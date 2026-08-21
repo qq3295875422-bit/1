@@ -41,10 +41,10 @@ trap fail ERR
 STAGE="install-runtime"; state starting "$STAGE" "Installing runtime"
 sudo apt-get update
 sudo apt-get install -y openvpn nginx jq curl uuid-runtime python3 ca-certificates
-TAG="$(curl -fsSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name')"; VER="${TAG#v}"
-curl -fsSL --retry 5 --retry-delay 2 "https://github.com/SagerNet/sing-box/releases/download/${TAG}/sing-box-${VER}-linux-amd64.tar.gz" -o /tmp/sb.tgz
+TAG="$(curl -fsSL --retry 5 --retry-delay 2 --retry-all-errors -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' -H 'User-Agent: qifu-japan-vpn' https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -er '.tag_name')"; VER="${TAG#v}"
+curl -fsSL --retry 5 --retry-delay 2 --retry-all-errors "https://github.com/SagerNet/sing-box/releases/download/${TAG}/sing-box-${VER}-linux-amd64.tar.gz" -o /tmp/sb.tgz
 tar -xzf /tmp/sb.tgz -C /tmp; sudo install -m0755 "/tmp/sing-box-${VER}-linux-amd64/sing-box" /usr/local/bin/sing-box
-curl -fsSL --retry 5 --retry-delay 2 https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
+curl -fsSL --retry 5 --retry-delay 2 --retry-all-errors https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared
 sudo install -m0755 /tmp/cloudflared /usr/local/bin/cloudflared
 
 STAGE="select-native-tcp443-jp"; state starting "$STAGE" "Selecting native Japan TCP 443 configs"
