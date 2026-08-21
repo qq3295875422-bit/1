@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32437969045",
-  "current_server": "reuters-bills-examining-quarterly.trycloudflare.com",
-  "previous_run_id": "32423136194",
-  "previous_server": "prototype-size-holders-costs.trycloudflare.com",
+  "current_run_id": "32462150442",
+  "current_server": "regardless-bug-springer-hispanic.trycloudflare.com",
+  "previous_run_id": "32437969045",
+  "previous_server": "reuters-bills-examining-quarterly.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
