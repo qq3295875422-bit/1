@@ -1,2 +1,2 @@
-manual-recovery 2026-08-21T08:14:40Z
-reason: restore-overlap-after-current-recovery-previous-run-32437969045-cancelled
+manual-recovery 2026-08-21T18:11:47Z
+reason: current-run-32499327995-keepalive-failed-previous-32485937536-still-running
