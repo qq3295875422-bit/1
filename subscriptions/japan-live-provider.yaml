@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32462311269
+# Current verified generation: 32485937536
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32485937536"
+    type: vless
+    server: train-def-border-casual.trycloudflare.com
+    port: 443
+    uuid: c7179d2d-519d-4061-b34a-fbb085125a3d
+    network: ws
+    tls: true
+    udp: true
+    servername: train-def-border-casual.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: train-def-border-casual.trycloudflare.com
   - name: "🇯🇵 日本VPN-32462311269"
     type: vless
     server: burning-projected-list-transit.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: burning-projected-list-transit.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32462150442"
-    type: vless
-    server: regardless-bug-springer-hispanic.trycloudflare.com
-    port: 443
-    uuid: df983a55-c01f-4394-95b6-c84c003be643
-    network: ws
-    tls: true
-    udp: true
-    servername: regardless-bug-springer-hispanic.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: regardless-bug-springer-hispanic.trycloudflare.com
