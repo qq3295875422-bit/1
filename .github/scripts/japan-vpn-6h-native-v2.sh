@@ -50,8 +50,19 @@ sudo install -m0755 /tmp/cloudflared /usr/local/bin/cloudflared
 STAGE="select-native-tcp443-jp"; state starting "$STAGE" "Selecting native Japan TCP 443 configs"
 printf 'vpn\nvpn\n' >/tmp/vpn-auth
 python3 - <<'PY'
-import base64,csv,io,json,re,urllib.request
-raw=urllib.request.urlopen('https://www.vpngate.net/api/iphone/',timeout=30).read().decode('utf-8','replace')
+import base64,csv,io,json,re,time,urllib.request
+raw=None
+last=None
+for attempt in range(1,6):
+ try:
+  raw=urllib.request.urlopen('https://www.vpngate.net/api/iphone/',timeout=30).read().decode('utf-8','replace')
+  break
+ except Exception as exc:
+  last=exc
+  print(f'VPN Gate API attempt {attempt}/5 failed: {exc}', flush=True)
+  if attempt < 5: time.sleep(min(3*attempt,10))
+if raw is None:
+ raise SystemExit(f'VPN Gate API unavailable after retries: {last}')
 lines=[x for x in raw.splitlines() if x.strip() and not x.startswith('*')]; i=next(i for i,x in enumerate(lines) if x.startswith('#HostName,')); lines=lines[i:]; lines[0]=lines[0].lstrip('#')
 rows=list(csv.DictReader(io.StringIO('\n'.join(lines)))); out=[]
 for r in rows:
