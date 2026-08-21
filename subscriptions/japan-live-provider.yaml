@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32485937536
+# Current verified generation: 32499327995
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32499327995"
+    type: vless
+    server: fireplace-virgin-personalized-belongs.trycloudflare.com
+    port: 443
+    uuid: 64cdc129-b315-414f-aa8a-fa7539fd1a9a
+    network: ws
+    tls: true
+    udp: true
+    servername: fireplace-virgin-personalized-belongs.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: fireplace-virgin-personalized-belongs.trycloudflare.com
   - name: "🇯🇵 日本VPN-32485937536"
     type: vless
     server: train-def-border-casual.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: train-def-border-casual.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32462311269"
-    type: vless
-    server: burning-projected-list-transit.trycloudflare.com
-    port: 443
-    uuid: 1301d077-5a59-48f5-b0ef-583ab19eaf1d
-    network: ws
-    tls: true
-    udp: true
-    servername: burning-projected-list-transit.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: burning-projected-list-transit.trycloudflare.com
