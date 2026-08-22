@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32554874514
+# Current verified generation: 32568061426
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32568061426"
+    type: vless
+    server: checks-maple-pressing-non.trycloudflare.com
+    port: 443
+    uuid: a62676d7-52be-493a-9a21-b88d629af28c
+    network: ws
+    tls: true
+    udp: true
+    servername: checks-maple-pressing-non.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: checks-maple-pressing-non.trycloudflare.com
   - name: "🇯🇵 日本VPN-32554874514"
     type: vless
     server: ham-contain-comparable-pmid.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: ham-contain-comparable-pmid.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32544455105"
-    type: vless
-    server: families-rfc-florida-drinks.trycloudflare.com
-    port: 443
-    uuid: ea9a6f94-16f0-45ac-9306-ed05bdb322c6
-    network: ws
-    tls: true
-    udp: true
-    servername: families-rfc-florida-drinks.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: families-rfc-florida-drinks.trycloudflare.com
