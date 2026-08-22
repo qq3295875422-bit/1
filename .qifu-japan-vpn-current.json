@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "select-native-tcp443-jp",
+  "stage": "connect-japan-exit",
   "run_id": "32582047337",
-  "updated_at": "2026-08-22T15:33:37.993935Z",
-  "message": "Selecting native Japan TCP 443 configs"
+  "updated_at": "2026-08-22T15:33:43.745714Z",
+  "message": "Connecting native Japan TCP 443 exit and verifying JP"
 }
