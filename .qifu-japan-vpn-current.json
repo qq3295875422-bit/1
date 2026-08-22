@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://albuquerque-suzuki-cookie-til.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.245",
-  "vpn_gate_server_ip": "219.100.37.193",
-  "started_at": "2026-08-21T20:38:56Z",
-  "approx_expires_at": "2026-08-22T02:03:56Z",
-  "run_id": "32524482643",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32544455105",
+  "message": "Checking GitHub runner TUN support"
 }
