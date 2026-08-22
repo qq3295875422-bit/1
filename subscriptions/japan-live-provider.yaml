@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32524482643
+# Current verified generation: 32544455105
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32544455105"
+    type: vless
+    server: families-rfc-florida-drinks.trycloudflare.com
+    port: 443
+    uuid: ea9a6f94-16f0-45ac-9306-ed05bdb322c6
+    network: ws
+    tls: true
+    udp: true
+    servername: families-rfc-florida-drinks.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: families-rfc-florida-drinks.trycloudflare.com
   - name: "🇯🇵 日本VPN-32524482643"
     type: vless
     server: albuquerque-suzuki-cookie-til.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: albuquerque-suzuki-cookie-til.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32512372978"
-    type: vless
-    server: delete-beautiful-stephanie-nonprofit.trycloudflare.com
-    port: 443
-    uuid: fa1041b5-18bc-4cfa-a4a6-99090b2069d4
-    network: ws
-    tls: true
-    udp: true
-    servername: delete-beautiful-stephanie-nonprofit.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: delete-beautiful-stephanie-nonprofit.trycloudflare.com
