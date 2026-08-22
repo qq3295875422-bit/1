@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32524482643",
-  "current_server": "albuquerque-suzuki-cookie-til.trycloudflare.com",
-  "previous_run_id": "32512372978",
-  "previous_server": "delete-beautiful-stephanie-nonprofit.trycloudflare.com",
+  "current_run_id": "32544455105",
+  "current_server": "families-rfc-florida-drinks.trycloudflare.com",
+  "previous_run_id": "32524482643",
+  "previous_server": "albuquerque-suzuki-cookie-til.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
