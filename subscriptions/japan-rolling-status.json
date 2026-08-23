@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32621000404",
-  "current_server": "outcome-relying-kids-adaptive.trycloudflare.com",
-  "previous_run_id": "32611613860",
-  "previous_server": "architects-airline-projector-mere.trycloudflare.com",
+  "current_run_id": "32633114815",
+  "current_server": "queue-companion-pregnancy-farmer.trycloudflare.com",
+  "previous_run_id": "32621000404",
+  "previous_server": "outcome-relying-kids-adaptive.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
