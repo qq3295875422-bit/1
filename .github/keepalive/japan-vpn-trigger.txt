@@ -1,2 +1,2 @@
-manual-recovery 2026-08-23T20:18:20Z
-reason: retry-after-run-32663894153-transient-vpngate-auth-failure-and-peer-reset-current-32648961725-nearing-expiry
+manual-recovery 2026-08-23T20:22:10Z
+reason: second-retry-after-two-upstream-vpngate-candidate-failures-current-32648961725-still-running-nearing-expiry
