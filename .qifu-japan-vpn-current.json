@@ -1,8 +1,7 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "connect-japan-exit",
-  "run_id": "32663894153",
-  "updated_at": "2026-08-23T20:17:56.964254Z",
-  "message": "exit=1; line=101"
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32664038888",
+  "message": "Checking GitHub runner TUN support"
 }
