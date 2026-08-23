@@ -1,2 +1,2 @@
-manual-recovery 2026-08-23T00:13:09Z
-reason: previous-run-32582047337-cancelled-restore-overlap-before-current-32597154652-expiry
+manual-recovery 2026-08-23T10:11:42Z
+reason: previous-run-32611613860-completed-no-live-overlap-current-32621000404-nearing-expiry
