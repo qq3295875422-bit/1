@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://architects-airline-projector-mere.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.109",
-  "started_at": "2026-08-23T01:58:35Z",
-  "approx_expires_at": "2026-08-23T07:23:35Z",
-  "run_id": "32611613860",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32621000404",
+  "message": "Checking GitHub runner TUN support"
 }
