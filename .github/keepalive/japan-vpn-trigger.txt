@@ -1,2 +1,2 @@
-manual-recovery 2026-08-23T20:16:30Z
-reason: previous-run-32634227693-cancelled-no-live-overlap-current-32648961725-within-45m-of-expiry
+manual-recovery 2026-08-23T20:18:20Z
+reason: retry-after-run-32663894153-transient-vpngate-auth-failure-and-peer-reset-current-32648961725-nearing-expiry
