@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32607301713",
-  "current_server": "spies-longitude-audio-tiger.trycloudflare.com",
-  "previous_run_id": "32597154652",
-  "previous_server": "soup-ccd-api-bookmarks.trycloudflare.com",
+  "current_run_id": "32611613860",
+  "current_server": "architects-airline-projector-mere.trycloudflare.com",
+  "previous_run_id": "32607301713",
+  "previous_server": "spies-longitude-audio-tiger.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
