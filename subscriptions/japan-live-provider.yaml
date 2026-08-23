@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32607301713
+# Current verified generation: 32611613860
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32611613860"
+    type: vless
+    server: architects-airline-projector-mere.trycloudflare.com
+    port: 443
+    uuid: 1b7e94fa-5523-416a-80bf-1f6a39367cd1
+    network: ws
+    tls: true
+    udp: true
+    servername: architects-airline-projector-mere.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: architects-airline-projector-mere.trycloudflare.com
   - name: "🇯🇵 日本VPN-32607301713"
     type: vless
     server: spies-longitude-audio-tiger.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: spies-longitude-audio-tiger.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32597154652"
-    type: vless
-    server: soup-ccd-api-bookmarks.trycloudflare.com
-    port: 443
-    uuid: 3ef1813c-5ca5-40fa-992e-2d9179f90b24
-    network: ws
-    tls: true
-    udp: true
-    servername: soup-ccd-api-bookmarks.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: soup-ccd-api-bookmarks.trycloudflare.com
