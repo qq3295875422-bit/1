@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://highways-intention-christopher-usb.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.243",
+  "vpn_gate_server_ip": "219.100.37.162",
+  "started_at": "2026-08-23T20:37:44Z",
+  "approx_expires_at": "2026-08-24T02:02:44Z",
   "run_id": "32664888450",
-  "updated_at": "2026-08-23T20:37:09.923377Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
