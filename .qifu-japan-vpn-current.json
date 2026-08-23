@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://equipped-builder-nine-territory.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.113",
-  "started_at": "2026-08-23T10:38:09Z",
-  "approx_expires_at": "2026-08-23T16:03:09Z",
-  "run_id": "32634227693",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32648961725",
+  "message": "Checking GitHub runner TUN support"
 }
