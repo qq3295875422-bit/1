@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32634227693
+# Current verified generation: 32648961725
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32648961725"
+    type: vless
+    server: regions-declined-walter-asylum.trycloudflare.com
+    port: 443
+    uuid: 5ebfab46-2b5f-4ab3-8c1c-1429ae868ad9
+    network: ws
+    tls: true
+    udp: true
+    servername: regions-declined-walter-asylum.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: regions-declined-walter-asylum.trycloudflare.com
   - name: "🇯🇵 日本VPN-32634227693"
     type: vless
     server: equipped-builder-nine-territory.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: equipped-builder-nine-territory.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32633114815"
-    type: vless
-    server: queue-companion-pregnancy-farmer.trycloudflare.com
-    port: 443
-    uuid: c4b12828-400d-4c10-a7b7-1bf1c050317a
-    network: ws
-    tls: true
-    udp: true
-    servername: queue-companion-pregnancy-farmer.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: queue-companion-pregnancy-farmer.trycloudflare.com
