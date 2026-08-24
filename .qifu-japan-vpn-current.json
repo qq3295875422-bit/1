@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://highways-intention-christopher-usb.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.243",
-  "vpn_gate_server_ip": "219.100.37.162",
-  "started_at": "2026-08-23T20:37:44Z",
-  "approx_expires_at": "2026-08-24T02:02:44Z",
-  "run_id": "32664888450",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32681331134",
+  "message": "Checking GitHub runner TUN support"
 }
