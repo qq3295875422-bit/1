@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://navigation-chassis-open-excessive.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.214",
-  "started_at": "2026-08-24T01:57:11Z",
-  "approx_expires_at": "2026-08-24T07:22:11Z",
-  "run_id": "32681331134",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32694950041",
+  "message": "Checking GitHub runner TUN support"
 }
