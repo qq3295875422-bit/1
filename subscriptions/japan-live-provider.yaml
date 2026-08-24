@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32718758089
+# Current verified generation: 32747511799
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-32747511799"
+    type: vless
+    server: arrow-invite-former-ecological.trycloudflare.com
+    port: 443
+    uuid: f9855b45-0144-4610-99a6-86129c4cd7e8
+    network: ws
+    tls: true
+    udp: true
+    servername: arrow-invite-former-ecological.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: arrow-invite-former-ecological.trycloudflare.com
   - name: "🇯🇵 日本VPN-32718758089"
     type: vless
     server: stewart-advertising-position-businesses.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: stewart-advertising-position-businesses.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32694950041"
-    type: vless
-    server: mustang-collins-become-sensors.trycloudflare.com
-    port: 443
-    uuid: c5c2594f-e213-4771-8d63-7fcf4b78c284
-    network: ws
-    tls: true
-    udp: true
-    servername: mustang-collins-become-sensors.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: mustang-collins-become-sensors.trycloudflare.com
