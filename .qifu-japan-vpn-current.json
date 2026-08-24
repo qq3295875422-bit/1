@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://mustang-collins-become-sensors.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.243",
+  "vpn_gate_server_ip": "219.100.37.163",
+  "started_at": "2026-08-24T05:52:25Z",
+  "approx_expires_at": "2026-08-24T11:17:25Z",
   "run_id": "32694950041",
-  "updated_at": "2026-08-24T05:52:09.353765Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
