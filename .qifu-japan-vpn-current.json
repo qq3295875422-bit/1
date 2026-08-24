@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://stewart-advertising-position-businesses.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.57",
-  "started_at": "2026-08-24T10:52:01Z",
-  "approx_expires_at": "2026-08-24T16:17:01Z",
-  "run_id": "32718758089",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32747511799",
+  "message": "Checking GitHub runner TUN support"
 }
