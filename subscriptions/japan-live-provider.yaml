@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 32868891300
+# Current verified generation: 32896866615
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-32868891300"
+  - name: "🇯🇵 日本VPN-32896866615"
     type: vless
-    server: sarah-marie-semiconductor-objectives.trycloudflare.com
+    server: commitment-increasing-repairs-broken.trycloudflare.com
     port: 443
-    uuid: f488dd9a-50ef-4c15-a7ab-d3990ff45d8e
+    uuid: 7d23ca4b-5a6d-4d31-947d-31b5343b70ca
     network: ws
     tls: true
     udp: true
-    servername: sarah-marie-semiconductor-objectives.trycloudflare.com
+    servername: commitment-increasing-repairs-broken.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: sarah-marie-semiconductor-objectives.trycloudflare.com
-  - name: "🇯🇵 日本VPN-32846701130"
-    type: vless
-    server: reproduce-tutorial-colleagues-appreciate.trycloudflare.com
-    port: 443
-    uuid: e73e097b-0e6e-4683-881b-d5eff864850a
-    network: ws
-    tls: true
-    udp: true
-    servername: reproduce-tutorial-colleagues-appreciate.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: reproduce-tutorial-colleagues-appreciate.trycloudflare.com
+        Host: commitment-increasing-repairs-broken.trycloudflare.com
