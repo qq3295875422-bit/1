@@ -1,2 +1,2 @@
-trigger_utc=2026-08-25T12:43:00Z
-reason=test_US_exit_for_client_connectivity
+trigger_utc=2026-08-25T12:45:00Z
+reason=retry_US_exit_after_TUN_ifname_fix
