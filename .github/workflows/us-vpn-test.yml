@@ -29,7 +29,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash .github/scripts/us-vpn-test.sh
+        run: bash .github/scripts/us-vpn-direct-test.sh
 
       - name: Upload verified US subscription
         if: success()
@@ -50,7 +50,6 @@ jobs:
           for _ in $(seq 1 325); do
             kill -0 "$(cat /tmp/cloudflared.pid)"
             kill -0 "$(cat /tmp/sing-server.pid)"
-            sudo kill -0 "$(cat /tmp/openvpn.pid)"
             if curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null; then
               HEALTH_FAILS=0
             else
