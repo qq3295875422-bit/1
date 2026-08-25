@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://verified-nominations-halifax-continental.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.86",
-  "started_at": "2026-08-25T10:47:58Z",
-  "approx_expires_at": "2026-08-25T16:12:58Z",
-  "run_id": "32838906247",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32846701130",
+  "message": "Checking GitHub runner TUN support"
 }
