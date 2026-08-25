@@ -1,0 +1,64 @@
+name: Qifu US VPN Test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/keepalive/us-vpn-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  us-vpn:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify runner TUN support
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -c /dev/net/tun
+          sudo ip tuntap add dev qifu-us-tun-test mode tun
+          sudo ip link set qifu-us-tun-test up
+          sudo ip link del qifu-us-tun-test
+
+      - name: Build and verify temporary US VPN
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash .github/scripts/us-vpn-test.sh
+
+      - name: Upload verified US subscription
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qifu-us-vpn-test-connection
+          path: |
+            /tmp/us-state.json
+            /tmp/sub.yaml
+          retention-days: 1
+
+      - name: Keep US VPN online
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          HEALTH_FAILS=0
+          for _ in $(seq 1 325); do
+            kill -0 "$(cat /tmp/cloudflared.pid)"
+            kill -0 "$(cat /tmp/sing-server.pid)"
+            sudo kill -0 "$(cat /tmp/openvpn.pid)"
+            if curl -fsS --max-time 10 "$(cat /tmp/tunnel-url)/health" >/dev/null; then
+              HEALTH_FAILS=0
+            else
+              HEALTH_FAILS=$((HEALTH_FAILS + 1))
+              echo "US public tunnel health check failed ${HEALTH_FAILS}/3"
+              if [ "$HEALTH_FAILS" -ge 3 ]; then
+                exit 1
+              fi
+            fi
+            sleep 60
+          done
