@@ -1,0 +1,2 @@
+trigger_utc=2026-08-25T12:43:00Z
+reason=test_US_exit_for_client_connectivity
