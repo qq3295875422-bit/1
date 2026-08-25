@@ -1,0 +1,8 @@
+{
+  "ready": false,
+  "status": "starting",
+  "stage": "install-runtime",
+  "run_id": "32849305651",
+  "updated_at": "2026-08-25T12:44:55.643729Z",
+  "message": "Installing runtime"
+}
