@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "starting",
+  "status": "failed",
   "stage": "select-native-tcp443-us",
   "run_id": "32849305651",
-  "updated_at": "2026-08-25T12:45:14.851101Z",
-  "message": "Selecting native US TCP 443 VPN Gate configs"
+  "updated_at": "2026-08-25T12:45:18.358998Z",
+  "message": "exit=1; line=68"
 }
