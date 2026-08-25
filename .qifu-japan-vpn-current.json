@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://early-session-solely-ion.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.180",
+  "started_at": "2026-08-25T05:47:07Z",
+  "approx_expires_at": "2026-08-25T11:12:07Z",
   "run_id": "32814064175",
-  "updated_at": "2026-08-25T05:46:42.762177Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
