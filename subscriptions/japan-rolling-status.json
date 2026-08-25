@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32814064175",
-  "current_server": "early-session-solely-ion.trycloudflare.com",
-  "previous_run_id": "32799021595",
-  "previous_server": "communities-want-contribution-requiring.trycloudflare.com",
+  "current_run_id": "32838906247",
+  "current_server": "verified-nominations-halifax-continental.trycloudflare.com",
+  "previous_run_id": "32814064175",
+  "previous_server": "early-session-solely-ion.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
