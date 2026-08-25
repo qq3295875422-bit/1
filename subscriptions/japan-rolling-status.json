@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "32838906247",
-  "current_server": "verified-nominations-halifax-continental.trycloudflare.com",
-  "previous_run_id": "32814064175",
-  "previous_server": "early-session-solely-ion.trycloudflare.com",
+  "current_run_id": "32846701130",
+  "current_server": "reproduce-tutorial-colleagues-appreciate.trycloudflare.com",
+  "previous_run_id": "32838906247",
+  "previous_server": "verified-nominations-halifax-continental.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
