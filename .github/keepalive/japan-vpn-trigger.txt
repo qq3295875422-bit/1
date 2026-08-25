@@ -1,2 +1,2 @@
-manual-recovery 2026-08-23T20:22:10Z
-reason: second-retry-after-two-upstream-vpngate-candidate-failures-current-32648961725-still-running-nearing-expiry
+manual-recovery 2026-08-25T12:15:46Z
+reason: previous-run-32814064175-cancelled-provider-fallback-not-active-trigger-new-overlap-run
