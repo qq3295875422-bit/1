@@ -21,9 +21,9 @@ jobs:
         run: |
           set -euo pipefail
           test -c /dev/net/tun
-          sudo ip tuntap add dev qifu-us-tun-test mode tun
-          sudo ip link set qifu-us-tun-test up
-          sudo ip link del qifu-us-tun-test
+          sudo ip tuntap add dev qifu-us-tun mode tun
+          sudo ip link set qifu-us-tun up
+          sudo ip link del qifu-us-tun
 
       - name: Build and verify temporary US VPN
         shell: bash
