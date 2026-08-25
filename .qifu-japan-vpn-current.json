@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://sarah-marie-semiconductor-objectives.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.214",
-  "started_at": "2026-08-25T15:58:28Z",
-  "approx_expires_at": "2026-08-25T21:23:28Z",
-  "run_id": "32868891300",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "32896866615",
+  "message": "Checking GitHub runner TUN support"
 }
