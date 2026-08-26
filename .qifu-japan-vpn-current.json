@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://workflow-also-apply-landscapes.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.27",
+  "started_at": "2026-08-26T23:29:15Z",
+  "approx_expires_at": "2026-08-27T04:54:15Z",
   "run_id": "33023446103",
-  "updated_at": "2026-08-26T23:29:01.006497Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
