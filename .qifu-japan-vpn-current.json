@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://gnu-arrow-evening-heart.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.85",
-  "started_at": "2026-08-26T16:34:45Z",
-  "approx_expires_at": "2026-08-26T21:59:45Z",
-  "run_id": "32989047083",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33023446103",
+  "message": "Checking GitHub runner TUN support"
 }
