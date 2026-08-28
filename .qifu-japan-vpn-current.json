@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://alien-nov-mysterious-lunch.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.239",
+  "vpn_gate_server_ip": "219.100.37.97",
+  "started_at": "2026-08-28T11:19:38Z",
+  "approx_expires_at": "2026-08-28T16:44:38Z",
   "run_id": "33166633279",
-  "updated_at": "2026-08-28T11:19:19.625599Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
