@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33239778588
+# Current verified generation: 33259139710
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-33239778588"
+  - name: "🇯🇵 日本VPN-33259139710"
     type: vless
-    server: sets-yamaha-needed-charitable.trycloudflare.com
+    server: vintage-previously-international-housewives.trycloudflare.com
     port: 443
-    uuid: 82fa8f79-5c2e-4fbc-9fa6-85e065241e1b
+    uuid: b14870d3-49f6-445d-963e-2f67948063ed
     network: ws
     tls: true
     udp: true
-    servername: sets-yamaha-needed-charitable.trycloudflare.com
+    servername: vintage-previously-international-housewives.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: sets-yamaha-needed-charitable.trycloudflare.com
+        Host: vintage-previously-international-housewives.trycloudflare.com
