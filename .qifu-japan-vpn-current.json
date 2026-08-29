@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://alien-nov-mysterious-lunch.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.97",
-  "started_at": "2026-08-28T11:19:38Z",
-  "approx_expires_at": "2026-08-28T16:44:38Z",
-  "run_id": "33166633279",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33222176911",
+  "message": "Checking GitHub runner TUN support"
 }
