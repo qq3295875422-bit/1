@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://tuner-para-institution-mall.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.245",
+  "vpn_gate_server_ip": "219.100.37.205",
+  "started_at": "2026-08-29T00:02:08Z",
+  "approx_expires_at": "2026-08-29T05:27:08Z",
   "run_id": "33222176911",
-  "updated_at": "2026-08-29T00:01:47.607990Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
