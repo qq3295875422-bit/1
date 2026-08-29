@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33166633279
+# Current verified generation: 33222176911
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-33166633279"
+  - name: "🇯🇵 日本VPN-33222176911"
     type: vless
-    server: alien-nov-mysterious-lunch.trycloudflare.com
+    server: tuner-para-institution-mall.trycloudflare.com
     port: 443
-    uuid: be914744-1e7c-4fc1-b5b3-b69f5ae466e6
+    uuid: eae6b83c-c792-47ef-80fe-b9890c84265a
     network: ws
     tls: true
     udp: true
-    servername: alien-nov-mysterious-lunch.trycloudflare.com
+    servername: tuner-para-institution-mall.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: alien-nov-mysterious-lunch.trycloudflare.com
+        Host: tuner-para-institution-mall.trycloudflare.com
