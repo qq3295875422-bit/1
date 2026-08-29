@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://sets-yamaha-needed-charitable.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.31",
+  "started_at": "2026-08-29T07:01:21Z",
+  "approx_expires_at": "2026-08-29T12:26:21Z",
   "run_id": "33239778588",
-  "updated_at": "2026-08-29T07:01:06.898745Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
