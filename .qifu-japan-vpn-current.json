@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://mainland-ultimately-desktop-entertaining.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.128",
-  "started_at": "2026-08-30T14:52:31Z",
-  "approx_expires_at": "2026-08-30T20:17:31Z",
-  "run_id": "33317991143",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33328552919",
+  "message": "Checking GitHub runner TUN support"
 }
