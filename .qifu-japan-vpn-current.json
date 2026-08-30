@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://reactions-start-page-electricity.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.181",
+  "started_at": "2026-08-30T18:38:53Z",
+  "approx_expires_at": "2026-08-31T00:03:53Z",
   "run_id": "33328552919",
-  "updated_at": "2026-08-30T18:38:21.776305Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
