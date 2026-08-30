@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33294425645
+# Current verified generation: 33317991143
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-33294425645"
+  - name: "🇯🇵 日本VPN-33317991143"
     type: vless
-    server: watt-college-grip-coated.trycloudflare.com
+    server: mainland-ultimately-desktop-entertaining.trycloudflare.com
     port: 443
-    uuid: 72d5fc6f-92bb-49d0-9903-d948a0889272
+    uuid: 59a97318-4d38-401c-88db-07448ee4ce7f
     network: ws
     tls: true
     udp: true
-    servername: watt-college-grip-coated.trycloudflare.com
+    servername: mainland-ultimately-desktop-entertaining.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: watt-college-grip-coated.trycloudflare.com
+        Host: mainland-ultimately-desktop-entertaining.trycloudflare.com
