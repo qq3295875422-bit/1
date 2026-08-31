@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://installation-appearing-breaking-austin.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.81",
-  "started_at": "2026-08-31T05:27:58Z",
-  "approx_expires_at": "2026-08-31T10:52:58Z",
-  "run_id": "33360568352",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33420422565",
+  "message": "Checking GitHub runner TUN support"
 }
