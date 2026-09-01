@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33452213247
+# Current verified generation: 33471979750
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-33452213247"
+  - name: "🇯🇵 日本VPN-33471979750"
     type: vless
-    server: qty-illinois-nursery-nor.trycloudflare.com
+    server: exhaust-hebrew-itself-diagnosis.trycloudflare.com
     port: 443
-    uuid: 2a1c800e-ee3e-43df-bb9b-e516c723c541
+    uuid: 3aca8fe1-7513-4815-a6b8-c2060df6c964
     network: ws
     tls: true
     udp: true
-    servername: qty-illinois-nursery-nor.trycloudflare.com
+    servername: exhaust-hebrew-itself-diagnosis.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: qty-illinois-nursery-nor.trycloudflare.com
+        Host: exhaust-hebrew-itself-diagnosis.trycloudflare.com
