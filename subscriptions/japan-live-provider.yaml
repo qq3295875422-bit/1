@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33495326242
+# Current verified generation: 33521914048
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-33521914048"
+    type: vless
+    server: survive-del-arcade-relating.trycloudflare.com
+    port: 443
+    uuid: 0662600b-d11d-46e2-90b2-195934df50ce
+    network: ws
+    tls: true
+    udp: true
+    servername: survive-del-arcade-relating.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: survive-del-arcade-relating.trycloudflare.com
   - name: "🇯🇵 日本VPN-33495326242"
     type: vless
     server: band-tommy-gain-thinking.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: band-tommy-gain-thinking.trycloudflare.com
-  - name: "🇯🇵 日本VPN-33471979750"
-    type: vless
-    server: exhaust-hebrew-itself-diagnosis.trycloudflare.com
-    port: 443
-    uuid: 3aca8fe1-7513-4815-a6b8-c2060df6c964
-    network: ws
-    tls: true
-    udp: true
-    servername: exhaust-hebrew-itself-diagnosis.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: exhaust-hebrew-itself-diagnosis.trycloudflare.com
