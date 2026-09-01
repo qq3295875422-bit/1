@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://exhaust-hebrew-itself-diagnosis.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.97",
-  "started_at": "2026-09-01T05:02:25Z",
-  "approx_expires_at": "2026-09-01T10:27:25Z",
-  "run_id": "33471979750",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33495326242",
+  "message": "Checking GitHub runner TUN support"
 }
