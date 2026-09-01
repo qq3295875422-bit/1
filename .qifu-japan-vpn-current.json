@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://slots-installation-pair-olive.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.212",
-  "started_at": "2026-09-01T18:29:53Z",
-  "approx_expires_at": "2026-09-01T23:54:53Z",
-  "run_id": "33543650408",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33566948943",
+  "message": "Checking GitHub runner TUN support"
 }
