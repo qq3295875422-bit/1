@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "33471979750",
-  "current_server": "exhaust-hebrew-itself-diagnosis.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "33495326242",
+  "current_server": "band-tommy-gain-thinking.trycloudflare.com",
+  "previous_run_id": "33471979750",
+  "previous_server": "exhaust-hebrew-itself-diagnosis.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
