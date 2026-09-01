@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://survive-del-arcade-relating.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.217",
-  "started_at": "2026-09-01T14:52:39Z",
-  "approx_expires_at": "2026-09-01T20:17:39Z",
-  "run_id": "33521914048",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33543650408",
+  "message": "Checking GitHub runner TUN support"
 }
