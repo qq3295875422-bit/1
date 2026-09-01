@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://band-tommy-gain-thinking.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.184",
-  "started_at": "2026-09-01T10:05:04Z",
-  "approx_expires_at": "2026-09-01T15:30:04Z",
-  "run_id": "33495326242",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33521914048",
+  "message": "Checking GitHub runner TUN support"
 }
