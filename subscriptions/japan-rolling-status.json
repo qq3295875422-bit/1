@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "33543650408",
-  "current_server": "slots-installation-pair-olive.trycloudflare.com",
-  "previous_run_id": "33521914048",
-  "previous_server": "survive-del-arcade-relating.trycloudflare.com",
+  "current_run_id": "33590669119",
+  "current_server": "putting-fast-debug-average.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
