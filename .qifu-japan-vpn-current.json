@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://asked-wallet-actress-reporter.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.181",
-  "started_at": "2026-09-02T18:40:17Z",
-  "approx_expires_at": "2026-09-03T00:05:17Z",
-  "run_id": "33668421757",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33691070488",
+  "message": "Checking GitHub runner TUN support"
 }
