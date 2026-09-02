@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://flame-statement-tomorrow-issue.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.239",
+  "vpn_gate_server_ip": "219.100.37.105",
+  "started_at": "2026-09-02T09:36:11Z",
+  "approx_expires_at": "2026-09-02T15:01:11Z",
   "run_id": "33614758820",
-  "updated_at": "2026-09-02T09:35:52.450173Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
