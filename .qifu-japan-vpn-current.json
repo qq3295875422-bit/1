@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://putting-fast-debug-average.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.30",
+  "started_at": "2026-09-02T04:25:30Z",
+  "approx_expires_at": "2026-09-02T09:50:30Z",
   "run_id": "33590669119",
-  "updated_at": "2026-09-02T04:25:14.696148Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
