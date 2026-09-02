@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33614758820
+# Current verified generation: 33642017545
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-33642017545"
+    type: vless
+    server: dog-sectors-alliance-gui.trycloudflare.com
+    port: 443
+    uuid: 599bf5d2-cc09-4b90-ab53-474c8a8d2a06
+    network: ws
+    tls: true
+    udp: true
+    servername: dog-sectors-alliance-gui.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: dog-sectors-alliance-gui.trycloudflare.com
   - name: "🇯🇵 日本VPN-33614758820"
     type: vless
     server: flame-statement-tomorrow-issue.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: flame-statement-tomorrow-issue.trycloudflare.com
-  - name: "🇯🇵 日本VPN-33590669119"
-    type: vless
-    server: putting-fast-debug-average.trycloudflare.com
-    port: 443
-    uuid: 41c42059-b36d-4f49-a38f-df98e0105280
-    network: ws
-    tls: true
-    udp: true
-    servername: putting-fast-debug-average.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: putting-fast-debug-average.trycloudflare.com
