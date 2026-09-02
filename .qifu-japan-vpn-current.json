@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://dog-sectors-alliance-gui.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.84",
-  "started_at": "2026-09-02T14:28:06Z",
-  "approx_expires_at": "2026-09-02T19:53:06Z",
-  "run_id": "33642017545",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33668421757",
+  "message": "Checking GitHub runner TUN support"
 }
