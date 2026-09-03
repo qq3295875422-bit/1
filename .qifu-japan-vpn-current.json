@@ -3,5 +3,5 @@
   "status": "starting",
   "stage": "probe-tun",
   "run_id": "33714508568",
-  "message": "Checking GitHub runner TUN support"
+  "message": "TUN verified; starting Japan VPN build"
 }
