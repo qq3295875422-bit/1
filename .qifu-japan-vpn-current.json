@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://sophisticated-strange-specifies-biotechnology.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.98",
-  "started_at": "2026-09-02T22:36:33Z",
-  "approx_expires_at": "2026-09-03T04:01:33Z",
-  "run_id": "33691070488",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33714508568",
+  "message": "Checking GitHub runner TUN support"
 }
