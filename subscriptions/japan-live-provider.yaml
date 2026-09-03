@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33714508568
+# Current verified generation: 33740374281
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-33740374281"
+    type: vless
+    server: apollo-legendary-behind-organized.trycloudflare.com
+    port: 443
+    uuid: d8d832cd-0510-44ed-a1a3-92d26e4247c9
+    network: ws
+    tls: true
+    udp: true
+    servername: apollo-legendary-behind-organized.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: apollo-legendary-behind-organized.trycloudflare.com
   - name: "🇯🇵 日本VPN-33714508568"
     type: vless
     server: chances-calculator-styles-described.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: chances-calculator-styles-described.trycloudflare.com
-  - name: "🇯🇵 日本VPN-33691070488"
-    type: vless
-    server: sophisticated-strange-specifies-biotechnology.trycloudflare.com
-    port: 443
-    uuid: 12342cd1-917d-4e49-b07c-060b7645c57b
-    network: ws
-    tls: true
-    udp: true
-    servername: sophisticated-strange-specifies-biotechnology.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: sophisticated-strange-specifies-biotechnology.trycloudflare.com
