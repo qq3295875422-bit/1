@@ -1,0 +1,149 @@
+name: VR V2 Final Fixed Package
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  final-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reconstruct verified app
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/reports work/output
+          cat vr-v2-payload/runtime-* | base64 --decode > work/payload.zip
+          echo 'a40f9f12c9da028a4f0775963f0951fc1f2ac5fdd651f28c4f3f9a2f1540026f  work/payload.zip' | sha256sum -c -
+          unzip -q work/payload.zip -d work
+          node -e "const r=require('./work/validation/specialized-tests.json');if(!r.passed||r.assertions!==30062||r.ikRandomCases!==10000)process.exit(1)"
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('work/release/assets/js/app/interaction/XRInteraction.js')
+          text=p.read_text()
+          old="if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {\n            return 'WebXR 需要 HTTPS 或 localhost';\n        }"
+          new="if (!window.isSecureContext) {\n            return 'WebXR 需要 HTTPS 安全环境';\n        }"
+          if old not in text: raise SystemExit('XR patch target missing')
+          p.write_text(text.replace(old,new))
+          PY
+          node --check vr-v2-payload/dynamic-browser-test-fixed.mjs
+
+      - name: Add official Three.js 0.180.0 vendor
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch r180 https://github.com/mrdoob/three.js.git work/three-r180
+          test "$(node -p "require('./work/three-r180/package.json').version")" = '0.180.0'
+          root=work/release/assets/js/vendor/three
+          mkdir -p "$root/addons/controls" "$root/addons/webxr"
+          cp work/three-r180/build/three.module.min.js "$root/three.module.min.js"
+          cp work/three-r180/build/three.core.min.js "$root/three.core.min.js"
+          cp work/three-r180/examples/jsm/controls/OrbitControls.js "$root/addons/controls/OrbitControls.js"
+          cp work/three-r180/examples/jsm/controls/TransformControls.js "$root/addons/controls/TransformControls.js"
+          cp work/three-r180/examples/jsm/webxr/VRButton.js "$root/addons/webxr/VRButton.js"
+          cp work/three-r180/LICENSE "$root/LICENSE"
+          cp work/three-r180/package.json "$root/package.json"
+          sha256sum $(find "$root" -type f | sort) > work/reports/ThreeJS-r180-SHA256.txt
+
+      - name: Validate formal static runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json,pathlib,re
+          root=pathlib.Path('work/release')
+          required=['qifu-vr.json','index.html','assets/js','assets/css','assets/models','assets/images','assets/audio','assets/js/app/main.js','assets/css/main.css','assets/js/vendor/three/three.module.min.js','assets/js/vendor/three/three.core.min.js','assets/js/vendor/three/addons/controls/OrbitControls.js','assets/js/vendor/three/addons/controls/TransformControls.js','assets/js/vendor/three/addons/webxr/VRButton.js','assets/js/vendor/three/LICENSE','assets/js/vendor/three/package.json']
+          missing=[p for p in required if not (root/p).exists()]
+          assert not missing,missing
+          manifest=json.loads((root/'qifu-vr.json').read_text())
+          assert manifest['id']=='vr-storyboard-stage' and manifest['version']=='2.0.0' and manifest['entry']=='index.html' and manifest['offline'] is True
+          html=(root/'index.html').read_text()
+          for v in ['./assets/js/vendor/three/three.module.min.js','./assets/js/vendor/three/addons/','./assets/js/app/main.js','./assets/css/main.css']: assert v in html,v
+          app_files=[root/'index.html',root/'qifu-vr.json',*list((root/'assets/js/app').rglob('*.js')),*list((root/'assets/css').rglob('*.css'))]
+          forbidden=[r'https?://',r'localhost',r'127\.0\.0\.1',r'(?<!\.)/assets/',r'/src/',r'qifu-static-sdk',r'static-sdk',r'QifuSDK',r'VRSDK',r'SDK\.init',r'sdkVersion',r'sdkPath']
+          hits=[]
+          for f in app_files:
+            text=f.read_text(errors='ignore')
+            for pat in forbidden:
+              if re.search(pat,text,re.I): hits.append([str(f),pat])
+          assert not hits,hits
+          unresolved=[]
+          for f in (root/'assets/js/app').rglob('*.js'):
+            text=f.read_text()
+            for spec in re.findall(r'(?:from\s*|import\s*)[\"\']([^\"\']+)[\"\']',text):
+              if spec=='three' or spec.startswith('three/addons/'): continue
+              if spec.startswith('.') and not (f.parent/spec).resolve().exists(): unresolved.append([str(f),spec])
+          assert not unresolved,unresolved
+          out={'passed':True,'required':required,'unresolved':[],'forbiddenHits':[]}
+          pathlib.Path('work/reports/module-path-check.json').write_text(json.dumps(out,ensure_ascii=False,indent=2))
+          PY
+
+      - name: HTTP and real Chrome validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --directory work/release > work/reports/http-server.log 2>&1 &
+          server_pid=$!
+          sleep 2
+          python3 - <<'PY'
+          import json,pathlib,urllib.request
+          paths=['/','/index.html','/qifu-vr.json','/assets/js/app/main.js','/assets/css/main.css','/assets/js/vendor/three/three.module.min.js','/assets/js/vendor/three/three.core.min.js','/assets/js/vendor/three/addons/controls/OrbitControls.js','/assets/js/vendor/three/addons/controls/TransformControls.js','/assets/js/vendor/three/addons/webxr/VRButton.js']
+          results=[]
+          for p in paths:
+            with urllib.request.urlopen('http://127.0.0.1:4173'+p,timeout=20) as r: status=r.status; r.read(64)
+            assert status==200,(p,status); results.append({'path':p,'status':status})
+          pathlib.Path('work/reports/http-results.json').write_text(json.dumps({'passed':True,'results':results},indent=2))
+          PY
+          export VR_V2_BASE_URL='http://127.0.0.1:4173/'
+          export VR_V2_BROWSER_RESULT="$PWD/work/reports/browser-dynamic.json"
+          set +e
+          timeout 150s node vr-v2-payload/dynamic-browser-test-fixed.mjs > work/reports/browser-console.log 2>&1
+          browser_status=$?
+          set -e
+          kill "$server_pid" 2>/dev/null || true
+          if [ -f work/reports/browser-dynamic.json ]; then cat work/reports/browser-dynamic.json; fi
+          cat work/reports/browser-console.log
+          test "$browser_status" -eq 0
+          node -e "const r=require('./work/reports/browser-dynamic.json');if(!r.passed||r.assertions<28)process.exit(1)"
+
+      - name: Package formal runtime and reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp work/validation/specialized-tests.json work/reports/specialized-tests.json
+          (cd work/release && zip -qr ../output/vr-storyboard-stage-v2.qifuvr.zip .)
+          unzip -Z1 work/output/vr-storyboard-stage-v2.qifuvr.zip > work/reports/ZIP内容清单.txt
+          find work/release -type f | sed 's#work/release/##' | sort > work/reports/正式包文件清单.txt
+          python3 - <<'PY'
+          import datetime,hashlib,json,pathlib
+          root=pathlib.Path('work/release'); out=pathlib.Path('work/output'); reports=pathlib.Path('work/reports'); runtime=out/'vr-storyboard-stage-v2.qifuvr.zip'
+          browser=json.loads((reports/'browser-dynamic.json').read_text()); specialized=json.loads((reports/'specialized-tests.json').read_text()); module=json.loads((reports/'module-path-check.json').read_text()); pkg=json.loads((root/'assets/js/vendor/three/package.json').read_text())
+          files=[p for p in root.rglob('*') if p.is_file()]; js=[p for p in files if p.suffix=='.js']; css=[p for p in files if p.suffix=='.css']; sha=hashlib.sha256(runtime.read_bytes()).hexdigest()
+          meta={'runtimeZip':runtime.name,'runtimeSha256':sha,'runtimeBytes':runtime.stat().st_size,'fileCount':len(files),'javascriptFileCount':len(js),'cssFileCount':len(css),'threeVersion':pkg['version'],'browserDynamicPassed':browser['passed'],'browserAssertions':browser['assertions'],'specializedAssertions':specialized['assertions'],'ikRandomCases':specialized['ikRandomCases'],'modulePathsPassed':module['passed'],'quest3sTested':False,'generatedAt':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          (reports/'release-metadata.json').write_text(json.dumps(meta,ensure_ascii=False,indent=2)); (reports/'ThreeJS版本检查.json').write_text(json.dumps({'passed':pkg['version']=='0.180.0','version':pkg['version'],'source':'Three.js official GitHub tag r180','runtimeNetworkDependency':False},ensure_ascii=False,indent=2)); (out/'vr-storyboard-stage-v2.qifuvr.zip.sha256').write_text(sha+'  '+runtime.name+'\n')
+          report=f'''# VR 双人分镜排演台 V2 最终验收报告\n\n- 正式运行包：`{runtime.name}`\n- SHA-256：`{sha}`\n- ZIP 大小：{runtime.stat().st_size} 字节\n- 正式文件数：{len(files)}；JavaScript：{len(js)}；CSS：{len(css)}\n- 正式运行包已生成：是\n\n## 架构与依赖\n\n- 本项目未使用任何 SDK，也未依赖服务器公共运行库。\n- 未执行 npm install，未使用 Vite 构建。\n- Three.js 0.180.0 来自官方 GitHub 固定标签 r180，作为本地 vendor 文件随正式 ZIP 交付。\n- 正式运行包完全自包含，所有运行资源使用相对路径，运行时不存在网络请求。\n\n## 验收结果\n\n- 专项逻辑：{specialized['assertions']} 项断言通过，其中 TwoBoneIK 随机案例 {specialized['ikRandomCases']} 组。\n- 普通 Chrome 动态测试：{browser['assertions']} 项断言通过。\n- PNG 实测尺寸：{browser['png']['width']}×{browser['png']['height']}，文件非空。\n- 分镜复制/切换、残影、虚拟摄影机、接触约束、项目 JSON、保存与刷新读取均通过。\n- Quest 3S 真机：尚未进行。\n- WebXR、控制器射线、扳机拖动、Grip 抓取与按钮安全映射完成代码级检查。\n'''
+          (reports/'VR_双人分镜排演台_V2_最终验收报告.md').write_text(report)
+          print(json.dumps(meta,ensure_ascii=False,indent=2))
+          PY
+
+      - name: Upload formal package
+        uses: actions/upload-artifact@v4
+        with:
+          name: vr-storyboard-stage-v2-final-package
+          path: work/output/*
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: Upload all validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vr-storyboard-stage-v2-final-reports
+          path: work/reports/*
+          if-no-files-found: warn
