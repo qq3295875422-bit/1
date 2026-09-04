@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33905400142
+# Current verified generation: 33925037672
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-33925037672"
+    type: vless
+    server: soc-marsh-road-launched.trycloudflare.com
+    port: 443
+    uuid: b94be6d1-9927-4cd0-86d3-3be9532fa8d3
+    network: ws
+    tls: true
+    udp: true
+    servername: soc-marsh-road-launched.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: soc-marsh-road-launched.trycloudflare.com
   - name: "🇯🇵 日本VPN-33905400142"
     type: vless
     server: simultaneously-crm-plenty-cite.trycloudflare.com
