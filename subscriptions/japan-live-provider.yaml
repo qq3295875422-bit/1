@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33791366064
+# Current verified generation: 33836684176
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-33791366064"
+  - name: "🇯🇵 日本VPN-33836684176"
     type: vless
-    server: symposium-julia-rosa-fortune.trycloudflare.com
+    server: component-hydrocodone-prediction-luke.trycloudflare.com
     port: 443
-    uuid: c1c6e73a-bd3d-42a5-ab62-7e69f24181ee
+    uuid: 24fbb4ae-d694-4a8f-b2d4-687ce44109d7
     network: ws
     tls: true
     udp: true
-    servername: symposium-julia-rosa-fortune.trycloudflare.com
+    servername: component-hydrocodone-prediction-luke.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: symposium-julia-rosa-fortune.trycloudflare.com
-  - name: "🇯🇵 日本VPN-33767210643"
-    type: vless
-    server: calling-evaluations-sunshine-artificial.trycloudflare.com
-    port: 443
-    uuid: 3fef3fa6-422c-489b-a65e-1dbe6823b35d
-    network: ws
-    tls: true
-    udp: true
-    servername: calling-evaluations-sunshine-artificial.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: calling-evaluations-sunshine-artificial.trycloudflare.com
+        Host: component-hydrocodone-prediction-luke.trycloudflare.com
