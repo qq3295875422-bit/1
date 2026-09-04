@@ -1,8 +1,7 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "start-public-relay",
-  "run_id": "33813472459",
-  "updated_at": "2026-09-03T22:32:53.357682Z",
-  "message": "Starting VLESS WebSocket and Cloudflare Quick Tunnel"
+  "stage": "probe-tun",
+  "run_id": "33836684176",
+  "message": "Checking GitHub runner TUN support"
 }
