@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "33791366064",
-  "current_server": "symposium-julia-rosa-fortune.trycloudflare.com",
-  "previous_run_id": "33767210643",
-  "previous_server": "calling-evaluations-sunshine-artificial.trycloudflare.com",
+  "current_run_id": "33836684176",
+  "current_server": "component-hydrocodone-prediction-luke.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
