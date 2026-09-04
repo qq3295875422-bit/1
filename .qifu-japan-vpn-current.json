@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://glasses-bucks-creek-duty.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.236",
+  "vpn_gate_server_ip": "219.100.37.49",
+  "started_at": "2026-09-04T09:37:02Z",
+  "approx_expires_at": "2026-09-04T15:02:02Z",
   "run_id": "33859013602",
-  "updated_at": "2026-09-04T09:36:43.454316Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
