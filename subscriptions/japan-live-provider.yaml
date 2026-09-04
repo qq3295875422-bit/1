@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33859013602
+# Current verified generation: 33905400142
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-33859013602"
+  - name: "🇯🇵 日本VPN-33905400142"
     type: vless
-    server: glasses-bucks-creek-duty.trycloudflare.com
+    server: simultaneously-crm-plenty-cite.trycloudflare.com
     port: 443
-    uuid: 7b1e9a4b-9be7-4184-b381-dea20ee1886f
+    uuid: 09f8b1e7-a762-42be-b319-ea29cb86ca41
     network: ws
     tls: true
     udp: true
-    servername: glasses-bucks-creek-duty.trycloudflare.com
+    servername: simultaneously-crm-plenty-cite.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: glasses-bucks-creek-duty.trycloudflare.com
-  - name: "🇯🇵 日本VPN-33836684176"
-    type: vless
-    server: component-hydrocodone-prediction-luke.trycloudflare.com
-    port: 443
-    uuid: 24fbb4ae-d694-4a8f-b2d4-687ce44109d7
-    network: ws
-    tls: true
-    udp: true
-    servername: component-hydrocodone-prediction-luke.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: component-hydrocodone-prediction-luke.trycloudflare.com
+        Host: simultaneously-crm-plenty-cite.trycloudflare.com
