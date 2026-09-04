@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "33836684176",
-  "current_server": "component-hydrocodone-prediction-luke.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "33859013602",
+  "current_server": "glasses-bucks-creek-duty.trycloudflare.com",
+  "previous_run_id": "33836684176",
+  "previous_server": "component-hydrocodone-prediction-luke.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
