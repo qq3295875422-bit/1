@@ -1,8 +1,7 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "fix-dns",
-  "run_id": "33882979606",
-  "updated_at": "2026-09-04T14:19:30.932367Z",
-  "message": "JP exit verified; switching runner to public DNS"
+  "stage": "probe-tun",
+  "run_id": "33905400142",
+  "message": "Checking GitHub runner TUN support"
 }
