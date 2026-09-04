@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://simultaneously-crm-plenty-cite.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.222",
-  "started_at": "2026-09-04T18:23:03Z",
-  "approx_expires_at": "2026-09-04T23:48:03Z",
-  "run_id": "33905400142",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33925037672",
+  "message": "Checking GitHub runner TUN support"
 }
