@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://puzzle-color-lots-housing.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.114",
-  "started_at": "2026-09-05T09:01:27Z",
-  "approx_expires_at": "2026-09-05T14:26:27Z",
-  "run_id": "33956767885",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "33968886843",
+  "message": "Checking GitHub runner TUN support"
 }
