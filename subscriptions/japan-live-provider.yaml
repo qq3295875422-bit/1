@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 33944272797
+# Current verified generation: 33956767885
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-33956767885"
+    type: vless
+    server: puzzle-color-lots-housing.trycloudflare.com
+    port: 443
+    uuid: 35569230-128a-42f4-b10b-fcf688bec1d7
+    network: ws
+    tls: true
+    udp: true
+    servername: puzzle-color-lots-housing.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: puzzle-color-lots-housing.trycloudflare.com
   - name: "🇯🇵 日本VPN-33944272797"
     type: vless
     server: bow-len-cocktail-remind.trycloudflare.com
