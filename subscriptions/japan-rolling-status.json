@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "33994752738",
-  "current_server": "hand-mold-description-improving.trycloudflare.com",
-  "previous_run_id": "33980529343",
-  "previous_server": "participate-sleeping-unlimited-organised.trycloudflare.com",
+  "current_run_id": "34011703739",
+  "current_server": "beijing-density-paris-may.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
