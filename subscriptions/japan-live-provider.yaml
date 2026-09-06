@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34024487587
+# Current verified generation: 34036747252
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-34036747252"
+    type: vless
+    server: paintings-excellent-geometry-purple.trycloudflare.com
+    port: 443
+    uuid: d5ff4a7d-69d3-498d-bb0a-aa6edba2cbfc
+    network: ws
+    tls: true
+    udp: true
+    servername: paintings-excellent-geometry-purple.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: paintings-excellent-geometry-purple.trycloudflare.com
   - name: "🇯🇵 日本VPN-34024487587"
     type: vless
     server: extract-content-falls-popular.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: extract-content-falls-popular.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34011703739"
-    type: vless
-    server: beijing-density-paris-may.trycloudflare.com
-    port: 443
-    uuid: f615fbc2-bb0d-4add-9821-7a74a274ca0d
-    network: ws
-    tls: true
-    udp: true
-    servername: beijing-density-paris-may.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: beijing-density-paris-may.trycloudflare.com
