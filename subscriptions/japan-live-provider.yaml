@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34083380571
+# Current verified generation: 34110215304
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-34110215304"
+    type: vless
+    server: edge-reader-ate-direct.trycloudflare.com
+    port: 443
+    uuid: 47b44d81-d129-4a08-b0d1-79b286ad370e
+    network: ws
+    tls: true
+    udp: true
+    servername: edge-reader-ate-direct.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: edge-reader-ate-direct.trycloudflare.com
   - name: "🇯🇵 日本VPN-34083380571"
     type: vless
     server: garden-celebration-whats-percent.trycloudflare.com
