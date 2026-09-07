@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://edge-reader-ate-direct.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "126.89.138.89",
+  "vpn_gate_server_ip": "126.89.138.89",
+  "started_at": "2026-09-07T10:13:48Z",
+  "approx_expires_at": "2026-09-07T15:38:48Z",
   "run_id": "34110215304",
-  "updated_at": "2026-09-07T10:13:34.976834Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
