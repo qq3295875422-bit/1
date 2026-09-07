@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34063017123
+# Current verified generation: 34083380571
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34063017123"
+  - name: "🇯🇵 日本VPN-34083380571"
     type: vless
-    server: mins-toolbar-favourites-learned.trycloudflare.com
+    server: garden-celebration-whats-percent.trycloudflare.com
     port: 443
-    uuid: f8be16d0-6fb7-4086-8217-fdd585c711f1
+    uuid: f919c732-84f7-4889-9676-79eaa5de5fad
     network: ws
     tls: true
     udp: true
-    servername: mins-toolbar-favourites-learned.trycloudflare.com
+    servername: garden-celebration-whats-percent.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: mins-toolbar-favourites-learned.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34049090822"
-    type: vless
-    server: dts-circles-including-universal.trycloudflare.com
-    port: 443
-    uuid: 35b9883c-5bd3-4ba1-a2f8-745b4aa2be1e
-    network: ws
-    tls: true
-    udp: true
-    servername: dts-circles-including-universal.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: dts-circles-including-universal.trycloudflare.com
+        Host: garden-celebration-whats-percent.trycloudflare.com
