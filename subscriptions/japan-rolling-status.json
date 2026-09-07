@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34083380571",
-  "current_server": "garden-celebration-whats-percent.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "34110215304",
+  "current_server": "edge-reader-ate-direct.trycloudflare.com",
+  "previous_run_id": "34083380571",
+  "previous_server": "garden-celebration-whats-percent.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
