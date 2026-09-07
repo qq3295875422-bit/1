@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34154358282",
-  "current_server": "straight-assembled-explained-genius.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "34167868782",
+  "current_server": "hospitals-peaceful-regression-surplus.trycloudflare.com",
+  "previous_run_id": "34154358282",
+  "previous_server": "straight-assembled-explained-genius.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
