@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34238653667",
-  "current_server": "max-likes-criticism-night.trycloudflare.com",
-  "previous_run_id": "34210913658",
-  "previous_server": "obtaining-differently-temperatures-textile.trycloudflare.com",
+  "current_run_id": "34286769864",
+  "current_server": "varies-jennifer-lan-accompanying.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
