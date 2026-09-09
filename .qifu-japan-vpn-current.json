@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://aerial-nominations-conclusion-ceo.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.243",
-  "vpn_gate_server_ip": "219.100.37.162",
-  "started_at": "2026-09-09T09:41:14Z",
-  "approx_expires_at": "2026-09-09T15:06:14Z",
-  "run_id": "34335962946",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34364143801",
+  "message": "Checking GitHub runner TUN support"
 }
