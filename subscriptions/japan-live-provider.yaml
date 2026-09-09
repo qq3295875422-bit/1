@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34389605690
+# Current verified generation: 34412592606
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-34412592606"
+    type: vless
+    server: alloy-screens-only-deposit.trycloudflare.com
+    port: 443
+    uuid: eeb823ec-24cc-437e-8bf8-4324935580a2
+    network: ws
+    tls: true
+    udp: true
+    servername: alloy-screens-only-deposit.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: alloy-screens-only-deposit.trycloudflare.com
   - name: "🇯🇵 日本VPN-34389605690"
     type: vless
     server: shortly-terminal-handhelds-hypothetical.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: shortly-terminal-handhelds-hypothetical.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34364143801"
-    type: vless
-    server: looking-round-bringing-steal.trycloudflare.com
-    port: 443
-    uuid: af15bfca-4d69-4935-9a3a-9d434a248859
-    network: ws
-    tls: true
-    udp: true
-    servername: looking-round-bringing-steal.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: looking-round-bringing-steal.trycloudflare.com
