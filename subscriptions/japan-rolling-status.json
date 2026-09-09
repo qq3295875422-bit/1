@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34364143801",
-  "current_server": "looking-round-bringing-steal.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "34389605690",
+  "current_server": "shortly-terminal-handhelds-hypothetical.trycloudflare.com",
+  "previous_run_id": "34364143801",
+  "previous_server": "looking-round-bringing-steal.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
