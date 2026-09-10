@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34461801696
+# Current verified generation: 34514032212
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34461801696"
+  - name: "🇯🇵 日本VPN-34514032212"
     type: vless
-    server: findlaw-will-competitive-infinite.trycloudflare.com
+    server: waterproof-socks-indirect-insertion.trycloudflare.com
     port: 443
-    uuid: 8aa7ab5a-7d60-4c1c-8dda-5457bf704a3f
+    uuid: 41c585f9-415a-4591-bcef-e21a314c10f2
     network: ws
     tls: true
     udp: true
-    servername: findlaw-will-competitive-infinite.trycloudflare.com
+    servername: waterproof-socks-indirect-insertion.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: findlaw-will-competitive-infinite.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34437717664"
-    type: vless
-    server: edmonton-establish-needs-flame.trycloudflare.com
-    port: 443
-    uuid: 4a1c16cd-a042-4491-9b8b-e40c4a3af2b5
-    network: ws
-    tls: true
-    udp: true
-    servername: edmonton-establish-needs-flame.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: edmonton-establish-needs-flame.trycloudflare.com
+        Host: waterproof-socks-indirect-insertion.trycloudflare.com
