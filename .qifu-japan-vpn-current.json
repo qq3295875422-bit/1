@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://waterproof-socks-indirect-insertion.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.26",
-  "started_at": "2026-09-10T18:25:36Z",
-  "approx_expires_at": "2026-09-10T23:50:36Z",
-  "run_id": "34514032212",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34537932320",
+  "message": "Checking GitHub runner TUN support"
 }
