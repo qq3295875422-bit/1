@@ -1,8 +1,7 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "wait-public-dns",
-  "run_id": "34488722667",
-  "updated_at": "2026-09-10T14:27:36.323968Z",
-  "message": "exit=1; line=163"
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34514032212",
+  "message": "Checking GitHub runner TUN support"
 }
