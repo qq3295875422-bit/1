@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34609795379",
-  "current_server": "drew-mac-targeted-loc.trycloudflare.com",
-  "previous_run_id": "34585054323",
-  "previous_server": "curious-packets-organisms-transportation.trycloudflare.com",
+  "current_run_id": "34633318473",
+  "current_server": "survive-domain-desire-cruz.trycloudflare.com",
+  "previous_run_id": "34609795379",
+  "previous_server": "drew-mac-targeted-loc.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
