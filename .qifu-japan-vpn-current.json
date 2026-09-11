@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://curious-packets-organisms-transportation.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.233",
-  "vpn_gate_server_ip": "219.100.37.14",
-  "started_at": "2026-09-11T09:37:34Z",
-  "approx_expires_at": "2026-09-11T15:02:34Z",
-  "run_id": "34585054323",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34609795379",
+  "message": "Checking GitHub runner TUN support"
 }
