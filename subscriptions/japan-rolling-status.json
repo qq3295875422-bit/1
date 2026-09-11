@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34562547001",
-  "current_server": "cricket-development-andreas-cameras.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "34585054323",
+  "current_server": "curious-packets-organisms-transportation.trycloudflare.com",
+  "previous_run_id": "34562547001",
+  "previous_server": "cricket-development-andreas-cameras.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
