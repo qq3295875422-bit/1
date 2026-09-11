@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34537932320
+# Current verified generation: 34562547001
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34537932320"
+  - name: "🇯🇵 日本VPN-34562547001"
     type: vless
-    server: copying-progressive-greg-dentists.trycloudflare.com
+    server: cricket-development-andreas-cameras.trycloudflare.com
     port: 443
-    uuid: 7f1925e5-0eb2-4cde-8233-6d71264ba546
+    uuid: 8f57542c-4c45-4cfb-8a29-be5cdcd7ca4f
     network: ws
     tls: true
     udp: true
-    servername: copying-progressive-greg-dentists.trycloudflare.com
+    servername: cricket-development-andreas-cameras.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: copying-progressive-greg-dentists.trycloudflare.com
+        Host: cricket-development-andreas-cameras.trycloudflare.com
