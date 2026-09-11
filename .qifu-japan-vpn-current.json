@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://copying-progressive-greg-dentists.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.178",
-  "started_at": "2026-09-10T22:33:54Z",
-  "approx_expires_at": "2026-09-11T03:58:54Z",
-  "run_id": "34537932320",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34562547001",
+  "message": "Checking GitHub runner TUN support"
 }
