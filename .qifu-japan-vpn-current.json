@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://survive-domain-desire-cruz.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.18",
-  "started_at": "2026-09-11T18:29:11Z",
-  "approx_expires_at": "2026-09-11T23:54:11Z",
-  "run_id": "34633318473",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34654403719",
+  "message": "Checking GitHub runner TUN support"
 }
