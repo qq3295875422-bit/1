@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "starting",
+  "status": "failed",
   "stage": "wait-public-dns",
   "run_id": "34722150104",
-  "updated_at": "2026-09-12T22:15:00.259892Z",
-  "message": "Waiting for new trycloudflare hostname to resolve globally"
+  "updated_at": "2026-09-12T22:16:36.704895Z",
+  "message": "exit=22; line=164"
 }
