@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34654403719",
-  "current_server": "showers-gary-sheriff-friends.trycloudflare.com",
-  "previous_run_id": "34633318473",
-  "previous_server": "survive-domain-desire-cruz.trycloudflare.com",
+  "current_run_id": "34673093955",
+  "current_server": "texas-servers-notified-denver.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
