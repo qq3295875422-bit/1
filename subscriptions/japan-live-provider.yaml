@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34685368553
+# Current verified generation: 34696810365
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-34696810365"
+    type: vless
+    server: recognize-lands-robert-evanescence.trycloudflare.com
+    port: 443
+    uuid: 345859e6-b117-4093-b0ab-c04856ee68d6
+    network: ws
+    tls: true
+    udp: true
+    servername: recognize-lands-robert-evanescence.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: recognize-lands-robert-evanescence.trycloudflare.com
   - name: "🇯🇵 日本VPN-34685368553"
     type: vless
     server: points-mainland-very-connectors.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: points-mainland-very-connectors.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34673093955"
-    type: vless
-    server: texas-servers-notified-denver.trycloudflare.com
-    port: 443
-    uuid: eef9dddc-4433-4498-be3b-f71a57d360a1
-    network: ws
-    tls: true
-    udp: true
-    servername: texas-servers-notified-denver.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: texas-servers-notified-denver.trycloudflare.com
