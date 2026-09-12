@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://recognize-lands-robert-evanescence.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.59",
-  "started_at": "2026-09-12T13:36:39Z",
-  "approx_expires_at": "2026-09-12T19:01:39Z",
-  "run_id": "34696810365",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34709116175",
+  "message": "Checking GitHub runner TUN support"
 }
