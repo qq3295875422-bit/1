@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34654403719
+# Current verified generation: 34673093955
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34654403719"
+  - name: "🇯🇵 日本VPN-34673093955"
     type: vless
-    server: showers-gary-sheriff-friends.trycloudflare.com
+    server: texas-servers-notified-denver.trycloudflare.com
     port: 443
-    uuid: 47a340fd-14f4-43a6-8d79-cee41b296c86
+    uuid: eef9dddc-4433-4498-be3b-f71a57d360a1
     network: ws
     tls: true
     udp: true
-    servername: showers-gary-sheriff-friends.trycloudflare.com
+    servername: texas-servers-notified-denver.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: showers-gary-sheriff-friends.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34633318473"
-    type: vless
-    server: survive-domain-desire-cruz.trycloudflare.com
-    port: 443
-    uuid: 0f535544-55ca-484c-8926-2e999ffac457
-    network: ws
-    tls: true
-    udp: true
-    servername: survive-domain-desire-cruz.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: survive-domain-desire-cruz.trycloudflare.com
+        Host: texas-servers-notified-denver.trycloudflare.com
