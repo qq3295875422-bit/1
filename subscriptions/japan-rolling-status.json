@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34685368553",
-  "current_server": "points-mainland-very-connectors.trycloudflare.com",
-  "previous_run_id": "34673093955",
-  "previous_server": "texas-servers-notified-denver.trycloudflare.com",
+  "current_run_id": "34696810365",
+  "current_server": "recognize-lands-robert-evanescence.trycloudflare.com",
+  "previous_run_id": "34685368553",
+  "previous_server": "points-mainland-very-connectors.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
