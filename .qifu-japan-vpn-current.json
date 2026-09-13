@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://civic-sampling-tournaments-supplies.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.236",
+  "vpn_gate_server_ip": "219.100.37.62",
+  "started_at": "2026-09-13T04:42:37Z",
+  "approx_expires_at": "2026-09-13T10:07:37Z",
   "run_id": "34738444112",
-  "updated_at": "2026-09-13T04:42:19.862587Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
