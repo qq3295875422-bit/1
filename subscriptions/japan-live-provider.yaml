@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34709116175
+# Current verified generation: 34738444112
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34709116175"
+  - name: "🇯🇵 日本VPN-34738444112"
     type: vless
-    server: specification-relation-lesser-receives.trycloudflare.com
+    server: civic-sampling-tournaments-supplies.trycloudflare.com
     port: 443
-    uuid: 509cd306-2a81-42c3-bdfd-9360f81c84a1
+    uuid: c0f218a9-f1bb-4ba8-8770-8fc6f291c8c3
     network: ws
     tls: true
     udp: true
-    servername: specification-relation-lesser-receives.trycloudflare.com
+    servername: civic-sampling-tournaments-supplies.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: specification-relation-lesser-receives.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34696810365"
-    type: vless
-    server: recognize-lands-robert-evanescence.trycloudflare.com
-    port: 443
-    uuid: 345859e6-b117-4093-b0ab-c04856ee68d6
-    network: ws
-    tls: true
-    udp: true
-    servername: recognize-lands-robert-evanescence.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: recognize-lands-robert-evanescence.trycloudflare.com
+        Host: civic-sampling-tournaments-supplies.trycloudflare.com
