@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "install-runtime",
+  "stage": "select-native-tcp443-jp",
   "run_id": "34773735919",
-  "updated_at": "2026-09-13T18:09:15.233750Z",
-  "message": "Installing runtime"
+  "updated_at": "2026-09-13T18:09:31.165829Z",
+  "message": "Selecting native Japan TCP 443 configs"
 }
