@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34738444112",
-  "current_server": "civic-sampling-tournaments-supplies.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "34751238040",
+  "current_server": "windsor-tutorial-microwave-badly.trycloudflare.com",
+  "previous_run_id": "34738444112",
+  "previous_server": "civic-sampling-tournaments-supplies.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
