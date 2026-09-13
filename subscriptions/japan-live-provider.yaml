@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34751238040
+# Current verified generation: 34773735919
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34751238040"
+  - name: "🇯🇵 日本VPN-34773735919"
     type: vless
-    server: windsor-tutorial-microwave-badly.trycloudflare.com
+    server: possibility-travesti-encouraging-optimize.trycloudflare.com
     port: 443
-    uuid: 7717db95-a1d9-4bee-ab77-f45e09e26f22
+    uuid: 8c520f29-4a90-4fb9-9a4a-9799c891f6b6
     network: ws
     tls: true
     udp: true
-    servername: windsor-tutorial-microwave-badly.trycloudflare.com
+    servername: possibility-travesti-encouraging-optimize.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: windsor-tutorial-microwave-badly.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34738444112"
-    type: vless
-    server: civic-sampling-tournaments-supplies.trycloudflare.com
-    port: 443
-    uuid: c0f218a9-f1bb-4ba8-8770-8fc6f291c8c3
-    network: ws
-    tls: true
-    udp: true
-    servername: civic-sampling-tournaments-supplies.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: civic-sampling-tournaments-supplies.trycloudflare.com
+        Host: possibility-travesti-encouraging-optimize.trycloudflare.com
