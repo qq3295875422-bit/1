@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34709116175",
-  "current_server": "specification-relation-lesser-receives.trycloudflare.com",
-  "previous_run_id": "34696810365",
-  "previous_server": "recognize-lands-robert-evanescence.trycloudflare.com",
+  "current_run_id": "34738444112",
+  "current_server": "civic-sampling-tournaments-supplies.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
