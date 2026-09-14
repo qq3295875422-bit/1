@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://curve-household-challenged-culture.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.122",
-  "started_at": "2026-09-14T04:50:18Z",
-  "approx_expires_at": "2026-09-14T10:15:18Z",
-  "run_id": "34807416528",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34833862663",
+  "message": "Checking GitHub runner TUN support"
 }
