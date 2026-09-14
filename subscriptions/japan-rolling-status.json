@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34889229558",
-  "current_server": "rivers-gives-ran-pressure.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "34907268511",
+  "current_server": "original-delivers-moved-alpine.trycloudflare.com",
+  "previous_run_id": "34889229558",
+  "previous_server": "rivers-gives-ran-pressure.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
