@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34833862663",
-  "current_server": "includes-incredible-pushing-knives.trycloudflare.com",
-  "previous_run_id": "34807416528",
-  "previous_server": "curve-household-challenged-culture.trycloudflare.com",
+  "current_run_id": "34889229558",
+  "current_server": "rivers-gives-ran-pressure.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
