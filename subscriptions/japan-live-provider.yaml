@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34833862663
+# Current verified generation: 34889229558
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-34833862663"
+  - name: "🇯🇵 日本VPN-34889229558"
     type: vless
-    server: includes-incredible-pushing-knives.trycloudflare.com
+    server: rivers-gives-ran-pressure.trycloudflare.com
     port: 443
-    uuid: e9f45c51-1422-4362-b12d-fc84ccb874fd
+    uuid: 9398d35a-db5e-41de-a3e1-6ceefb3d5f62
     network: ws
     tls: true
     udp: true
-    servername: includes-incredible-pushing-knives.trycloudflare.com
+    servername: rivers-gives-ran-pressure.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: includes-incredible-pushing-knives.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34807416528"
-    type: vless
-    server: curve-household-challenged-culture.trycloudflare.com
-    port: 443
-    uuid: b3b539ce-2f77-4598-a39a-b17f6d7230e3
-    network: ws
-    tls: true
-    udp: true
-    servername: curve-household-challenged-culture.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: curve-household-challenged-culture.trycloudflare.com
+        Host: rivers-gives-ran-pressure.trycloudflare.com
