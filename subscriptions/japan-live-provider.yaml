@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 34907268511
+# Current verified generation: 34930247865
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-34930247865"
+    type: vless
+    server: reproductive-marshall-scotia-thickness.trycloudflare.com
+    port: 443
+    uuid: f63bfe83-722d-4c6e-bc74-fcf06f31a753
+    network: ws
+    tls: true
+    udp: true
+    servername: reproductive-marshall-scotia-thickness.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: reproductive-marshall-scotia-thickness.trycloudflare.com
   - name: "🇯🇵 日本VPN-34907268511"
     type: vless
     server: original-delivers-moved-alpine.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: original-delivers-moved-alpine.trycloudflare.com
-  - name: "🇯🇵 日本VPN-34889229558"
-    type: vless
-    server: rivers-gives-ran-pressure.trycloudflare.com
-    port: 443
-    uuid: 9398d35a-db5e-41de-a3e1-6ceefb3d5f62
-    network: ws
-    tls: true
-    udp: true
-    servername: rivers-gives-ran-pressure.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: rivers-gives-ran-pressure.trycloudflare.com
