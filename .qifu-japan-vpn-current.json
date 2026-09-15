@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://recipients-canvas-researchers-ruby.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.243",
+  "vpn_gate_server_ip": "219.100.37.162",
+  "started_at": "2026-09-15T22:53:25Z",
+  "approx_expires_at": "2026-09-16T04:18:25Z",
   "run_id": "35033020284",
-  "updated_at": "2026-09-15T22:53:03.929024Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
