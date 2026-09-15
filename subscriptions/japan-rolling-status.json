@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "34930247865",
-  "current_server": "reproductive-marshall-scotia-thickness.trycloudflare.com",
-  "previous_run_id": "34907268511",
-  "previous_server": "original-delivers-moved-alpine.trycloudflare.com",
+  "current_run_id": "34985128804",
+  "current_server": "duo-interests-nova-mobiles.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
