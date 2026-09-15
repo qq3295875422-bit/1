@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://duo-interests-nova-mobiles.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.104",
-  "started_at": "2026-09-15T14:59:09Z",
-  "approx_expires_at": "2026-09-15T20:24:09Z",
-  "run_id": "34985128804",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "35010594676",
+  "message": "Checking GitHub runner TUN support"
 }
