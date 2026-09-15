@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://reproductive-marshall-scotia-thickness.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.32",
-  "started_at": "2026-09-15T04:49:49Z",
-  "approx_expires_at": "2026-09-15T10:14:49Z",
-  "run_id": "34930247865",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "34955675669",
+  "message": "Checking GitHub runner TUN support"
 }
