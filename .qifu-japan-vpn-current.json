@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://tier-camel-dramatic-notes.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.238",
+  "vpn_gate_server_ip": "219.100.37.96",
+  "started_at": "2026-09-16T14:56:43Z",
+  "approx_expires_at": "2026-09-16T20:21:43Z",
   "run_id": "35111828443",
-  "updated_at": "2026-09-16T14:56:27.194654Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
