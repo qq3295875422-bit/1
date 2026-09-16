@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35033020284",
-  "current_server": "recipients-canvas-researchers-ruby.trycloudflare.com",
-  "previous_run_id": "35010594676",
-  "previous_server": "ran-inside-lodge-prostores.trycloudflare.com",
+  "current_run_id": "35056743049",
+  "current_server": "item-newbie-arkansas-plant.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
