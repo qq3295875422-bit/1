@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35056743049",
-  "current_server": "item-newbie-arkansas-plant.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "35081951470",
+  "current_server": "date-engine-opportunity-olympus.trycloudflare.com",
+  "previous_run_id": "35056743049",
+  "previous_server": "item-newbie-arkansas-plant.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
