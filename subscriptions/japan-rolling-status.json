@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35137033852",
-  "current_server": "sequences-leader-velocity-bikini.trycloudflare.com",
-  "previous_run_id": "35111828443",
-  "previous_server": "tier-camel-dramatic-notes.trycloudflare.com",
+  "current_run_id": "35159869566",
+  "current_server": "activated-slideshow-quarterly-classes.trycloudflare.com",
+  "previous_run_id": "35137033852",
+  "previous_server": "sequences-leader-velocity-bikini.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
