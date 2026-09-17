@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://medications-dependent-recommends-henry.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.239",
+  "vpn_gate_server_ip": "219.100.37.103",
+  "started_at": "2026-09-17T09:59:10Z",
+  "approx_expires_at": "2026-09-17T15:24:10Z",
   "run_id": "35207890558",
-  "updated_at": "2026-09-17T09:58:51.885488Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
