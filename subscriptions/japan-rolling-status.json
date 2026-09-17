@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35237014726",
-  "current_server": "based-gif-cabinets-received.trycloudflare.com",
-  "previous_run_id": "35207890558",
-  "previous_server": "medications-dependent-recommends-henry.trycloudflare.com",
+  "current_run_id": "35262131920",
+  "current_server": "oct-seas-position-mas.trycloudflare.com",
+  "previous_run_id": "35237014726",
+  "previous_server": "based-gif-cabinets-received.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
