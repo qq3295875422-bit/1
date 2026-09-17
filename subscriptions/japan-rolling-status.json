@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35159869566",
-  "current_server": "activated-slideshow-quarterly-classes.trycloudflare.com",
-  "previous_run_id": "35137033852",
-  "previous_server": "sequences-leader-velocity-bikini.trycloudflare.com",
+  "current_run_id": "35183222194",
+  "current_server": "partly-min-secondary-returned.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
