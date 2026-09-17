@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35183222194",
-  "current_server": "partly-min-secondary-returned.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "35207890558",
+  "current_server": "medications-dependent-recommends-henry.trycloudflare.com",
+  "previous_run_id": "35183222194",
+  "previous_server": "partly-min-secondary-returned.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
