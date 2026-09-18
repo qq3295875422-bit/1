@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://acknowledged-bracelet-particles-trustees.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.122",
-  "started_at": "2026-09-18T09:42:34Z",
-  "approx_expires_at": "2026-09-18T15:07:34Z",
-  "run_id": "35330817680",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "35356372491",
+  "message": "Checking GitHub runner TUN support"
 }
