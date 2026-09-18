@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://documents-known-split-drivers.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.233",
-  "vpn_gate_server_ip": "219.100.37.2",
-  "started_at": "2026-09-17T22:51:14Z",
-  "approx_expires_at": "2026-09-18T04:16:14Z",
-  "run_id": "35283967507",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "35307623767",
+  "message": "Checking GitHub runner TUN support"
 }
