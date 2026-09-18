@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35283967507",
-  "current_server": "documents-known-split-drivers.trycloudflare.com",
-  "previous_run_id": "35262131920",
-  "previous_server": "oct-seas-position-mas.trycloudflare.com",
+  "current_run_id": "35307623767",
+  "current_server": "sullivan-directory-coaching-nickname.trycloudflare.com",
+  "previous_run_id": "35283967507",
+  "previous_server": "documents-known-split-drivers.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
