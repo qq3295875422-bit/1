@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://sullivan-directory-coaching-nickname.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.211",
-  "started_at": "2026-09-18T04:38:24Z",
-  "approx_expires_at": "2026-09-18T10:03:24Z",
-  "run_id": "35307623767",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "35330817680",
+  "message": "Checking GitHub runner TUN support"
 }
