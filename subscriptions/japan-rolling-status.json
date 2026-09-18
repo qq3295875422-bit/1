@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35379923993",
-  "current_server": "iso-theta-assisted-collecting.trycloudflare.com",
-  "previous_run_id": "35356372491",
-  "previous_server": "shall-templates-you-gen.trycloudflare.com",
+  "current_run_id": "35402006138",
+  "current_server": "filed-assignments-uses-vault.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
