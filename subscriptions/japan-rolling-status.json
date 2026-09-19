@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35459704288",
-  "current_server": "donald-during-telling-ivory.trycloudflare.com",
-  "previous_run_id": "35447137098",
-  "previous_server": "chassis-assign-productions-nano.trycloudflare.com",
+  "current_run_id": "35472953895",
+  "current_server": "drive-earned-bride-frog.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
