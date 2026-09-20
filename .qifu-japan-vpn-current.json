@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://avoiding-charm-external-marked.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.239",
+  "vpn_gate_server_ip": "219.100.37.109",
+  "started_at": "2026-09-20T09:47:43Z",
+  "approx_expires_at": "2026-09-20T15:12:43Z",
   "run_id": "35503186971",
-  "updated_at": "2026-09-20T09:47:24.949524Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
