@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35528230668",
-  "current_server": "suggested-partnerships-connectivity-medicine.trycloudflare.com",
-  "previous_run_id": "35515730119",
-  "previous_server": "dock-sheer-creating-enb.trycloudflare.com",
+  "current_run_id": "35541565193",
+  "current_server": "notifications-match-beach-lawyer.trycloudflare.com",
+  "previous_run_id": "35528230668",
+  "previous_server": "suggested-partnerships-connectivity-medicine.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
