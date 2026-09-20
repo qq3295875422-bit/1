@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 35472953895
+# Current verified generation: 35490081476
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-35472953895"
+  - name: "🇯🇵 日本VPN-35490081476"
     type: vless
-    server: drive-earned-bride-frog.trycloudflare.com
+    server: camps-kai-varies-barriers.trycloudflare.com
     port: 443
-    uuid: 4a591f33-7936-42fb-8d36-9e4e0cfe1419
+    uuid: 66335cbe-e4c8-4c16-8017-ee98ec41014b
     network: ws
     tls: true
     udp: true
-    servername: drive-earned-bride-frog.trycloudflare.com
+    servername: camps-kai-varies-barriers.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: drive-earned-bride-frog.trycloudflare.com
+        Host: camps-kai-varies-barriers.trycloudflare.com
