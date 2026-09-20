@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://camps-kai-varies-barriers.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.236",
+  "vpn_gate_server_ip": "219.100.37.58",
+  "started_at": "2026-09-20T04:51:23Z",
+  "approx_expires_at": "2026-09-20T10:16:23Z",
   "run_id": "35490081476",
-  "updated_at": "2026-09-20T04:51:07.913591Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
