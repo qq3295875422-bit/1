@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35503186971",
-  "current_server": "avoiding-charm-external-marked.trycloudflare.com",
-  "previous_run_id": "35490081476",
-  "previous_server": "camps-kai-varies-barriers.trycloudflare.com",
+  "current_run_id": "35515730119",
+  "current_server": "dock-sheer-creating-enb.trycloudflare.com",
+  "previous_run_id": "35503186971",
+  "previous_server": "avoiding-charm-external-marked.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
