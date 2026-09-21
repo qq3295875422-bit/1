@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://seventh-structure-slightly-llp.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.187",
-  "started_at": "2026-09-21T10:40:19Z",
-  "approx_expires_at": "2026-09-21T16:05:19Z",
-  "run_id": "35589828788",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "35648057980",
+  "message": "Checking GitHub runner TUN support"
 }
