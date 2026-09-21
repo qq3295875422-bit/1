@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35541565193",
-  "current_server": "notifications-match-beach-lawyer.trycloudflare.com",
-  "previous_run_id": "35528230668",
-  "previous_server": "suggested-partnerships-connectivity-medicine.trycloudflare.com",
+  "current_run_id": "35562349991",
+  "current_server": "dictionary-garage-ext-melbourne.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
