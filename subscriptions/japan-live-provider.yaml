@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 35541565193
+# Current verified generation: 35562349991
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-35541565193"
+  - name: "🇯🇵 日本VPN-35562349991"
     type: vless
-    server: notifications-match-beach-lawyer.trycloudflare.com
+    server: dictionary-garage-ext-melbourne.trycloudflare.com
     port: 443
-    uuid: 76cab052-5099-40e6-8ab8-fe4913545269
+    uuid: 16f38406-69a3-4548-877f-15ae89f94ee1
     network: ws
     tls: true
     udp: true
-    servername: notifications-match-beach-lawyer.trycloudflare.com
+    servername: dictionary-garage-ext-melbourne.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: notifications-match-beach-lawyer.trycloudflare.com
-  - name: "🇯🇵 日本VPN-35528230668"
-    type: vless
-    server: suggested-partnerships-connectivity-medicine.trycloudflare.com
-    port: 443
-    uuid: c5f348b3-0699-4302-ab75-512ce3483b95
-    network: ws
-    tls: true
-    udp: true
-    servername: suggested-partnerships-connectivity-medicine.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: suggested-partnerships-connectivity-medicine.trycloudflare.com
+        Host: dictionary-garage-ext-melbourne.trycloudflare.com
