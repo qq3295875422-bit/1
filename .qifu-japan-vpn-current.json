@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://notifications-match-beach-lawyer.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.117",
-  "started_at": "2026-09-20T22:25:17Z",
-  "approx_expires_at": "2026-09-21T03:50:17Z",
-  "run_id": "35541565193",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "35562349991",
+  "message": "Checking GitHub runner TUN support"
 }
