@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 35648057980
+# Current verified generation: 35666630255
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-35666630255"
+    type: vless
+    server: buy-lucy-revolution-smith.trycloudflare.com
+    port: 443
+    uuid: f949739d-3d5d-4aa5-ad80-b390e5e7d053
+    network: ws
+    tls: true
+    udp: true
+    servername: buy-lucy-revolution-smith.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: buy-lucy-revolution-smith.trycloudflare.com
   - name: "🇯🇵 日本VPN-35648057980"
     type: vless
     server: consisting-teenage-oregon-reserve.trycloudflare.com
