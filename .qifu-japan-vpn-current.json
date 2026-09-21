@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://buy-lucy-revolution-smith.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.186",
+  "started_at": "2026-09-21T23:16:45Z",
+  "approx_expires_at": "2026-09-22T04:41:45Z",
   "run_id": "35666630255",
-  "updated_at": "2026-09-21T23:16:07.121434Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
