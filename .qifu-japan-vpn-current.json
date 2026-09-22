@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://databases-revised-realize-pix.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.233",
+  "vpn_gate_server_ip": "219.100.37.9",
+  "started_at": "2026-09-22T22:56:15Z",
+  "approx_expires_at": "2026-09-23T04:21:15Z",
   "run_id": "35794828251",
-  "updated_at": "2026-09-22T22:55:57.301340Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
