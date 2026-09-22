@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 35712967786
+# Current verified generation: 35742869030
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-35742869030"
+    type: vless
+    server: moreover-planner-boulevard-duties.trycloudflare.com
+    port: 443
+    uuid: 4d217047-5072-464d-92fb-66e7c6d2ddf2
+    network: ws
+    tls: true
+    udp: true
+    servername: moreover-planner-boulevard-duties.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: moreover-planner-boulevard-duties.trycloudflare.com
   - name: "🇯🇵 日本VPN-35712967786"
     type: vless
     server: banners-brush-ali-existed.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: banners-brush-ali-existed.trycloudflare.com
-  - name: "🇯🇵 日本VPN-35688254208"
-    type: vless
-    server: basket-become-hence-texas.trycloudflare.com
-    port: 443
-    uuid: 77880e8c-bc38-4967-aa07-d25ad0c59a07
-    network: ws
-    tls: true
-    udp: true
-    servername: basket-become-hence-texas.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: basket-become-hence-texas.trycloudflare.com
