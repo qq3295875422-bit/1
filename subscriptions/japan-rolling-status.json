@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35878152055",
-  "current_server": "select-columnists-zinc-migration.trycloudflare.com",
-  "previous_run_id": "35845826004",
-  "previous_server": "rhythm-columnists-variables-summit.trycloudflare.com",
+  "current_run_id": "35906472153",
+  "current_server": "stages-initiated-aerospace-desperate.trycloudflare.com",
+  "previous_run_id": "35878152055",
+  "previous_server": "select-columnists-zinc-migration.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
