@@ -1,8 +1,7 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "verify-public-path",
-  "run_id": "36045763764",
-  "updated_at": "2026-09-24T19:12:42.008758Z",
-  "message": "exit=1; line=174"
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "36071428655",
+  "message": "Checking GitHub runner TUN support"
 }
