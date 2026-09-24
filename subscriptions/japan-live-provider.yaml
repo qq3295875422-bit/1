@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 36016993870
+# Current verified generation: 36071428655
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-36016993870"
+  - name: "🇯🇵 日本VPN-36071428655"
     type: vless
-    server: insured-andrea-homepage-extensions.trycloudflare.com
+    server: madonna-touched-condo-believed.trycloudflare.com
     port: 443
-    uuid: 927305ab-064e-4ead-98e5-cb6bc6ed27f5
+    uuid: 8ab12b91-645b-4324-a102-a1e2910e5795
     network: ws
     tls: true
     udp: true
-    servername: insured-andrea-homepage-extensions.trycloudflare.com
+    servername: madonna-touched-condo-believed.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: insured-andrea-homepage-extensions.trycloudflare.com
-  - name: "🇯🇵 日本VPN-35984252865"
-    type: vless
-    server: quotations-participants-near-preston.trycloudflare.com
-    port: 443
-    uuid: b32b88e1-6e40-497d-82d5-5fb706943fa9
-    network: ws
-    tls: true
-    udp: true
-    servername: quotations-participants-near-preston.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: quotations-participants-near-preston.trycloudflare.com
+        Host: madonna-touched-condo-believed.trycloudflare.com
