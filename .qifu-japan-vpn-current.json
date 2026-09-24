@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://insured-andrea-homepage-extensions.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.178",
-  "started_at": "2026-09-24T15:02:27Z",
-  "approx_expires_at": "2026-09-24T20:27:27Z",
-  "run_id": "36016993870",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "36045763764",
+  "message": "Checking GitHub runner TUN support"
 }
