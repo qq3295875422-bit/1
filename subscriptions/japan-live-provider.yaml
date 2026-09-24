@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 35956727203
+# Current verified generation: 35984252865
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-35984252865"
+    type: vless
+    server: quotations-participants-near-preston.trycloudflare.com
+    port: 443
+    uuid: b32b88e1-6e40-497d-82d5-5fb706943fa9
+    network: ws
+    tls: true
+    udp: true
+    servername: quotations-participants-near-preston.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: quotations-participants-near-preston.trycloudflare.com
   - name: "🇯🇵 日本VPN-35956727203"
     type: vless
     server: simple-rotary-respiratory-replace.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: simple-rotary-respiratory-replace.trycloudflare.com
-  - name: "🇯🇵 日本VPN-35930932081"
-    type: vless
-    server: boutique-promises-picnic-kinda.trycloudflare.com
-    port: 443
-    uuid: 30c12f63-a829-4df7-9661-56a05586c912
-    network: ws
-    tls: true
-    udp: true
-    servername: boutique-promises-picnic-kinda.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: boutique-promises-picnic-kinda.trycloudflare.com
