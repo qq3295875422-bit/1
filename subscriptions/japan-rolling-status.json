@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "35930932081",
-  "current_server": "boutique-promises-picnic-kinda.trycloudflare.com",
-  "previous_run_id": "35906472153",
-  "previous_server": "stages-initiated-aerospace-desperate.trycloudflare.com",
+  "current_run_id": "35956727203",
+  "current_server": "simple-rotary-respiratory-replace.trycloudflare.com",
+  "previous_run_id": "35930932081",
+  "previous_server": "boutique-promises-picnic-kinda.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
