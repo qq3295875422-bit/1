@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://fire-guardian-locking-financing.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.233",
-  "vpn_gate_server_ip": "219.100.37.4",
-  "started_at": "2026-09-25T10:11:00Z",
-  "approx_expires_at": "2026-09-25T15:36:00Z",
-  "run_id": "36122433105",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "36178346994",
+  "message": "Checking GitHub runner TUN support"
 }
