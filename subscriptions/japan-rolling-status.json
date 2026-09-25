@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "36122433105",
-  "current_server": "fire-guardian-locking-financing.trycloudflare.com",
-  "previous_run_id": "36096110708",
-  "previous_server": "california-below-transparent-background.trycloudflare.com",
+  "current_run_id": "36178346994",
+  "current_server": "secret-cam-lecture-incomplete.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
