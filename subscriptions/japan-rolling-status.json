@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "36219035492",
-  "current_server": "occupations-subscribe-clip-nurse.trycloudflare.com",
-  "previous_run_id": "36200364542",
-  "previous_server": "blocking-endorsement-improvements-initiated.trycloudflare.com",
+  "current_run_id": "36233950174",
+  "current_server": "beverly-minerals-introduced-sufficient.trycloudflare.com",
+  "previous_run_id": "36219035492",
+  "previous_server": "occupations-subscribe-clip-nurse.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
