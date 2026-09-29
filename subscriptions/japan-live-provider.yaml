@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 36561077550
+# Current verified generation: 36622886788
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-36561077550"
+  - name: "🇯🇵 日本VPN-36622886788"
     type: vless
-    server: boats-evolution-holdings-avon.trycloudflare.com
+    server: subsidiary-exclusively-industries-three.trycloudflare.com
     port: 443
-    uuid: b2be0a3b-09b0-40e6-a2f1-84f58ab27aff
+    uuid: d4e6258c-6ef4-42c7-8293-d616c08a7791
     network: ws
     tls: true
     udp: true
-    servername: boats-evolution-holdings-avon.trycloudflare.com
+    servername: subsidiary-exclusively-industries-three.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: boats-evolution-holdings-avon.trycloudflare.com
+        Host: subsidiary-exclusively-industries-three.trycloudflare.com
