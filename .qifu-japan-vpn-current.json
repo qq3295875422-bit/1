@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://pursue-reed-evaluation-africa.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.246",
+  "vpn_gate_server_ip": "219.100.37.213",
+  "started_at": "2026-09-29T00:22:19Z",
+  "approx_expires_at": "2026-09-29T05:47:19Z",
   "run_id": "36502608201",
-  "updated_at": "2026-09-29T00:21:44.659196Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
