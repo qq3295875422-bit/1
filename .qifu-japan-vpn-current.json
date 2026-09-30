@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://vitamins-galleries-permission-bulletin.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.54",
-  "started_at": "2026-09-30T16:26:17Z",
-  "approx_expires_at": "2026-09-30T21:51:17Z",
-  "run_id": "36743796642",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "36792658590",
+  "message": "Checking GitHub runner TUN support"
 }
