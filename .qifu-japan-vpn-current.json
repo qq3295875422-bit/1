@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://alerts-situations-prince-thought.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.99",
-  "started_at": "2026-09-29T23:41:32Z",
-  "approx_expires_at": "2026-09-30T05:06:32Z",
-  "run_id": "36646426617",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "36673395467",
+  "message": "Checking GitHub runner TUN support"
 }
