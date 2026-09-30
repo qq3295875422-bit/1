@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://vitamins-galleries-permission-bulletin.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.236",
+  "vpn_gate_server_ip": "219.100.37.54",
+  "started_at": "2026-09-30T16:26:17Z",
+  "approx_expires_at": "2026-09-30T21:51:17Z",
   "run_id": "36743796642",
-  "updated_at": "2026-09-30T16:25:47.415544Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
