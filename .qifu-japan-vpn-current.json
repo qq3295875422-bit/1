@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://donations-showcase-thumbzilla-nowhere.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.178",
-  "started_at": "2026-10-01T05:46:47Z",
-  "approx_expires_at": "2026-10-01T11:11:47Z",
-  "run_id": "36821247818",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "36896139734",
+  "message": "Checking GitHub runner TUN support"
 }
