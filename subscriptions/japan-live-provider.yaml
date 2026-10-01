@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 36792658590
+# Current verified generation: 36821247818
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-36792658590"
+  - name: "🇯🇵 日本VPN-36821247818"
     type: vless
-    server: dvds-flux-danny-controversial.trycloudflare.com
+    server: donations-showcase-thumbzilla-nowhere.trycloudflare.com
     port: 443
-    uuid: a6df2c01-8bee-4cab-9353-012b1f7efca7
+    uuid: da8160f9-5ed9-4a31-8efe-c2a6c0107e0a
     network: ws
     tls: true
     udp: true
-    servername: dvds-flux-danny-controversial.trycloudflare.com
+    servername: donations-showcase-thumbzilla-nowhere.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: dvds-flux-danny-controversial.trycloudflare.com
+        Host: donations-showcase-thumbzilla-nowhere.trycloudflare.com
