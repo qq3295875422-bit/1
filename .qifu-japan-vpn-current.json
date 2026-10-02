@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://witness-illustration-adjust-charleston.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.211",
-  "started_at": "2026-10-02T05:30:35Z",
-  "approx_expires_at": "2026-10-02T10:55:35Z",
-  "run_id": "36969115938",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "37032593399",
+  "message": "Checking GitHub runner TUN support"
 }
