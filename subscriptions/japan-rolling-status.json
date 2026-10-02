@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "36969115938",
-  "current_server": "witness-illustration-adjust-charleston.trycloudflare.com",
-  "previous_run_id": "36943019543",
-  "previous_server": "recreational-gentleman-components-cleared.trycloudflare.com",
+  "current_run_id": "37032593399",
+  "current_server": "queens-proposal-chronic-increases.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
