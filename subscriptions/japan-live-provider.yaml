@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37099044195
+# Current verified generation: 37130557268
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37099044195"
+  - name: "🇯🇵 日本VPN-37130557268"
     type: vless
-    server: side-shoulder-impaired-cake.trycloudflare.com
+    server: declare-reveal-chicken-services.trycloudflare.com
     port: 443
-    uuid: b1d2c20f-9691-420a-baef-1084e7f422d4
+    uuid: 531c3a3b-fb1d-43f9-bf2e-973e05c68366
     network: ws
     tls: true
     udp: true
-    servername: side-shoulder-impaired-cake.trycloudflare.com
+    servername: declare-reveal-chicken-services.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: side-shoulder-impaired-cake.trycloudflare.com
-  - name: "🇯🇵 日本VPN-37079009311"
-    type: vless
-    server: debate-fioricet-cream-silver.trycloudflare.com
-    port: 443
-    uuid: 71f5a0cb-ed8a-40fe-b2f7-dcb52578e73c
-    network: ws
-    tls: true
-    udp: true
-    servername: debate-fioricet-cream-silver.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: debate-fioricet-cream-silver.trycloudflare.com
+        Host: declare-reveal-chicken-services.trycloudflare.com
