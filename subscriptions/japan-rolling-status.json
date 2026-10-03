@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "37079009311",
-  "current_server": "debate-fioricet-cream-silver.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "37099044195",
+  "current_server": "side-shoulder-impaired-cake.trycloudflare.com",
+  "previous_run_id": "37079009311",
+  "previous_server": "debate-fioricet-cream-silver.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
