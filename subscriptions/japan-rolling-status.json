@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "37130557268",
-  "current_server": "declare-reveal-chicken-services.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "37145033956",
+  "current_server": "exhaust-condos-plates-plain.trycloudflare.com",
+  "previous_run_id": "37130557268",
+  "previous_server": "declare-reveal-chicken-services.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
