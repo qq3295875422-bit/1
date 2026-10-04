@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://warned-acid-reynolds-electronic.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "124.35.90.44",
+  "vpn_gate_server_ip": "124.35.90.44",
+  "started_at": "2026-10-04T23:06:39Z",
+  "approx_expires_at": "2026-10-05T04:31:39Z",
   "run_id": "37242355039",
-  "updated_at": "2026-10-04T23:06:06.764489Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
