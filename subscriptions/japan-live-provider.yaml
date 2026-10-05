@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37268088454
+# Current verified generation: 37362167826
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37268088454"
+  - name: "🇯🇵 日本VPN-37362167826"
     type: vless
-    server: leather-lynn-narrow-comfort.trycloudflare.com
+    server: expenses-subdivision-heated-mistress.trycloudflare.com
     port: 443
-    uuid: 2e38a5ee-d2a4-4614-9e49-f28419b338f6
+    uuid: 6967c565-39ea-4b03-9c27-cc78d9a67fdc
     network: ws
     tls: true
     udp: true
-    servername: leather-lynn-narrow-comfort.trycloudflare.com
+    servername: expenses-subdivision-heated-mistress.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: leather-lynn-narrow-comfort.trycloudflare.com
+        Host: expenses-subdivision-heated-mistress.trycloudflare.com
