@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://expenses-subdivision-heated-mistress.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.21",
+  "started_at": "2026-10-05T19:18:39Z",
+  "approx_expires_at": "2026-10-06T00:43:39Z",
   "run_id": "37362167826",
-  "updated_at": "2026-10-05T19:18:15.353302Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
