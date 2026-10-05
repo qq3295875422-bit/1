@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37242355039
+# Current verified generation: 37268088454
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37242355039"
+  - name: "🇯🇵 日本VPN-37268088454"
     type: vless
-    server: warned-acid-reynolds-electronic.trycloudflare.com
+    server: leather-lynn-narrow-comfort.trycloudflare.com
     port: 443
-    uuid: 4742199d-5af7-4bd4-a1c1-d1046784ccfd
+    uuid: 2e38a5ee-d2a4-4614-9e49-f28419b338f6
     network: ws
     tls: true
     udp: true
-    servername: warned-acid-reynolds-electronic.trycloudflare.com
+    servername: leather-lynn-narrow-comfort.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: warned-acid-reynolds-electronic.trycloudflare.com
+        Host: leather-lynn-narrow-comfort.trycloudflare.com
