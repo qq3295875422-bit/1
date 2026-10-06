@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://expenses-subdivision-heated-mistress.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.21",
-  "started_at": "2026-10-05T19:18:39Z",
-  "approx_expires_at": "2026-10-06T00:43:39Z",
-  "run_id": "37362167826",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "37398333779",
+  "message": "Checking GitHub runner TUN support"
 }
