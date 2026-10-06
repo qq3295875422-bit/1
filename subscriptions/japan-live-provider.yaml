@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37362167826
+# Current verified generation: 37398333779
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37362167826"
+  - name: "🇯🇵 日本VPN-37398333779"
     type: vless
-    server: expenses-subdivision-heated-mistress.trycloudflare.com
+    server: reference-philosophy-reaction-scholarships.trycloudflare.com
     port: 443
-    uuid: 6967c565-39ea-4b03-9c27-cc78d9a67fdc
+    uuid: 8075900c-c892-4f1a-b86b-e3f78e72c178
     network: ws
     tls: true
     udp: true
-    servername: expenses-subdivision-heated-mistress.trycloudflare.com
+    servername: reference-philosophy-reaction-scholarships.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: expenses-subdivision-heated-mistress.trycloudflare.com
+        Host: reference-philosophy-reaction-scholarships.trycloudflare.com
