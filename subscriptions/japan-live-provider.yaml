@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37578337793
+# Current verified generation: 37658776118
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37578337793"
+  - name: "🇯🇵 日本VPN-37658776118"
     type: vless
-    server: bids-sign-wrestling-interview.trycloudflare.com
+    server: door-leg-consistently-film.trycloudflare.com
     port: 443
-    uuid: e4a7c1b2-33d0-4ee9-be2e-6c52818e0198
+    uuid: c70da895-6831-439b-b153-d99d6997c1cb
     network: ws
     tls: true
     udp: true
-    servername: bids-sign-wrestling-interview.trycloudflare.com
+    servername: door-leg-consistently-film.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: bids-sign-wrestling-interview.trycloudflare.com
+        Host: door-leg-consistently-film.trycloudflare.com
