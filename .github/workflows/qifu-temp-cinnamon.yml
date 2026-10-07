@@ -143,3 +143,5 @@ EOF
             pgrep -fa 'cinnamon|muffin|Xvnc' >/dev/null || exit 1
             sleep 60
           done
+
+# launch-trigger: 2026-10-07T22:55+08:00
