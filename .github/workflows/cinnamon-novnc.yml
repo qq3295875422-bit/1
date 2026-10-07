@@ -40,6 +40,15 @@ jobs:
           printf '%s\n' "$VNC_PASSWORD" | "$VNC_PASSWD_BIN" -f > "$HOME/.vnc/passwd"
           chmod 600 "$HOME/.vnc/passwd"
 
+          # Make the Cinnamon unlock password identical to the VNC password.
+          printf '%s:%s\n' "$USER" "$VNC_PASSWORD" | sudo chpasswd
+
+          # Disable Cinnamon auto-lock and idle blanking for this temporary cloud desktop.
+          dbus-run-session -- gsettings set org.cinnamon.desktop.screensaver lock-enabled false || true
+          dbus-run-session -- gsettings set org.cinnamon.desktop.session idle-delay 0 || true
+          dbus-run-session -- gsettings set org.cinnamon.settings-daemon.plugins.power sleep-display-ac 0 || true
+          dbus-run-session -- gsettings set org.cinnamon.settings-daemon.plugins.power sleep-display-battery 0 || true
+
       - name: Start Cinnamon and noVNC
         shell: bash
         run: |
@@ -120,4 +129,4 @@ jobs:
             sleep 60
           done
 
-# qifu-trigger: 2026-08-11-cloud-desktop
+# qifu-trigger: 2026-10-07-redeploy-lockfix
