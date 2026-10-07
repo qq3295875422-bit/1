@@ -99,16 +99,16 @@ jobs:
         run: |
           set -euo pipefail
           cat >/tmp/qifu-public.pem <<'EOF'
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp+VUmn1JlWEwRERbvWrZ
-3DMDr45VuAJo3Coxx4PPsDbTpCTx/zfVnG913JIyGmjscuV2n4xOkPIode1kJZgN
-oqtOvWxTt8H9m1lSM66+MjKrdaNJPTUABz46ycquUlYIYfpC6lHuIBlvuDL1Ng1C
-SgthCuNViYi57Y7GEwPgJ4q3yEYX9zEmgb4P7mWyqiyXAhKIRI1syOc9rXwF5b0/
-MFS/ZaQhQSdZysNufrxs6bCNVpO6tfcNnw05xQe+DxKIPMYlErAfavxk31VV1BMr
-cxpnXsJL3lSlkJseXrg/EZo7ZKviNNu8vHDsCegKj4rkRw7rnhXGcWbCKeygOK8J
-RQIDAQAB
------END PUBLIC KEY-----
-EOF
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp+VUmn1JlWEwRERbvWrZ
+          3DMDr45VuAJo3Coxx4PPsDbTpCTx/zfVnG913JIyGmjscuV2n4xOkPIode1kJZgN
+          oqtOvWxTt8H9m1lSM66+MjKrdaNJPTUABz46ycquUlYIYfpC6lHuIBlvuDL1Ng1C
+          SgthCuNViYi57Y7GEwPgJ4q3yEYX9zEmgb4P7mWyqiyXAhKIRI1syOc9rXwF5b0/
+          MFS/ZaQhQSdZysNufrxs6bCNVpO6tfcNnw05xQe+DxKIPMYlErAfavxk31VV1BMr
+          cxpnXsJL3lSlkJseXrg/EZo7ZKviNNu8vHDsCegKj4rkRw7rnhXGcWbCKeygOK8J
+          RQIDAQAB
+          -----END PUBLIC KEY-----
+          EOF
           ENC_PASSWORD="$(openssl pkeyutl -encrypt -pubin -inkey /tmp/qifu-public.pem -in /tmp/desktop-password.txt | base64 -w0)"
           TUNNEL_URL="$(cat /tmp/tunnel-url.txt)"
           python3 - "$TUNNEL_URL" "$ENC_PASSWORD" "$GITHUB_RUN_ID" <<'PY'
@@ -146,4 +146,5 @@ EOF
             sleep 60
           done
 
-# launch-trigger: 2026-10-07T22:55+08:00
+
+# syntax-fix-trigger: 2026-10-07T22:58+08:00
