@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37706241694
+# Current verified generation: 37841205618
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37706241694"
+  - name: "🇯🇵 日本VPN-37841205618"
     type: vless
-    server: windsor-thus-corrected-yarn.trycloudflare.com
+    server: harley-prediction-wanting-author.trycloudflare.com
     port: 443
-    uuid: d3812164-f830-42d0-b480-8aff328e2a2f
+    uuid: eee6cdad-b902-4c70-93c8-6c5d5e9f1e62
     network: ws
     tls: true
     udp: true
-    servername: windsor-thus-corrected-yarn.trycloudflare.com
+    servername: harley-prediction-wanting-author.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: windsor-thus-corrected-yarn.trycloudflare.com
+        Host: harley-prediction-wanting-author.trycloudflare.com
