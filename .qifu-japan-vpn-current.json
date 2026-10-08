@@ -1,8 +1,7 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "connect-japan-exit",
-  "run_id": "37773718569",
-  "updated_at": "2026-10-08T11:59:43.089903Z",
-  "message": "Connecting native Japan TCP 443 exit and verifying JP"
+  "stage": "probe-tun",
+  "run_id": "37841205618",
+  "message": "Checking GitHub runner TUN support"
 }
