@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37658776118
+# Current verified generation: 37706241694
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37658776118"
+  - name: "🇯🇵 日本VPN-37706241694"
     type: vless
-    server: door-leg-consistently-film.trycloudflare.com
+    server: windsor-thus-corrected-yarn.trycloudflare.com
     port: 443
-    uuid: c70da895-6831-439b-b153-d99d6997c1cb
+    uuid: d3812164-f830-42d0-b480-8aff328e2a2f
     network: ws
     tls: true
     udp: true
-    servername: door-leg-consistently-film.trycloudflare.com
+    servername: windsor-thus-corrected-yarn.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: door-leg-consistently-film.trycloudflare.com
+        Host: windsor-thus-corrected-yarn.trycloudflare.com
