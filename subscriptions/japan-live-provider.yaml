@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37891428158
+# Current verified generation: 37962886854
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37891428158"
+  - name: "🇯🇵 日本VPN-37962886854"
     type: vless
-    server: cst-rivers-miami-arrested.trycloudflare.com
+    server: great-appropriations-prefers-featuring.trycloudflare.com
     port: 443
-    uuid: b56a9205-ff63-4f18-ab1f-591cabd36a33
+    uuid: 18f3ca9f-59dd-4f7b-a981-118b2f8b5a34
     network: ws
     tls: true
     udp: true
-    servername: cst-rivers-miami-arrested.trycloudflare.com
+    servername: great-appropriations-prefers-featuring.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: cst-rivers-miami-arrested.trycloudflare.com
+        Host: great-appropriations-prefers-featuring.trycloudflare.com
