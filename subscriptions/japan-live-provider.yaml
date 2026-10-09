@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37841205618
+# Current verified generation: 37891428158
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37841205618"
+  - name: "🇯🇵 日本VPN-37891428158"
     type: vless
-    server: harley-prediction-wanting-author.trycloudflare.com
+    server: cst-rivers-miami-arrested.trycloudflare.com
     port: 443
-    uuid: eee6cdad-b902-4c70-93c8-6c5d5e9f1e62
+    uuid: b56a9205-ff63-4f18-ab1f-591cabd36a33
     network: ws
     tls: true
     udp: true
-    servername: harley-prediction-wanting-author.trycloudflare.com
+    servername: cst-rivers-miami-arrested.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: harley-prediction-wanting-author.trycloudflare.com
+        Host: cst-rivers-miami-arrested.trycloudflare.com
