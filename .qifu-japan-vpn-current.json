@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://optional-muscles-shirt-diy.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.117",
-  "started_at": "2026-10-10T05:45:49Z",
-  "approx_expires_at": "2026-10-10T11:10:49Z",
-  "run_id": "38028533470",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38065274632",
+  "message": "Checking GitHub runner TUN support"
 }
