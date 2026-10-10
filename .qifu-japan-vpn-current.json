@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://costa-mistakes-suited-then.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.118",
-  "started_at": "2026-10-10T00:01:10Z",
-  "approx_expires_at": "2026-10-10T05:26:10Z",
-  "run_id": "38007060393",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38028533470",
+  "message": "Checking GitHub runner TUN support"
 }
