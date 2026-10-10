@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 37962886854
+# Current verified generation: 38007060393
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-37962886854"
+  - name: "🇯🇵 日本VPN-38007060393"
     type: vless
-    server: great-appropriations-prefers-featuring.trycloudflare.com
+    server: costa-mistakes-suited-then.trycloudflare.com
     port: 443
-    uuid: 18f3ca9f-59dd-4f7b-a981-118b2f8b5a34
+    uuid: 35a9543a-d0fa-4db7-a392-0143da13c128
     network: ws
     tls: true
     udp: true
-    servername: great-appropriations-prefers-featuring.trycloudflare.com
+    servername: costa-mistakes-suited-then.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: great-appropriations-prefers-featuring.trycloudflare.com
+        Host: costa-mistakes-suited-then.trycloudflare.com
