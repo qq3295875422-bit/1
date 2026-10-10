@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://monroe-phpbb-shape-alert.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.246",
+  "vpn_gate_server_ip": "219.100.37.220",
+  "started_at": "2026-10-10T23:32:31Z",
+  "approx_expires_at": "2026-10-11T04:57:31Z",
   "run_id": "38095255329",
-  "updated_at": "2026-10-10T23:32:11.567721Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
