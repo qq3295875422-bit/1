@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 38095255329
+# Current verified generation: 38115491576
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-38095255329"
+  - name: "🇯🇵 日本VPN-38115491576"
     type: vless
-    server: monroe-phpbb-shape-alert.trycloudflare.com
+    server: caring-invitation-rows-surveys.trycloudflare.com
     port: 443
-    uuid: e24ffcdc-ad43-4995-9a9e-b8e1cad91add
+    uuid: 8d21801e-fa7f-480b-878c-54472f561ef0
     network: ws
     tls: true
     udp: true
-    servername: monroe-phpbb-shape-alert.trycloudflare.com
+    servername: caring-invitation-rows-surveys.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: monroe-phpbb-shape-alert.trycloudflare.com
+        Host: caring-invitation-rows-surveys.trycloudflare.com
