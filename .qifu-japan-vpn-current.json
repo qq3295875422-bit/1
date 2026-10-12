@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://conventional-correctly-blair-accurate.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.238",
+  "vpn_gate_server_ip": "219.100.37.96",
+  "started_at": "2026-10-12T19:48:42Z",
+  "approx_expires_at": "2026-10-13T01:13:42Z",
   "run_id": "38299881847",
-  "updated_at": "2026-10-12T19:48:20.333408Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
