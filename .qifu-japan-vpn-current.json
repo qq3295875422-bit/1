@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://synthesis-forth-detected-wrapping.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.61",
-  "started_at": "2026-10-12T05:51:11Z",
-  "approx_expires_at": "2026-10-12T11:16:11Z",
-  "run_id": "38209615631",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38299881847",
+  "message": "Checking GitHub runner TUN support"
 }
