@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 38398953141
+# Current verified generation: 38464372712
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-38398953141"
+  - name: "🇯🇵 日本VPN-38464372712"
     type: vless
-    server: civilization-earthquake-supervision-pixel.trycloudflare.com
+    server: counted-disco-band-mainstream.trycloudflare.com
     port: 443
-    uuid: bafcb512-7a85-475c-aeb8-a289611eae7e
+    uuid: c5227a57-582c-46d7-8ff8-3a02688add6f
     network: ws
     tls: true
     udp: true
-    servername: civilization-earthquake-supervision-pixel.trycloudflare.com
+    servername: counted-disco-band-mainstream.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: civilization-earthquake-supervision-pixel.trycloudflare.com
+        Host: counted-disco-band-mainstream.trycloudflare.com
