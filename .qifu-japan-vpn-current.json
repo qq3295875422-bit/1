@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://conventional-correctly-blair-accurate.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.96",
-  "started_at": "2026-10-12T19:48:42Z",
-  "approx_expires_at": "2026-10-13T01:13:42Z",
-  "run_id": "38299881847",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38334711284",
+  "message": "Checking GitHub runner TUN support"
 }
