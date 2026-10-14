@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "38586721994",
-  "current_server": "warning-chapters-mae-tagged.trycloudflare.com",
-  "previous_run_id": "38547343197",
-  "previous_server": "eight-diana-louisville-areas.trycloudflare.com",
+  "current_run_id": "38652450019",
+  "current_server": "reforms-bow-thesaurus-passenger.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
