@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://reforms-bow-thesaurus-passenger.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.191",
+  "started_at": "2026-10-14T23:12:54Z",
+  "approx_expires_at": "2026-10-15T04:37:54Z",
   "run_id": "38652450019",
-  "updated_at": "2026-10-14T23:12:32.076694Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
