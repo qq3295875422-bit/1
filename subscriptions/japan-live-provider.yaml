@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 38464372712
+# Current verified generation: 38513136830
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-38464372712"
+  - name: "🇯🇵 日本VPN-38513136830"
     type: vless
-    server: counted-disco-band-mainstream.trycloudflare.com
+    server: laundry-eggs-statewide-intent.trycloudflare.com
     port: 443
-    uuid: c5227a57-582c-46d7-8ff8-3a02688add6f
+    uuid: c697fb04-b9f2-4f43-9bbe-264abb8f6b36
     network: ws
     tls: true
     udp: true
-    servername: counted-disco-band-mainstream.trycloudflare.com
+    servername: laundry-eggs-statewide-intent.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: counted-disco-band-mainstream.trycloudflare.com
+        Host: laundry-eggs-statewide-intent.trycloudflare.com
