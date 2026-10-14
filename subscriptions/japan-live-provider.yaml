@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 38513136830
+# Current verified generation: 38547343197
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-38547343197"
+    type: vless
+    server: eight-diana-louisville-areas.trycloudflare.com
+    port: 443
+    uuid: 448e074b-f542-4828-b3bf-f783cefe000c
+    network: ws
+    tls: true
+    udp: true
+    servername: eight-diana-louisville-areas.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: eight-diana-louisville-areas.trycloudflare.com
   - name: "🇯🇵 日本VPN-38513136830"
     type: vless
     server: laundry-eggs-statewide-intent.trycloudflare.com
