@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "38513136830",
-  "current_server": "laundry-eggs-statewide-intent.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "38547343197",
+  "current_server": "eight-diana-louisville-areas.trycloudflare.com",
+  "previous_run_id": "38513136830",
+  "previous_server": "laundry-eggs-statewide-intent.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
