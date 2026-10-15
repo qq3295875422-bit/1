@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://reforms-bow-thesaurus-passenger.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.191",
-  "started_at": "2026-10-14T23:12:54Z",
-  "approx_expires_at": "2026-10-15T04:37:54Z",
-  "run_id": "38652450019",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38681763619",
+  "message": "Checking GitHub runner TUN support"
 }
