@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "38681763619",
-  "current_server": "cookbook-llp-johnny-thanksgiving.trycloudflare.com",
-  "previous_run_id": "38652450019",
-  "previous_server": "reforms-bow-thesaurus-passenger.trycloudflare.com",
+  "current_run_id": "38715856990",
+  "current_server": "seems-fitting-phases-hang.trycloudflare.com",
+  "previous_run_id": "38681763619",
+  "previous_server": "cookbook-llp-johnny-thanksgiving.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
