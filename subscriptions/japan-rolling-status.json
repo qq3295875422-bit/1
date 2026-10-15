@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "38652450019",
-  "current_server": "reforms-bow-thesaurus-passenger.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "38681763619",
+  "current_server": "cookbook-llp-johnny-thanksgiving.trycloudflare.com",
+  "previous_run_id": "38652450019",
+  "previous_server": "reforms-bow-thesaurus-passenger.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
