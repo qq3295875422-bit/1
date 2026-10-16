@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://applied-bool-championships-bargains.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.239",
-  "vpn_gate_server_ip": "219.100.37.104",
-  "started_at": "2026-10-16T14:49:10Z",
-  "approx_expires_at": "2026-10-16T20:14:10Z",
-  "run_id": "38918671400",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38949860166",
+  "message": "Checking GitHub runner TUN support"
 }
