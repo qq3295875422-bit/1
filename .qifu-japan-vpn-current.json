@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://characteristic-dad-graduate-qld.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.246",
+  "vpn_gate_server_ip": "219.100.37.212",
+  "started_at": "2026-10-16T22:49:29Z",
+  "approx_expires_at": "2026-10-17T04:14:29Z",
   "run_id": "38977861430",
-  "updated_at": "2026-10-16T22:49:06.128643Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
