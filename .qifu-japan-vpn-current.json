@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://circumstances-arrangement-allergy-experiencing.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.117",
-  "started_at": "2026-10-16T04:25:34Z",
-  "approx_expires_at": "2026-10-16T09:50:34Z",
-  "run_id": "38850434078",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "38882366005",
+  "message": "Checking GitHub runner TUN support"
 }
