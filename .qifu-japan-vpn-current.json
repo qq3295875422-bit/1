@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://works-sox-abroad-effects.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.233",
+  "vpn_gate_server_ip": "219.100.37.6",
+  "started_at": "2026-10-17T22:15:57Z",
+  "approx_expires_at": "2026-10-18T03:40:57Z",
   "run_id": "39074266500",
-  "updated_at": "2026-10-17T22:15:44.017630Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
