@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://donation-athletes-guidance-conferencing.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.240",
+  "vpn_gate_server_ip": "219.100.37.120",
+  "started_at": "2026-10-17T04:19:05Z",
+  "approx_expires_at": "2026-10-17T09:44:05Z",
   "run_id": "39002029434",
-  "updated_at": "2026-10-17T04:18:51.476275Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
