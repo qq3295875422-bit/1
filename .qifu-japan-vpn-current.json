@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://organizational-sufficiently-aka-conflicts.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.245",
-  "vpn_gate_server_ip": "219.100.37.194",
-  "started_at": "2026-10-17T09:19:08Z",
-  "approx_expires_at": "2026-10-17T14:44:08Z",
-  "run_id": "39020563477",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "39037607180",
+  "message": "Checking GitHub runner TUN support"
 }
