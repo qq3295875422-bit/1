@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://named-gay-sound-changes.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.119",
-  "started_at": "2026-10-18T04:25:13Z",
-  "approx_expires_at": "2026-10-18T09:50:13Z",
-  "run_id": "39096948779",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "39115637805",
+  "message": "Checking GitHub runner TUN support"
 }
