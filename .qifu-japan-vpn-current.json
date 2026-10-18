@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://superintendent-mood-horse-dan.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.188",
+  "started_at": "2026-10-18T18:06:12Z",
+  "approx_expires_at": "2026-10-18T23:31:12Z",
   "run_id": "39152390353",
-  "updated_at": "2026-10-18T18:05:27.117838Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
