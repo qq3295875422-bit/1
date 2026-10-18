@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39152390353
+# Current verified generation: 39172012971
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-39172012971"
+    type: vless
+    server: documented-dennis-fruits-animals.trycloudflare.com
+    port: 443
+    uuid: db5b7816-5fe4-424b-a2f5-99bf49747660
+    network: ws
+    tls: true
+    udp: true
+    servername: documented-dennis-fruits-animals.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: documented-dennis-fruits-animals.trycloudflare.com
   - name: "🇯🇵 日本VPN-39152390353"
     type: vless
     server: superintendent-mood-horse-dan.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: superintendent-mood-horse-dan.trycloudflare.com
-  - name: "🇯🇵 日本VPN-39133864272"
-    type: vless
-    server: ready-fairly-degrees-maker.trycloudflare.com
-    port: 443
-    uuid: efb0aa94-afc7-4a90-acf0-73d3de24392b
-    network: ws
-    tls: true
-    udp: true
-    servername: ready-fairly-degrees-maker.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: ready-fairly-degrees-maker.trycloudflare.com
