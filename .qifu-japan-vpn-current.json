@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://ready-fairly-degrees-maker.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.239",
+  "vpn_gate_server_ip": "219.100.37.110",
+  "started_at": "2026-10-18T13:59:57Z",
+  "approx_expires_at": "2026-10-18T19:24:57Z",
   "run_id": "39133864272",
-  "updated_at": "2026-10-18T13:59:39.098360Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
