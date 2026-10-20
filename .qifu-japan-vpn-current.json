@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://milton-anyone-hints-counsel.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.115",
-  "started_at": "2026-10-20T19:12:51Z",
-  "approx_expires_at": "2026-10-21T00:37:51Z",
-  "run_id": "39481200187",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "39513024243",
+  "message": "Checking GitHub runner TUN support"
 }
