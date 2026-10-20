@@ -1,7 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "probe-tun",
+  "stage": "install-runtime",
   "run_id": "39370941947",
-  "message": "TUN verified; starting Japan VPN build"
+  "updated_at": "2026-10-20T04:42:04.315598Z",
+  "message": "Installing runtime"
 }
