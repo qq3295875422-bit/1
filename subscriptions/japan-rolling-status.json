@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "39370941947",
-  "current_server": "thoroughly-authorities-cancel-breakdown.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "39404624061",
+  "current_server": "holland-klein-strategy-immunology.trycloudflare.com",
+  "previous_run_id": "39370941947",
+  "previous_server": "thoroughly-authorities-cancel-breakdown.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
