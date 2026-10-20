@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "start-public-relay",
+  "stage": "wait-public-dns",
   "run_id": "39444452052",
-  "updated_at": "2026-10-20T15:02:00.453508Z",
-  "message": "Starting VLESS WebSocket and Cloudflare Quick Tunnel"
+  "updated_at": "2026-10-20T15:02:13.497561Z",
+  "message": "Waiting for new trycloudflare hostname to resolve globally"
 }
