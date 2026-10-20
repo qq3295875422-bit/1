@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://thoroughly-authorities-cancel-breakdown.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.240",
+  "vpn_gate_server_ip": "219.100.37.117",
+  "started_at": "2026-10-20T04:43:11Z",
+  "approx_expires_at": "2026-10-20T10:08:11Z",
   "run_id": "39370941947",
-  "updated_at": "2026-10-20T04:42:56.692081Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
