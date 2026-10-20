@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://milton-anyone-hints-counsel.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.240",
+  "vpn_gate_server_ip": "219.100.37.115",
+  "started_at": "2026-10-20T19:12:51Z",
+  "approx_expires_at": "2026-10-21T00:37:51Z",
   "run_id": "39481200187",
-  "updated_at": "2026-10-20T19:12:27.966999Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
