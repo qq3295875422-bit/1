@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "39444452052",
-  "current_server": "reserved-care-authorization-few.trycloudflare.com",
-  "previous_run_id": "39404624061",
-  "previous_server": "holland-klein-strategy-immunology.trycloudflare.com",
+  "current_run_id": "39481200187",
+  "current_server": "milton-anyone-hints-counsel.trycloudflare.com",
+  "previous_run_id": "39444452052",
+  "previous_server": "reserved-care-authorization-few.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
