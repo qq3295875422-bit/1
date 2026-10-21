@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "39581812554",
-  "current_server": "facts-unlock-tommy-bulletin.trycloudflare.com",
-  "previous_run_id": "39545097869",
-  "previous_server": "guidance-rca-resulting-spare.trycloudflare.com",
+  "current_run_id": "39623491647",
+  "current_server": "hometown-bathrooms-touch-spell.trycloudflare.com",
+  "previous_run_id": "39581812554",
+  "previous_server": "facts-unlock-tommy-bulletin.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
