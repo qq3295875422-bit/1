@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39623491647
+# Current verified generation: 39692106627
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-39623491647"
+  - name: "🇯🇵 日本VPN-39692106627"
     type: vless
-    server: hometown-bathrooms-touch-spell.trycloudflare.com
+    server: judicial-preferences-south-supplier.trycloudflare.com
     port: 443
-    uuid: b52115c4-4257-4c1b-88a6-fcf46826e4af
+    uuid: bd6ca00b-a838-4d22-9d60-6841ea60ae0f
     network: ws
     tls: true
     udp: true
-    servername: hometown-bathrooms-touch-spell.trycloudflare.com
+    servername: judicial-preferences-south-supplier.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: hometown-bathrooms-touch-spell.trycloudflare.com
-  - name: "🇯🇵 日本VPN-39581812554"
-    type: vless
-    server: facts-unlock-tommy-bulletin.trycloudflare.com
-    port: 443
-    uuid: 4842c1ee-3f4a-4257-a062-a77cfb9b2612
-    network: ws
-    tls: true
-    udp: true
-    servername: facts-unlock-tommy-bulletin.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: facts-unlock-tommy-bulletin.trycloudflare.com
+        Host: judicial-preferences-south-supplier.trycloudflare.com
