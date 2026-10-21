@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "39513024243",
-  "current_server": "bra-managing-stickers-inquiries.trycloudflare.com",
-  "previous_run_id": "39481200187",
-  "previous_server": "milton-anyone-hints-counsel.trycloudflare.com",
+  "current_run_id": "39545097869",
+  "current_server": "guidance-rca-resulting-spare.trycloudflare.com",
+  "previous_run_id": "39513024243",
+  "previous_server": "bra-managing-stickers-inquiries.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
