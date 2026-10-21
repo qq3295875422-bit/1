@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://bra-managing-stickers-inquiries.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.96",
-  "started_at": "2026-10-20T23:10:00Z",
-  "approx_expires_at": "2026-10-21T04:35:00Z",
-  "run_id": "39513024243",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "39545097869",
+  "message": "Checking GitHub runner TUN support"
 }
