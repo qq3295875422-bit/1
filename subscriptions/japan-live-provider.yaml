@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39692106627
+# Current verified generation: 39723225013
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-39723225013"
+    type: vless
+    server: bath-record-expert-clinic.trycloudflare.com
+    port: 443
+    uuid: d9bfa59b-2876-4467-9e9a-9248ca522bf0
+    network: ws
+    tls: true
+    udp: true
+    servername: bath-record-expert-clinic.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: bath-record-expert-clinic.trycloudflare.com
   - name: "🇯🇵 日本VPN-39692106627"
     type: vless
     server: judicial-preferences-south-supplier.trycloudflare.com
