@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://aye-manor-ceo-frankfurt.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.177",
+  "started_at": "2026-10-22T15:18:05Z",
+  "approx_expires_at": "2026-10-22T20:43:05Z",
   "run_id": "39803137533",
-  "updated_at": "2026-10-22T15:17:36.015866Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
