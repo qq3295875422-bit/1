@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39803137533
+# Current verified generation: 39870912842
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-39803137533"
+  - name: "🇯🇵 日本VPN-39870912842"
     type: vless
-    server: aye-manor-ceo-frankfurt.trycloudflare.com
+    server: replica-workers-armor-ordinance.trycloudflare.com
     port: 443
-    uuid: 5d574360-77e6-4241-9464-ab83da7d21e9
+    uuid: f72f8849-700d-455c-b8ae-c724593e3dd8
     network: ws
     tls: true
     udp: true
-    servername: aye-manor-ceo-frankfurt.trycloudflare.com
+    servername: replica-workers-armor-ordinance.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: aye-manor-ceo-frankfurt.trycloudflare.com
-  - name: "🇯🇵 日本VPN-39760600131"
-    type: vless
-    server: birmingham-retrieved-attendance-removable.trycloudflare.com
-    port: 443
-    uuid: 586cba51-d92c-4ab0-9021-8355ec161a84
-    network: ws
-    tls: true
-    udp: true
-    servername: birmingham-retrieved-attendance-removable.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: birmingham-retrieved-attendance-removable.trycloudflare.com
+        Host: replica-workers-armor-ordinance.trycloudflare.com
