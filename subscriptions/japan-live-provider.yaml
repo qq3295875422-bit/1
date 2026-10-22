@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39723225013
+# Current verified generation: 39760600131
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-39760600131"
+    type: vless
+    server: birmingham-retrieved-attendance-removable.trycloudflare.com
+    port: 443
+    uuid: 586cba51-d92c-4ab0-9021-8355ec161a84
+    network: ws
+    tls: true
+    udp: true
+    servername: birmingham-retrieved-attendance-removable.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: birmingham-retrieved-attendance-removable.trycloudflare.com
   - name: "🇯🇵 日本VPN-39723225013"
     type: vless
     server: bath-record-expert-clinic.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: bath-record-expert-clinic.trycloudflare.com
-  - name: "🇯🇵 日本VPN-39692106627"
-    type: vless
-    server: judicial-preferences-south-supplier.trycloudflare.com
-    port: 443
-    uuid: bd6ca00b-a838-4d22-9d60-6841ea60ae0f
-    network: ws
-    tls: true
-    udp: true
-    servername: judicial-preferences-south-supplier.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: judicial-preferences-south-supplier.trycloudflare.com
