@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39760600131
+# Current verified generation: 39803137533
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-39803137533"
+    type: vless
+    server: aye-manor-ceo-frankfurt.trycloudflare.com
+    port: 443
+    uuid: 5d574360-77e6-4241-9464-ab83da7d21e9
+    network: ws
+    tls: true
+    udp: true
+    servername: aye-manor-ceo-frankfurt.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: aye-manor-ceo-frankfurt.trycloudflare.com
   - name: "🇯🇵 日本VPN-39760600131"
     type: vless
     server: birmingham-retrieved-attendance-removable.trycloudflare.com
@@ -15,16 +28,3 @@ proxies:
       path: /ws
       headers:
         Host: birmingham-retrieved-attendance-removable.trycloudflare.com
-  - name: "🇯🇵 日本VPN-39723225013"
-    type: vless
-    server: bath-record-expert-clinic.trycloudflare.com
-    port: 443
-    uuid: d9bfa59b-2876-4467-9e9a-9248ca522bf0
-    network: ws
-    tls: true
-    udp: true
-    servername: bath-record-expert-clinic.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: bath-record-expert-clinic.trycloudflare.com
