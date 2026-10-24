@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 39974480527
+# Current verified generation: 40082080589
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-39974480527"
+  - name: "🇯🇵 日本VPN-40082080589"
     type: vless
-    server: handle-outsourcing-electric-defining.trycloudflare.com
+    server: sector-jump-primarily-clusters.trycloudflare.com
     port: 443
-    uuid: e276543f-976b-4c7b-a5fa-a1dd48280b37
+    uuid: 70d7c1c4-e4d6-498d-b96f-3d04ac7446f2
     network: ws
     tls: true
     udp: true
-    servername: handle-outsourcing-electric-defining.trycloudflare.com
+    servername: sector-jump-primarily-clusters.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: handle-outsourcing-electric-defining.trycloudflare.com
-  - name: "🇯🇵 日本VPN-39935860118"
-    type: vless
-    server: partner-seekers-responsible-candle.trycloudflare.com
-    port: 443
-    uuid: 9fa9edc4-ff25-456e-937f-7cb2be273e85
-    network: ws
-    tls: true
-    udp: true
-    servername: partner-seekers-responsible-candle.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: partner-seekers-responsible-candle.trycloudflare.com
+        Host: sector-jump-primarily-clusters.trycloudflare.com
