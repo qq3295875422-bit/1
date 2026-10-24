@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "starting",
+  "status": "failed",
   "stage": "select-native-tcp443-jp",
   "run_id": "40062528468",
-  "updated_at": "2026-10-24T04:29:43.673265Z",
-  "message": "Selecting native Japan TCP 443 configs"
+  "updated_at": "2026-10-24T04:50:15.104633Z",
+  "message": "exit=1; line=52"
 }
