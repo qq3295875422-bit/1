@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "40082080589",
-  "current_server": "sector-jump-primarily-clusters.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "40100477781",
+  "current_server": "partnerships-salary-arrive-expense.trycloudflare.com",
+  "previous_run_id": "40082080589",
+  "previous_server": "sector-jump-primarily-clusters.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
