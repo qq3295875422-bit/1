@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "40119057144",
-  "current_server": "philips-max-appliances-arms.trycloudflare.com",
-  "previous_run_id": "40100477781",
-  "previous_server": "partnerships-salary-arrive-expense.trycloudflare.com",
+  "current_run_id": "40138578827",
+  "current_server": "tent-rabbit-resident-designer.trycloudflare.com",
+  "previous_run_id": "40119057144",
+  "previous_server": "philips-max-appliances-arms.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
