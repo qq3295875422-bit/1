@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 40138578827
+# Current verified generation: 40181997820
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-40138578827"
+  - name: "🇯🇵 日本VPN-40181997820"
     type: vless
-    server: tent-rabbit-resident-designer.trycloudflare.com
+    server: own-statutory-jpg-oxygen.trycloudflare.com
     port: 443
-    uuid: 4f2a951a-73a0-4afa-ba9a-f127e475ac04
+    uuid: 8be7c4e2-4362-426d-aaa3-df6f18f04183
     network: ws
     tls: true
     udp: true
-    servername: tent-rabbit-resident-designer.trycloudflare.com
+    servername: own-statutory-jpg-oxygen.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: tent-rabbit-resident-designer.trycloudflare.com
-  - name: "🇯🇵 日本VPN-40119057144"
-    type: vless
-    server: philips-max-appliances-arms.trycloudflare.com
-    port: 443
-    uuid: fb772e0d-6ea6-4f3c-8505-9bfc7d2d3547
-    network: ws
-    tls: true
-    udp: true
-    servername: philips-max-appliances-arms.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: philips-max-appliances-arms.trycloudflare.com
+        Host: own-statutory-jpg-oxygen.trycloudflare.com
