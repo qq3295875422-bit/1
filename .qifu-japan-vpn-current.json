@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://tent-rabbit-resident-designer.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.22",
-  "started_at": "2026-10-24T22:28:05Z",
-  "approx_expires_at": "2026-10-25T03:53:05Z",
-  "run_id": "40138578827",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "40162330267",
+  "message": "Checking GitHub runner TUN support"
 }
