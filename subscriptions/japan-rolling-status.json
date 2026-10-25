@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "40181997820",
-  "current_server": "own-statutory-jpg-oxygen.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "40201736033",
+  "current_server": "views-colours-discrete-urban.trycloudflare.com",
+  "previous_run_id": "40181997820",
+  "previous_server": "own-statutory-jpg-oxygen.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
