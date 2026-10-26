@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://paid-outreach-myspace-finals.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.55",
-  "started_at": "2026-10-26T11:02:37Z",
-  "approx_expires_at": "2026-10-26T16:27:37Z",
-  "run_id": "40311872421",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "40395671163",
+  "message": "Checking GitHub runner TUN support"
 }
