@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 40311872421
+# Current verified generation: 40395671163
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-40311872421"
+  - name: "🇯🇵 日本VPN-40395671163"
     type: vless
-    server: paid-outreach-myspace-finals.trycloudflare.com
+    server: discrimination-surprising-laugh-meetings.trycloudflare.com
     port: 443
-    uuid: 08f25a12-0407-409a-b379-2aef09a9070c
+    uuid: 1d77e5bf-3a75-40e0-b96d-4366e4e7adc1
     network: ws
     tls: true
     udp: true
-    servername: paid-outreach-myspace-finals.trycloudflare.com
+    servername: discrimination-surprising-laugh-meetings.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: paid-outreach-myspace-finals.trycloudflare.com
+        Host: discrimination-surprising-laugh-meetings.trycloudflare.com
