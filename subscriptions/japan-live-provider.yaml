@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 40270123621
+# Current verified generation: 40311872421
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-40270123621"
+  - name: "🇯🇵 日本VPN-40311872421"
     type: vless
-    server: geology-claimed-federation-gui.trycloudflare.com
+    server: paid-outreach-myspace-finals.trycloudflare.com
     port: 443
-    uuid: 4079abce-ca1e-4850-9266-c301a789e402
+    uuid: 08f25a12-0407-409a-b379-2aef09a9070c
     network: ws
     tls: true
     udp: true
-    servername: geology-claimed-federation-gui.trycloudflare.com
+    servername: paid-outreach-myspace-finals.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: geology-claimed-federation-gui.trycloudflare.com
+        Host: paid-outreach-myspace-finals.trycloudflare.com
