@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://discrimination-surprising-laugh-meetings.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.246",
+  "vpn_gate_server_ip": "219.100.37.216",
+  "started_at": "2026-10-26T20:29:56Z",
+  "approx_expires_at": "2026-10-27T01:54:56Z",
   "run_id": "40395671163",
-  "updated_at": "2026-10-26T20:29:21.880419Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
