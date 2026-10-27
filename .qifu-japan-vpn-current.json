@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://chapter-healthcare-nights-acoustic.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.245",
-  "vpn_gate_server_ip": "219.100.37.199",
-  "started_at": "2026-10-27T04:59:05Z",
-  "approx_expires_at": "2026-10-27T10:24:05Z",
-  "run_id": "40452485326",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "40488828563",
+  "message": "Checking GitHub runner TUN support"
 }
