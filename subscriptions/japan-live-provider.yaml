@@ -1,7 +1,20 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 40574326691
+# Current verified generation: 40604105061
 # The previous generation is kept as a short overlap fallback.
 proxies:
+  - name: "🇯🇵 日本VPN-40604105061"
+    type: vless
+    server: fruits-balance-mercury-past.trycloudflare.com
+    port: 443
+    uuid: 45876a29-b1c4-4aae-9a1b-2690b7d5cdc6
+    network: ws
+    tls: true
+    udp: true
+    servername: fruits-balance-mercury-past.trycloudflare.com
+    ws-opts:
+      path: /ws
+      headers:
+        Host: fruits-balance-mercury-past.trycloudflare.com
   - name: "🇯🇵 日本VPN-40574326691"
     type: vless
     server: deliver-actress-ips-leather.trycloudflare.com
