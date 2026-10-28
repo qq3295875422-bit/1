@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://mirrors-submit-nowhere-example.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.233",
+  "vpn_gate_server_ip": "219.100.37.13",
+  "started_at": "2026-10-28T16:36:24Z",
+  "approx_expires_at": "2026-10-28T22:01:24Z",
   "run_id": "40727406179",
-  "updated_at": "2026-10-28T16:36:07.292404Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
