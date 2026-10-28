@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "40638508677",
-  "current_server": "leon-winning-hub-mapping.trycloudflare.com",
-  "previous_run_id": "40604105061",
-  "previous_server": "fruits-balance-mercury-past.trycloudflare.com",
+  "current_run_id": "40727406179",
+  "current_server": "mirrors-submit-nowhere-example.trycloudflare.com",
+  "previous_run_id": null,
+  "previous_server": null,
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
