@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 40638508677
+# Current verified generation: 40727406179
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-40638508677"
+  - name: "🇯🇵 日本VPN-40727406179"
     type: vless
-    server: leon-winning-hub-mapping.trycloudflare.com
+    server: mirrors-submit-nowhere-example.trycloudflare.com
     port: 443
-    uuid: a0a48790-5cd2-46f4-9647-1e06a51e0f9f
+    uuid: c0532862-10f5-40e7-b595-388f50695f3d
     network: ws
     tls: true
     udp: true
-    servername: leon-winning-hub-mapping.trycloudflare.com
+    servername: mirrors-submit-nowhere-example.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: leon-winning-hub-mapping.trycloudflare.com
-  - name: "🇯🇵 日本VPN-40604105061"
-    type: vless
-    server: fruits-balance-mercury-past.trycloudflare.com
-    port: 443
-    uuid: 45876a29-b1c4-4aae-9a1b-2690b7d5cdc6
-    network: ws
-    tls: true
-    udp: true
-    servername: fruits-balance-mercury-past.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: fruits-balance-mercury-past.trycloudflare.com
+        Host: mirrors-submit-nowhere-example.trycloudflare.com
