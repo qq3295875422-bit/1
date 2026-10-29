@@ -1,30 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 40824681108
+# Current verified generation: 40915970269
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-40824681108"
+  - name: "🇯🇵 日本VPN-40915970269"
     type: vless
-    server: holes-mechanical-gonna-core.trycloudflare.com
+    server: posting-asus-obligation-affairs.trycloudflare.com
     port: 443
-    uuid: 77a61e06-25fe-434a-a026-a48206870ac0
+    uuid: a003196f-1390-4ba4-9647-4ed5697b4919
     network: ws
     tls: true
     udp: true
-    servername: holes-mechanical-gonna-core.trycloudflare.com
+    servername: posting-asus-obligation-affairs.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: holes-mechanical-gonna-core.trycloudflare.com
-  - name: "🇯🇵 日本VPN-40791012396"
-    type: vless
-    server: breaks-burlington-apnic-knitting.trycloudflare.com
-    port: 443
-    uuid: 602bb5de-4106-4fd6-ab8e-79d7e928b921
-    network: ws
-    tls: true
-    udp: true
-    servername: breaks-burlington-apnic-knitting.trycloudflare.com
-    ws-opts:
-      path: /ws
-      headers:
-        Host: breaks-burlington-apnic-knitting.trycloudflare.com
+        Host: posting-asus-obligation-affairs.trycloudflare.com
