@@ -1,9 +1,9 @@
 {
   "ready": true,
-  "current_run_id": "40791012396",
-  "current_server": "breaks-burlington-apnic-knitting.trycloudflare.com",
-  "previous_run_id": null,
-  "previous_server": null,
+  "current_run_id": "40824681108",
+  "current_server": "holes-mechanical-gonna-core.trycloudflare.com",
+  "previous_run_id": "40791012396",
+  "previous_server": "breaks-burlington-apnic-knitting.trycloudflare.com",
   "provider_path": "subscriptions/japan-live-provider.yaml",
   "stable_subscription_path": "subscriptions/japan-rolling.yaml"
 }
