@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://breaks-burlington-apnic-knitting.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.243",
-  "vpn_gate_server_ip": "219.100.37.163",
-  "started_at": "2026-10-29T00:00:36Z",
-  "approx_expires_at": "2026-10-29T05:25:36Z",
-  "run_id": "40791012396",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "40824681108",
+  "message": "Checking GitHub runner TUN support"
 }
