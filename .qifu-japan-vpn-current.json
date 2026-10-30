@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://people-deutschland-jpeg-bands.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "58.188.113.220",
-  "vpn_gate_server_ip": "58.188.113.220",
-  "started_at": "2026-10-29T23:56:44Z",
-  "approx_expires_at": "2026-10-30T05:21:44Z",
-  "run_id": "40976307921",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "41009640063",
+  "message": "Checking GitHub runner TUN support"
 }
