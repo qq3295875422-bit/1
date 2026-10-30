@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 41092037559
+# Current verified generation: 41145982166
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-41092037559"
+  - name: "🇯🇵 日本VPN-41145982166"
     type: vless
-    server: cbs-titled-cedar-steve.trycloudflare.com
+    server: generating-gamma-bicycle-laura.trycloudflare.com
     port: 443
-    uuid: 918d426a-dcfc-4e7f-8aec-3d1eabfcffaf
+    uuid: f4072199-235f-4746-9842-57f29d4f7fe7
     network: ws
     tls: true
     udp: true
-    servername: cbs-titled-cedar-steve.trycloudflare.com
+    servername: generating-gamma-bicycle-laura.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: cbs-titled-cedar-steve.trycloudflare.com
+        Host: generating-gamma-bicycle-laura.trycloudflare.com
