@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 41009640063
+# Current verified generation: 41092037559
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-41009640063"
+  - name: "🇯🇵 日本VPN-41092037559"
     type: vless
-    server: she-speaks-grande-programming.trycloudflare.com
+    server: cbs-titled-cedar-steve.trycloudflare.com
     port: 443
-    uuid: 88001bd0-4eea-4995-ad06-162488c19da4
+    uuid: 918d426a-dcfc-4e7f-8aec-3d1eabfcffaf
     network: ws
     tls: true
     udp: true
-    servername: she-speaks-grande-programming.trycloudflare.com
+    servername: cbs-titled-cedar-steve.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: she-speaks-grande-programming.trycloudflare.com
+        Host: cbs-titled-cedar-steve.trycloudflare.com
