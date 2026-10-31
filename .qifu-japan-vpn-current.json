@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://friend-matching-believes-mineral.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.113",
-  "started_at": "2026-10-31T05:31:46Z",
-  "approx_expires_at": "2026-10-31T10:56:46Z",
-  "run_id": "41172810701",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "41216111022",
+  "message": "Checking GitHub runner TUN support"
 }
