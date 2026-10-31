@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "wait-public-dns",
+  "stage": "verify-public-path",
   "run_id": "41252061501",
-  "updated_at": "2026-10-31T23:20:37.064800Z",
-  "message": "Waiting for new trycloudflare hostname to resolve globally"
+  "updated_at": "2026-10-31T23:20:42.361967Z",
+  "message": "End-to-end verifying imported public VLESS path exits JP"
 }
