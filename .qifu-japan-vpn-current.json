@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://folding-lead-engage-wto.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.233",
-  "vpn_gate_server_ip": "219.100.37.2",
-  "started_at": "2026-10-31T15:44:17Z",
-  "approx_expires_at": "2026-10-31T21:09:17Z",
-  "run_id": "41216111022",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "41252061501",
+  "message": "Checking GitHub runner TUN support"
 }
