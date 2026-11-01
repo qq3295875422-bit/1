@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://reproductive-removal-disturbed-common.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.234",
+  "vpn_gate_server_ip": "219.100.37.24",
+  "started_at": "2026-11-01T23:33:32Z",
+  "approx_expires_at": "2026-11-02T04:58:32Z",
   "run_id": "41362590135",
-  "updated_at": "2026-11-01T23:33:17.804861Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
