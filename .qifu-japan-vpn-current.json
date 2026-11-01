@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "connect-japan-exit",
+  "stage": "fix-dns",
   "run_id": "41328099960",
-  "updated_at": "2026-11-01T16:47:44.026650Z",
-  "message": "Connecting native Japan TCP 443 exit and verifying JP"
+  "updated_at": "2026-11-01T16:47:53.663330Z",
+  "message": "JP exit verified; switching runner to public DNS"
 }
