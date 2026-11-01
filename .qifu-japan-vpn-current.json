@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://enlarge-paint-reads-trans.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.233",
-  "vpn_gate_server_ip": "219.100.37.13",
-  "started_at": "2026-11-01T05:56:37Z",
-  "approx_expires_at": "2026-11-01T11:21:37Z",
-  "run_id": "41278755621",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "41328099960",
+  "message": "Checking GitHub runner TUN support"
 }
