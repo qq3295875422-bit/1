@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://reproductive-removal-disturbed-common.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.24",
-  "started_at": "2026-11-01T23:33:32Z",
-  "approx_expires_at": "2026-11-02T04:58:32Z",
-  "run_id": "41362590135",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "41396744163",
+  "message": "Checking GitHub runner TUN support"
 }
