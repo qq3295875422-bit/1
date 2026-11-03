@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 41591312489
+# Current verified generation: 41687657248
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-41591312489"
+  - name: "🇯🇵 日本VPN-41687657248"
     type: vless
-    server: targets-zope-pending-movies.trycloudflare.com
+    server: critics-titled-establishment-postposted.trycloudflare.com
     port: 443
-    uuid: 9ca738ab-4b3f-4e22-b2ca-4f5af180a250
+    uuid: d9870370-fa6f-4345-a9ba-608c9e5b8b7d
     network: ws
     tls: true
     udp: true
-    servername: targets-zope-pending-movies.trycloudflare.com
+    servername: critics-titled-establishment-postposted.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: targets-zope-pending-movies.trycloudflare.com
+        Host: critics-titled-establishment-postposted.trycloudflare.com
