@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 41518102947
+# Current verified generation: 41591312489
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-41518102947"
+  - name: "🇯🇵 日本VPN-41591312489"
     type: vless
-    server: tile-systems-cir-kentucky.trycloudflare.com
+    server: targets-zope-pending-movies.trycloudflare.com
     port: 443
-    uuid: db5906ae-b3f5-41f9-b93e-e272b2525155
+    uuid: 9ca738ab-4b3f-4e22-b2ca-4f5af180a250
     network: ws
     tls: true
     udp: true
-    servername: tile-systems-cir-kentucky.trycloudflare.com
+    servername: targets-zope-pending-movies.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: tile-systems-cir-kentucky.trycloudflare.com
+        Host: targets-zope-pending-movies.trycloudflare.com
