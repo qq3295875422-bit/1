@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 41914439757
+# Current verified generation: 41981482513
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-41914439757"
+  - name: "🇯🇵 日本VPN-41981482513"
     type: vless
-    server: podcast-mods-knows-magnetic.trycloudflare.com
+    server: accountability-lucas-usc-kai.trycloudflare.com
     port: 443
-    uuid: 24d578bf-5357-4925-965f-9e51a7854675
+    uuid: 461f2a07-0f07-408e-8d04-29572b76afb4
     network: ws
     tls: true
     udp: true
-    servername: podcast-mods-knows-magnetic.trycloudflare.com
+    servername: accountability-lucas-usc-kai.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: podcast-mods-knows-magnetic.trycloudflare.com
+        Host: accountability-lucas-usc-kai.trycloudflare.com
