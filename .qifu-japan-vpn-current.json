@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://properly-fireplace-duncan-leeds.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.178",
-  "started_at": "2026-11-05T18:00:13Z",
-  "approx_expires_at": "2026-11-05T23:25:13Z",
-  "run_id": "42079738161",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "42140411908",
+  "message": "Checking GitHub runner TUN support"
 }
