@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 42140411908
+# Current verified generation: 42221156467
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-42140411908"
+  - name: "🇯🇵 日本VPN-42221156467"
     type: vless
-    server: commons-copying-sodium-straight.trycloudflare.com
+    server: drink-bringing-knives-extraction.trycloudflare.com
     port: 443
-    uuid: 96467f89-0493-4ce4-b84a-8ca0a2b1f632
+    uuid: 35356e2f-cdcd-48f7-b19d-5f4dfc846439
     network: ws
     tls: true
     udp: true
-    servername: commons-copying-sodium-straight.trycloudflare.com
+    servername: drink-bringing-knives-extraction.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: commons-copying-sodium-straight.trycloudflare.com
+        Host: drink-bringing-knives-extraction.trycloudflare.com
