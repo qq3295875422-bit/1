@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://drink-bringing-knives-extraction.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.243",
+  "vpn_gate_server_ip": "219.100.37.174",
+  "started_at": "2026-11-06T12:55:12Z",
+  "approx_expires_at": "2026-11-06T18:20:12Z",
   "run_id": "42221156467",
-  "updated_at": "2026-11-06T12:54:49.715936Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
