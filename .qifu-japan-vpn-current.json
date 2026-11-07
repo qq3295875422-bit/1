@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://albuquerque-emacs-location-covered.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.17",
-  "started_at": "2026-11-07T05:52:29Z",
-  "approx_expires_at": "2026-11-07T11:17:29Z",
-  "run_id": "42344460712",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "42391010981",
+  "message": "Checking GitHub runner TUN support"
 }
