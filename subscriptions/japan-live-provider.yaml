@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 42391010981
+# Current verified generation: 42426039559
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-42391010981"
+  - name: "🇯🇵 日本VPN-42426039559"
     type: vless
-    server: musical-practices-diet-hunter.trycloudflare.com
+    server: usr-boat-float-administrators.trycloudflare.com
     port: 443
-    uuid: e671c002-cbe0-40da-9159-795ee4a97e0b
+    uuid: b5c17cae-d68c-43f6-a3d2-c65c18f7e2d7
     network: ws
     tls: true
     udp: true
-    servername: musical-practices-diet-hunter.trycloudflare.com
+    servername: usr-boat-float-administrators.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: musical-practices-diet-hunter.trycloudflare.com
+        Host: usr-boat-float-administrators.trycloudflare.com
