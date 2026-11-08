@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://arctic-bunny-viewing-separation.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.223",
-  "started_at": "2026-11-08T16:40:14Z",
-  "approx_expires_at": "2026-11-08T22:05:14Z",
-  "run_id": "42500905840",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "42536289657",
+  "message": "Checking GitHub runner TUN support"
 }
