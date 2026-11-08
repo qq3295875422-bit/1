@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 42500905840
+# Current verified generation: 42536289657
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-42500905840"
+  - name: "🇯🇵 日本VPN-42536289657"
     type: vless
-    server: arctic-bunny-viewing-separation.trycloudflare.com
+    server: please-informal-oem-hospitals.trycloudflare.com
     port: 443
-    uuid: 9f601af6-340b-48b3-ab83-c65fdfc11acc
+    uuid: 2ae39375-6fa8-4fc4-9dc2-d0bfdc196ed6
     network: ws
     tls: true
     udp: true
-    servername: arctic-bunny-viewing-separation.trycloudflare.com
+    servername: please-informal-oem-hospitals.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: arctic-bunny-viewing-separation.trycloudflare.com
+        Host: please-informal-oem-hospitals.trycloudflare.com
