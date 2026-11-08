@@ -1,8 +1,8 @@
 {
   "ready": false,
   "status": "starting",
-  "stage": "fix-dns",
+  "stage": "start-public-relay",
   "run_id": "42452579749",
-  "updated_at": "2026-11-08T05:55:06.876554Z",
-  "message": "JP exit verified; switching runner to public DNS"
+  "updated_at": "2026-11-08T05:55:10.394307Z",
+  "message": "Starting VLESS WebSocket and Cloudflare Quick Tunnel"
 }
