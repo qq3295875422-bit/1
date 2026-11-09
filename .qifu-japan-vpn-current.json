@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://please-informal-oem-hospitals.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.56",
-  "started_at": "2026-11-08T23:42:17Z",
-  "approx_expires_at": "2026-11-09T05:07:17Z",
-  "run_id": "42536289657",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "42571788330",
+  "message": "Checking GitHub runner TUN support"
 }
