@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://agree-retention-reynolds-pollution.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.236",
-  "vpn_gate_server_ip": "219.100.37.55",
-  "started_at": "2026-11-09T20:42:34Z",
-  "approx_expires_at": "2026-11-10T02:07:34Z",
-  "run_id": "42695187420",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "42773289727",
+  "message": "Checking GitHub runner TUN support"
 }
