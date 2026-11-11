@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://portion-missed-tour-introduction.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.244",
-  "vpn_gate_server_ip": "219.100.37.185",
-  "started_at": "2026-11-11T00:39:04Z",
-  "approx_expires_at": "2026-11-11T06:04:04Z",
-  "run_id": "42932734848",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "43022307933",
+  "message": "Checking GitHub runner TUN support"
 }
