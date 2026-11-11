@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 43022307933
+# Current verified generation: 43106993075
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-43022307933"
+  - name: "🇯🇵 日本VPN-43106993075"
     type: vless
-    server: shadow-temperature-jerry-sized.trycloudflare.com
+    server: textbook-condos-upgrading-hugo.trycloudflare.com
     port: 443
-    uuid: c4626ed8-e534-413a-b57b-7dd9f54d7517
+    uuid: dd6db48a-48b5-4aab-a6c5-3e339dad0684
     network: ws
     tls: true
     udp: true
-    servername: shadow-temperature-jerry-sized.trycloudflare.com
+    servername: textbook-condos-upgrading-hugo.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: shadow-temperature-jerry-sized.trycloudflare.com
+        Host: textbook-condos-upgrading-hugo.trycloudflare.com
