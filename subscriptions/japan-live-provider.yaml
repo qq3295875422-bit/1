@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 42868035852
+# Current verified generation: 42932734848
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-42868035852"
+  - name: "🇯🇵 日本VPN-42932734848"
     type: vless
-    server: volvo-programmes-rachel-stack.trycloudflare.com
+    server: portion-missed-tour-introduction.trycloudflare.com
     port: 443
-    uuid: f84b4504-f330-4600-bf14-2653682add77
+    uuid: e9411861-0a2a-49db-8b2d-88644b48feb2
     network: ws
     tls: true
     udp: true
-    servername: volvo-programmes-rachel-stack.trycloudflare.com
+    servername: portion-missed-tour-introduction.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: volvo-programmes-rachel-stack.trycloudflare.com
+        Host: portion-missed-tour-introduction.trycloudflare.com
