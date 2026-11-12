@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 43106993075
+# Current verified generation: 43172408457
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-43106993075"
+  - name: "🇯🇵 日本VPN-43172408457"
     type: vless
-    server: textbook-condos-upgrading-hugo.trycloudflare.com
+    server: introduction-silk-sufficient-lounge.trycloudflare.com
     port: 443
-    uuid: dd6db48a-48b5-4aab-a6c5-3e339dad0684
+    uuid: 034a4085-e5e9-491f-bcc2-c38166c07570
     network: ws
     tls: true
     udp: true
-    servername: textbook-condos-upgrading-hugo.trycloudflare.com
+    servername: introduction-silk-sufficient-lounge.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: textbook-condos-upgrading-hugo.trycloudflare.com
+        Host: introduction-silk-sufficient-lounge.trycloudflare.com
