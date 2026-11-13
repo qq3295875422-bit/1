@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://please-fruits-welding-hear.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.244",
+  "vpn_gate_server_ip": "219.100.37.185",
+  "started_at": "2026-11-13T13:04:14Z",
+  "approx_expires_at": "2026-11-13T18:29:14Z",
   "run_id": "43430126902",
-  "updated_at": "2026-11-13T13:03:51.939084Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
