@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 43616347137
+# Current verified generation: 43655327082
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-43616347137"
+  - name: "🇯🇵 日本VPN-43655327082"
     type: vless
-    server: orders-indexed-college-led.trycloudflare.com
+    server: states-alto-pennsylvania-enables.trycloudflare.com
     port: 443
-    uuid: 21edabcd-4274-4f02-8926-95e3f05fee23
+    uuid: e9cddf1b-63e5-457c-9cb7-f40677034a2a
     network: ws
     tls: true
     udp: true
-    servername: orders-indexed-college-led.trycloudflare.com
+    servername: states-alto-pennsylvania-enables.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: orders-indexed-college-led.trycloudflare.com
+        Host: states-alto-pennsylvania-enables.trycloudflare.com
