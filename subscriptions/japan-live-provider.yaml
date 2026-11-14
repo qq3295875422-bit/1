@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 43510318587
+# Current verified generation: 43565051957
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-43510318587"
+  - name: "🇯🇵 日本VPN-43565051957"
     type: vless
-    server: studio-maintaining-yarn-speaks.trycloudflare.com
+    server: economies-examined-price-movements.trycloudflare.com
     port: 443
-    uuid: 3a863b5b-d70b-4267-ace3-56d0c4fa1bf0
+    uuid: 157adc28-165f-42f5-9722-2fc07e4ed8c9
     network: ws
     tls: true
     udp: true
-    servername: studio-maintaining-yarn-speaks.trycloudflare.com
+    servername: economies-examined-price-movements.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: studio-maintaining-yarn-speaks.trycloudflare.com
+        Host: economies-examined-price-movements.trycloudflare.com
