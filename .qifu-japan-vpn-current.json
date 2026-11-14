@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://economies-examined-price-movements.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.239",
+  "vpn_gate_server_ip": "219.100.37.98",
+  "started_at": "2026-11-14T06:12:03Z",
+  "approx_expires_at": "2026-11-14T11:37:03Z",
   "run_id": "43565051957",
-  "updated_at": "2026-11-14T06:11:45.094682Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
