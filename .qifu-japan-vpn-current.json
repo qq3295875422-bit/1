@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://protective-ron-played-priest.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.245",
+  "vpn_gate_server_ip": "219.100.37.200",
+  "started_at": "2026-11-15T23:59:35Z",
+  "approx_expires_at": "2026-11-16T05:24:35Z",
   "run_id": "43777486698",
-  "updated_at": "2026-11-15T23:59:01.099700Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
