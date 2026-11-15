@@ -1,8 +1,7 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "select-native-tcp443-jp",
-  "run_id": "43684834468",
-  "updated_at": "2026-11-15T06:19:21.425329Z",
-  "message": "exit=1; line=52"
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "43738773391",
+  "message": "Checking GitHub runner TUN support"
 }
