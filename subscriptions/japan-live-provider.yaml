@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 43738773391
+# Current verified generation: 43777486698
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-43738773391"
+  - name: "🇯🇵 日本VPN-43777486698"
     type: vless
-    server: apparatus-aruba-marilyn-developing.trycloudflare.com
+    server: protective-ron-played-priest.trycloudflare.com
     port: 443
-    uuid: 4a8a8e73-78db-4975-a0ac-b568b3d918f9
+    uuid: e50e3726-1c6a-495c-b5e6-362f76569d20
     network: ws
     tls: true
     udp: true
-    servername: apparatus-aruba-marilyn-developing.trycloudflare.com
+    servername: protective-ron-played-priest.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: apparatus-aruba-marilyn-developing.trycloudflare.com
+        Host: protective-ron-played-priest.trycloudflare.com
