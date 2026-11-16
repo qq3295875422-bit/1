@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 43815782042
+# Current verified generation: 43949129779
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-43815782042"
+  - name: "🇯🇵 日本VPN-43949129779"
     type: vless
-    server: bugs-pike-merry-openings.trycloudflare.com
+    server: appeals-deputy-spending-publishing.trycloudflare.com
     port: 443
-    uuid: b7cc065a-9aa0-4e64-9346-d25b270d029b
+    uuid: 766caf5c-856b-4785-a8f9-d9a470180cd5
     network: ws
     tls: true
     udp: true
-    servername: bugs-pike-merry-openings.trycloudflare.com
+    servername: appeals-deputy-spending-publishing.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: bugs-pike-merry-openings.trycloudflare.com
+        Host: appeals-deputy-spending-publishing.trycloudflare.com
