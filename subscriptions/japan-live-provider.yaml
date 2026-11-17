@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 44041435844
+# Current verified generation: 44155350543
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-44041435844"
+  - name: "🇯🇵 日本VPN-44155350543"
     type: vless
-    server: lanka-circular-age-amended.trycloudflare.com
+    server: southampton-conservative-proceed-astrology.trycloudflare.com
     port: 443
-    uuid: ddbc4362-a71b-45a9-aa0e-f42551adec14
+    uuid: 3189e0ca-8740-4d5d-b611-a21577743f3e
     network: ws
     tls: true
     udp: true
-    servername: lanka-circular-age-amended.trycloudflare.com
+    servername: southampton-conservative-proceed-astrology.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: lanka-circular-age-amended.trycloudflare.com
+        Host: southampton-conservative-proceed-astrology.trycloudflare.com
