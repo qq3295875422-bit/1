@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 44155350543
+# Current verified generation: 44222889863
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-44155350543"
+  - name: "🇯🇵 日本VPN-44222889863"
     type: vless
-    server: southampton-conservative-proceed-astrology.trycloudflare.com
+    server: fortune-mill-dealers-experts.trycloudflare.com
     port: 443
-    uuid: 3189e0ca-8740-4d5d-b611-a21577743f3e
+    uuid: b329dd95-7a84-4834-94f9-788c0653b3bd
     network: ws
     tls: true
     udp: true
-    servername: southampton-conservative-proceed-astrology.trycloudflare.com
+    servername: fortune-mill-dealers-experts.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: southampton-conservative-proceed-astrology.trycloudflare.com
+        Host: fortune-mill-dealers-experts.trycloudflare.com
