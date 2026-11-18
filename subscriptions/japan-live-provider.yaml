@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 44318340361
+# Current verified generation: 44412750714
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-44318340361"
+  - name: "🇯🇵 日本VPN-44412750714"
     type: vless
-    server: circuit-nearby-dividend-sofa.trycloudflare.com
+    server: cutting-betting-guest-shepherd.trycloudflare.com
     port: 443
-    uuid: 77ad6811-c665-4e2d-bf7a-107e81d4a69e
+    uuid: 9af1ea7e-e62f-4b9b-a363-5e84d865a9b6
     network: ws
     tls: true
     udp: true
-    servername: circuit-nearby-dividend-sofa.trycloudflare.com
+    servername: cutting-betting-guest-shepherd.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: circuit-nearby-dividend-sofa.trycloudflare.com
+        Host: cutting-betting-guest-shepherd.trycloudflare.com
