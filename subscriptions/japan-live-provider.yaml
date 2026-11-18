@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 44222889863
+# Current verified generation: 44318340361
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-44222889863"
+  - name: "🇯🇵 日本VPN-44318340361"
     type: vless
-    server: fortune-mill-dealers-experts.trycloudflare.com
+    server: circuit-nearby-dividend-sofa.trycloudflare.com
     port: 443
-    uuid: b329dd95-7a84-4834-94f9-788c0653b3bd
+    uuid: 77ad6811-c665-4e2d-bf7a-107e81d4a69e
     network: ws
     tls: true
     udp: true
-    servername: fortune-mill-dealers-experts.trycloudflare.com
+    servername: circuit-nearby-dividend-sofa.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: fortune-mill-dealers-experts.trycloudflare.com
+        Host: circuit-nearby-dividend-sofa.trycloudflare.com
