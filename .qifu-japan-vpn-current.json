@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://southampton-conservative-proceed-astrology.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.240",
-  "vpn_gate_server_ip": "219.100.37.124",
-  "started_at": "2026-11-17T19:11:40Z",
-  "approx_expires_at": "2026-11-18T00:36:40Z",
-  "run_id": "44155350543",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "44222889863",
+  "message": "Checking GitHub runner TUN support"
 }
