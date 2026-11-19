@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 44412750714
+# Current verified generation: 44478209358
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-44412750714"
+  - name: "🇯🇵 日本VPN-44478209358"
     type: vless
-    server: cutting-betting-guest-shepherd.trycloudflare.com
+    server: messaging-enabled-pound-lookup.trycloudflare.com
     port: 443
-    uuid: 9af1ea7e-e62f-4b9b-a363-5e84d865a9b6
+    uuid: d5def476-3157-4337-a5fb-7a98bc440a40
     network: ws
     tls: true
     udp: true
-    servername: cutting-betting-guest-shepherd.trycloudflare.com
+    servername: messaging-enabled-pound-lookup.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: cutting-betting-guest-shepherd.trycloudflare.com
+        Host: messaging-enabled-pound-lookup.trycloudflare.com
