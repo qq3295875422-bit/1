@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://media-photographs-bedroom-timing.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.17",
-  "started_at": "2026-11-20T01:48:38Z",
-  "approx_expires_at": "2026-11-20T07:13:38Z",
-  "run_id": "44655862634",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "44748900379",
+  "message": "Checking GitHub runner TUN support"
 }
