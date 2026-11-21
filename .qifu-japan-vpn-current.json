@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://ide-inspiration-approaches-soon.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.234",
-  "vpn_gate_server_ip": "219.100.37.20",
-  "started_at": "2026-11-21T06:59:24Z",
-  "approx_expires_at": "2026-11-21T12:24:24Z",
-  "run_id": "44877978602",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "44929969520",
+  "message": "Checking GitHub runner TUN support"
 }
