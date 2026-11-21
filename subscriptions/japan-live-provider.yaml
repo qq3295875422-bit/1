@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 44827135586
+# Current verified generation: 44877978602
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-44827135586"
+  - name: "🇯🇵 日本VPN-44877978602"
     type: vless
-    server: colin-salmon-sum-blonde.trycloudflare.com
+    server: ide-inspiration-approaches-soon.trycloudflare.com
     port: 443
-    uuid: 4bda719d-a48a-4c9e-97ed-48c62dc1638f
+    uuid: a73542dd-4b90-4b59-852e-bb5c276e486c
     network: ws
     tls: true
     udp: true
-    servername: colin-salmon-sum-blonde.trycloudflare.com
+    servername: ide-inspiration-approaches-soon.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: colin-salmon-sum-blonde.trycloudflare.com
+        Host: ide-inspiration-approaches-soon.trycloudflare.com
