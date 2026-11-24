@@ -1,8 +1,13 @@
 {
-  "ready": false,
-  "status": "starting",
-  "stage": "verify-public-path",
+  "ready": true,
+  "status": "ready",
+  "stage": "ready",
+  "subscription_url": "https://outline-interface-arkansas-technician.trycloudflare.com/sub.yaml",
+  "verified_country": "JP",
+  "verified_exit_ip": "219.100.37.240",
+  "vpn_gate_server_ip": "219.100.37.122",
+  "started_at": "2026-11-24T09:47:28Z",
+  "approx_expires_at": "2026-11-24T15:12:28Z",
   "run_id": "45368320873",
-  "updated_at": "2026-11-24T09:47:10.486655Z",
-  "message": "End-to-end verifying imported public VLESS path exits JP"
+  "transport": "VLESS+WebSocket+TLS"
 }
