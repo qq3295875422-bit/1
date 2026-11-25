@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 45482674235
+# Current verified generation: 45575570419
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-45482674235"
+  - name: "🇯🇵 日本VPN-45575570419"
     type: vless
-    server: portable-eligibility-console-experience.trycloudflare.com
+    server: surge-camera-away-show.trycloudflare.com
     port: 443
-    uuid: b3c37379-cf1b-4843-9818-2f09262eb95d
+    uuid: 4d82d37e-dfae-41ef-9abb-7c5204f5458d
     network: ws
     tls: true
     udp: true
-    servername: portable-eligibility-console-experience.trycloudflare.com
+    servername: surge-camera-away-show.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: portable-eligibility-console-experience.trycloudflare.com
+        Host: surge-camera-away-show.trycloudflare.com
