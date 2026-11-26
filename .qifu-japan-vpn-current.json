@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "starting",
+  "status": "failed",
   "stage": "connect-japan-exit",
   "run_id": "45845539451",
-  "updated_at": "2026-11-26T15:06:12.340646Z",
-  "message": "Connecting native Japan TCP 443 exit and verifying JP"
+  "updated_at": "2026-11-26T15:06:52.085628Z",
+  "message": "exit=1; line=101"
 }
