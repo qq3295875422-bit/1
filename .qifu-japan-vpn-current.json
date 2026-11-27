@@ -1,8 +1,8 @@
 {
   "ready": false,
-  "status": "starting",
+  "status": "failed",
   "stage": "install-runtime",
   "run_id": "46056702579",
-  "updated_at": "2026-11-27T19:26:34.512305Z",
-  "message": "Installing runtime"
+  "updated_at": "2026-11-27T19:26:48.329466Z",
+  "message": "exit=100; line=42"
 }
