@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://senator-paint-theft-throw.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.238",
-  "vpn_gate_server_ip": "219.100.37.85",
-  "started_at": "2026-11-26T23:50:13Z",
-  "approx_expires_at": "2026-11-27T05:15:13Z",
-  "run_id": "45913093502",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "45964396760",
+  "message": "Checking GitHub runner TUN support"
 }
