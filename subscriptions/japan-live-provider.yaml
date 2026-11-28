@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 45913093502
+# Current verified generation: 46099088217
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-45913093502"
+  - name: "🇯🇵 日本VPN-46099088217"
     type: vless
-    server: senator-paint-theft-throw.trycloudflare.com
+    server: swing-sic-cash-receptors.trycloudflare.com
     port: 443
-    uuid: db900627-3d6d-4fef-afb0-d41cd73c2fbc
+    uuid: 81191089-bb6b-4e67-bc15-4257864a1e1c
     network: ws
     tls: true
     udp: true
-    servername: senator-paint-theft-throw.trycloudflare.com
+    servername: swing-sic-cash-receptors.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: senator-paint-theft-throw.trycloudflare.com
+        Host: swing-sic-cash-receptors.trycloudflare.com
