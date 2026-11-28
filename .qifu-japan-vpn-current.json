@@ -1,8 +1,7 @@
 {
   "ready": false,
-  "status": "failed",
-  "stage": "install-runtime",
-  "run_id": "46056702579",
-  "updated_at": "2026-11-27T19:26:48.329466Z",
-  "message": "exit=100; line=42"
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "46099088217",
+  "message": "Checking GitHub runner TUN support"
 }
