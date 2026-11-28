@@ -1,17 +1,17 @@
 # Qifu rolling Japan VPN provider
-# Current verified generation: 46099088217
+# Current verified generation: 46152996911
 # The previous generation is kept as a short overlap fallback.
 proxies:
-  - name: "🇯🇵 日本VPN-46099088217"
+  - name: "🇯🇵 日本VPN-46152996911"
     type: vless
-    server: swing-sic-cash-receptors.trycloudflare.com
+    server: cite-rarely-marina-rehabilitation.trycloudflare.com
     port: 443
-    uuid: 81191089-bb6b-4e67-bc15-4257864a1e1c
+    uuid: ede34ab9-753f-4a18-b5fa-3833bf2d6e2a
     network: ws
     tls: true
     udp: true
-    servername: swing-sic-cash-receptors.trycloudflare.com
+    servername: cite-rarely-marina-rehabilitation.trycloudflare.com
     ws-opts:
       path: /ws
       headers:
-        Host: swing-sic-cash-receptors.trycloudflare.com
+        Host: cite-rarely-marina-rehabilitation.trycloudflare.com
