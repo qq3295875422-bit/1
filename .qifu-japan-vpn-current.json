@@ -1,13 +1,7 @@
 {
-  "ready": true,
-  "status": "ready",
-  "stage": "ready",
-  "subscription_url": "https://swing-sic-cash-receptors.trycloudflare.com/sub.yaml",
-  "verified_country": "JP",
-  "verified_exit_ip": "219.100.37.246",
-  "vpn_gate_server_ip": "219.100.37.211",
-  "started_at": "2026-11-28T02:40:09Z",
-  "approx_expires_at": "2026-11-28T08:05:09Z",
-  "run_id": "46099088217",
-  "transport": "VLESS+WebSocket+TLS"
+  "ready": false,
+  "status": "starting",
+  "stage": "probe-tun",
+  "run_id": "46152996911",
+  "message": "Checking GitHub runner TUN support"
 }
